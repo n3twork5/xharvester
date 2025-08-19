@@ -32,7 +32,7 @@ def banner() -> None:
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
     {RESET}""")
     print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
-    print(f"{GREEN}| GitHub:{RESET}{YELLOW}@n3towrkh4x |{RESET}")
+    print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}")
     print(f"{RED}Use only for authorized security testing!{RESET}\n")
     
 def print_status(message: str) -> None:
@@ -49,7 +49,6 @@ def print_error(message: str) -> None:
 
 class WiFiModule:
     """WiFi reconnaissance module"""
-    
     def __init__(self, interface: str) -> None:
         self.interface = interface
         self.monitor_interface = f"{interface}mon"
@@ -69,15 +68,12 @@ class WiFiModule:
         """Put wireless interface into manage mode"""
         print_status(f"{YELLOW}Setting up manage mode on {self.interface}{RESET}")
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
-        output = subprocess.check_output(cmd, shell=True, text=True)
-        if output:
-            print_status(f'{YELLOW}Successfully set to manage mode: {self.interface}!{RESET}')
-        elif not output:
-            print_error(f'{RED}An error occured during set of mode!{RESET}')
+        subprocess.check_output(cmd, shell=True, text=True)
+        print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}')
     
 
 if __name__ == '__main__':
     wifi = WiFiModule('wlo1')
     banner()
-    wifi.setup_monitor_mode()    
+    #wifi.setup_monitor_mode()    
     wifi.setup_manage_mode()
