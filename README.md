@@ -7,7 +7,7 @@
 xharvestor is a specialized, modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF), wireless, industrial, and automotive systems. It integrates multiple tools and scripts into a unified workflow for probing, analyzing, and documenting findings from the physical and wireless world.
 ### Overview
 
-Moving beyond traditional web OSINT, Phantom Harvester RF allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automobiles.
+Moving beyond traditional web OSINT, xHarvester RF allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automobiles.
 
 ### Core Framework Features
 
