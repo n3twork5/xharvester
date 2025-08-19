@@ -1,10 +1,7 @@
 #!/bin/env python3
 import shlex
 import subprocess
-import argparse
-import sys
-import time
-import csv
+import os
 from typing import List, Dict, Any
 
 # Color setup
@@ -25,6 +22,7 @@ except ImportError:
 #Banner Function
 def banner() -> None:
     """Banner"""
+    os.system('clear')
     print(f"""{MAGENTA}
  _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
 ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
