@@ -32,7 +32,8 @@ def banner() -> None:
     print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}")
     print(f"{RED}Use only for authorized security testing!{RESET}\n")
-    
+
+#Color status  
 def print_status(message: str) -> None:
     """Print status messages"""
     print(f"{GREEN}[+]{RESET} {message}")
