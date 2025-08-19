@@ -32,6 +32,8 @@ def banner() -> None:
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
     {RESET}""")
     print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
+    print(f"{GREEN}| GitHub:{RESET}{YELLOW}@n3towrkh4x |{RESET}")
+    print(f"{RED}Use only for authorized security testing!{RESET}\n")
     
 def print_status(message: str) -> None:
     """Print status messages"""
@@ -76,6 +78,6 @@ class WiFiModule:
 
 if __name__ == '__main__':
     wifi = WiFiModule('wlo1')
-    wifi.setup_monitor_mode()
     banner()
+    wifi.setup_monitor_mode()    
     wifi.setup_manage_mode()
