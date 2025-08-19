@@ -22,6 +22,17 @@ except ImportError:
     # Fallback if colorama is not installed
     GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = RESET = ""
 
+#Banner Function
+def banner() -> None:
+    """Banner"""
+    print(f"""{MAGENTA}
+ _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
+( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
+ )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
+(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
+    {RESET}""")
+    print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
+
 class Color:
     """Color modes"""
     def __init__(self, message: str) -> None:
@@ -38,17 +49,6 @@ class Color:
     def print_error(self) -> None:
         """Print error messages"""
         print(f"{RED}[-]{RESET} {self.message}")
-
-def banner() -> None:
-    """Banner"""
-    print(f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
-    {RESET}""")
-    print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
-
 
 class WiFiModule:
     """WiFi reconnaissance module"""
