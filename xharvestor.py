@@ -32,23 +32,18 @@ def banner() -> None:
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
     {RESET}""")
     print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
+    
+def print_status(message: str) -> None:
+    """Print status messages"""
+    print(f"{GREEN}[+]{RESET} {message}")
 
-class Color:
-    """Color modes"""
-    def __init__(self, message: str) -> None:
-        self.message = message
+def print_warning(message: str) -> None:
+    """Print warning messages"""
+    print(f"{YELLOW}[!]{RESET} {message}")
 
-    def print_status(self) -> None:
-        """Print status messages"""
-        print(f"{GREEN}[+]{RESET} {self.message}")
-
-    def print_warning(self) -> None:
-        """Print warning messages"""
-        print(f"{YELLOW}[!]{RESET} {self.message}")
-
-    def print_error(self) -> None:
-        """Print error messages"""
-        print(f"{RED}[-]{RESET} {self.message}")
+def print_error(message: str) -> None:
+    """Print error messages"""
+    print(f"{RED}[-]{RESET} {message}")
 
 class WiFiModule:
     """WiFi reconnaissance module"""
@@ -60,23 +55,23 @@ class WiFiModule:
     
     def setup_monitor_mode(self) -> str:
         """Put wireless interface into monitor mode"""
-        Color.print_status(f"{YELLOW}Setting up monitor mode on {self.interface}{RESET}") 
+        print_status(f"{YELLOW}Setting up monitor mode on {self.interface}{RESET}") 
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode monitor && sudo ifconfig {self.interface} up && sudo airmon-ng check kill"
         output = subprocess.check_output(cmd, shell=True, text=True)
         if output:
-            Color.print(f'{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}')
-        else:
-            Color.print('An error occured during change of mode!')
+            print(f'{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}')
+        elif not output:
+            print('An error occured during change of mode!')
     
     def setup_manage_mode(self) -> str:
         """Put wireless interface into manage mode"""
-        Color.print_status(f"{YELLOW}Setting sup manage mode on {self.interface}{RESET}")
+        print_status(f"{YELLOW}Setting up manage mode on {self.interface}{RESET}")
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
         output = subprocess.check_output(cmd, shell=True, text=True)
         if output:
-            Color.print_status(f'{YELLOW}Successfully set to manage mode: {self.interface}!{RESET}')
-        else:
-            Color.print_error('An error occured during set of mode!')
+            print_status(f'{YELLOW}Successfully set to manage mode: {self.interface}!{RESET}')
+        elif not output:
+            print_error(f'{RED}An error occured during set of mode!{RESET}')
     
 
 if __name__ == '__main__':
