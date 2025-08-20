@@ -82,9 +82,7 @@ def main():
         f'{CYAN}industrial control system (SCADA),{RESET} '
         f'{CYAN}and automotive systems.{RESET} '
         f'{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET} '
-        f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'\
-        f'{GREEN}Usage:{RESET}'\
-        f'\t\n{GREEN}sudo ./xharvestor'
+        f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
     ))
 
     parser.add_argument('--wifi', help=f'{GREEN}wifi module mode {YELLOW}(wifi){RESET}')
@@ -93,9 +91,8 @@ def main():
     parser.add_argument('-ics', '--industrial-control-system', help=f'{GREEN}industrial control system [SCADA] module mode {YELLOW}(ics){RESET}')
 
     args = parser.parse_args()
-    if args:
-        parser.print_help()
-    elif args.wifi == 'wifi':
+
+    if args.wifi == 'wifi':
         wifi = WiFiModule('wlo1')
         banner()
         #wifi.setup_monitor_mode()    
