@@ -111,7 +111,32 @@ def main():
         print(f"{CYAN} [5] 🏙️ Industrial Control System - SCADA")
         print(f"{RED} [0] ❌ Exit")
         print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    show_menu()
+
+    # ========== MAIN LOOP ========== #
+    banner()
+    while True:
+        show_menu()
+        choice = input(f"\n{GREEN}[?] Choose option: ")
+
+        if choice == "0":
+            print(f"{RED}Exiting...\n")
+            break
+
+        elif choice == "1":
+            pass
+
+
+        elif choice == "2":
+            wifi = WiFiModule('wlo1')
+            banner()
+            #wifi.setup_monitor_mode()    
+            wifi.setup_manage_mode()
+
+        elif choice == "3":
+            pass
+
+        else:
+            print(f"{RED}Invalid option. Try again.\n")
 
 
 if __name__ == '__main__':
