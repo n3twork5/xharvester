@@ -102,7 +102,7 @@ def main():
 
     def show_menu() -> str:
         print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        print(f"{GREEN}         🚀   XHARVESTOR             ")
+        print(f"{GREEN}         🚀        XHARVESTOR             ")
         print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
         print(f"{CYAN} [1] 🔀 BlueTooth")
         print(f"{CYAN} [2] 📶 Wifi")
