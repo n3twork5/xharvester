@@ -27,10 +27,6 @@ Hardware Abstraction Layer: Simplifies the use of complex hardware (SDRs, CAN in
 
 ---
 
-### **Option 3: Highly Structured with Tabs (Great for Docs)**
-
-This uses HTML-like comments to create "tabs" for different operating systems, which is popular in many project READMEs.
-
 
 ## 💾 Installation
 
@@ -40,19 +36,35 @@ git clone https://github.com/n3tworkh4x/xharvestor.git
 cd xharvestor
 ```
 ### 2. Virtual Environment Setup
-```macos/linux
+##### MacOS/Linux
+```
 python3 -m venv venv
 source venv/bin/activate
 ```
-```windows
-#Powershell
+##### Windows
+```
+###### Powershell ######
 python -m venv venv
 .\venv\Scripts\Activate.ps1
-
-#Command Prompt
+```
+```
+###### Command Prompt ######
 python -m venv venv
 .\venv\Scripts\activate.bat
-
-
+```
+### Usage
+#### Menu for modules selection
+```
+sudo ./xharvestor
+```
+#### Module selection from the cli
+##### MacOS/Linux
+```
+sudo ./xharvestor <module type> <module name> #module type(--wifi)
+```
+##### Windows
+```
+python xharvestor <module type> <module name>
+```
 ## ⚠️ Disclaimer
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, catastrophic failure, and severe legal consequences. Always operate within a controlled, legal environment.
