@@ -23,7 +23,7 @@ except ImportError:
 #Banner Function
 def banner() -> None:
     """Banner"""
-    os.system('clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{MAGENTA}
  _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
 ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
@@ -89,6 +89,7 @@ def main():
     parser.add_argument('-bt', '--bluetooth', help=f'{GREEN}bluetooth module mode {YELLOW}(bluetooth){RESET}')
     parser.add_argument('-rf', '--radio-frequency', help=f'{GREEN}radio frequency mode {YELLOW}(rf){RESET}')
     parser.add_argument('-ics', '--industrial-control-system', help=f'{GREEN}industrial control system [SCADA] module mode {YELLOW}(ics){RESET}')
+    parser.add_argument('-auto', '--automobile', help=f'{GREEN}automobile module mode {YELLOW}(auto){RESET}')
 
     args = parser.parse_args()
 
