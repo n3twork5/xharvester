@@ -15,6 +15,7 @@ try:
     BLUE = colorama.Fore.BLUE
     MAGENTA = colorama.Fore.MAGENTA
     CYAN = colorama.Fore.CYAN
+    LIGHTCYAN_EX = colorama.Fore.LIGHTCYAN_EX
     RESET = colorama.Fore.RESET
 except ImportError:
     # Fallback if colorama is not installed
@@ -98,6 +99,20 @@ def main():
         banner()
         #wifi.setup_monitor_mode()    
         wifi.setup_manage_mode()
+
+    def show_menu() -> str:
+        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print(f"{GREEN}         🚀   XHARVESTOR             ")
+        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+        print(f"{CYAN} [1] 🔀 BlueTooth")
+        print(f"{CYAN} [2] 📶 Wifi")
+        print(f"{CYAN} [3] 🚖 Automobile")
+        print(f"{CYAN} [4] 📡 Radio Frequency")
+        print(f"{CYAN} [5] 🏙️ Industrial Control System - SCADA")
+        print(f"{RED} [0] ❌ Exit")
+        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    show_menu()
+
 
 if __name__ == '__main__':
    main()
