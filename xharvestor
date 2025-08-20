@@ -21,6 +21,18 @@ except ImportError:
     # Fallback if colorama is not installed
     GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = RESET = ""
 
+def show_menu() -> str:
+    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print(f"{GREEN}         🚀        XHARVESTOR             ")
+    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print(f"{CYAN} [1] 🔀 BlueTooth")
+    print(f"{CYAN} [2] 📶 Wifi")
+    print(f"{CYAN} [3] 🚖 Automobile")
+    print(f"{CYAN} [4] 📡 Radio Frequency")
+    print(f"{CYAN} [5] 🏙️ Industrial Control System - SCADA")
+    print(f"{RED} [0] ❌ Exit")
+    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")  
+
 #Banner Function
 def banner() -> None:
     """Banner"""
@@ -86,31 +98,7 @@ def main():
         f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
     ))
 
-    parser.add_argument('--wifi', help=f'{GREEN}wifi module mode {YELLOW}(wifi){RESET}')
-    parser.add_argument('-bt', '--bluetooth', help=f'{GREEN}bluetooth module mode {YELLOW}(bluetooth){RESET}')
-    parser.add_argument('-rf', '--radio-frequency', help=f'{GREEN}radio frequency mode {YELLOW}(rf){RESET}')
-    parser.add_argument('-ics', '--industrial-control-system', help=f'{GREEN}industrial control system [SCADA] module mode {YELLOW}(ics){RESET}')
-    parser.add_argument('-auto', '--automobile', help=f'{GREEN}automobile module mode {YELLOW}(auto){RESET}')
-
-    args = parser.parse_args()
-
-    if args.wifi == 'wifi':
-        wifi = WiFiModule('wlo1')
-        banner()
-        #wifi.setup_monitor_mode()    
-        wifi.setup_manage_mode()
-
-    def show_menu() -> str:
-        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        print(f"{GREEN}         🚀        XHARVESTOR             ")
-        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        print(f"{CYAN} [1] 🔀 BlueTooth")
-        print(f"{CYAN} [2] 📶 Wifi")
-        print(f"{CYAN} [3] 🚖 Automobile")
-        print(f"{CYAN} [4] 📡 Radio Frequency")
-        print(f"{CYAN} [5] 🏙️ Industrial Control System - SCADA")
-        print(f"{RED} [0] ❌ Exit")
-        print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
+    parser.print_help()
 
     # ========== MAIN LOOP ========== #
     banner()
