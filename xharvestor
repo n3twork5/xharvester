@@ -1,5 +1,5 @@
 #!/bin/env python3
-import shlex
+import argparse
 import subprocess
 import os
 from typing import List, Dict, Any
@@ -69,10 +69,33 @@ class WiFiModule:
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
         subprocess.check_output(cmd, shell=True, text=True)
         print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}')
-    
+
+def main():
+    """All modules and argparse"""
+    parser = argparse.ArgumentParser(
+        prog='xharvestor',
+        description=f'{CYAN}xharvestor is a specialized,{RESET}' \
+        f' {CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}' \
+        f' {CYAN}wireless(bluetooth & wifi),{RESET}' \
+        f' {CYAN}industrial control system(scada),{RESET}'
+        f' {CYAN}and automotive systems.{RESET}' \
+        f' {CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET}' \
+        f' {CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
+    )
+    parser.add_argument('--wifi', help=f'{GREEN}wifi module mode{YELLOW}(wifi){RESET}')
+    parser.add_argument('-bt', '--bluetooth', help=f'{GREEN}bluetooth module mode{YELLOW}(bluetooth){RESET}')
+    parser.add_argument('-rf', '--radio-frequency', help=f'{GREEN}radio frequency mode{YELLOW}(rf){RESET}')
+    parser.add_argument('-ics', '--industrial-control-system', help=f'{GREEN}industrial control system[scada] module mode{YELLOW}(ics){RESET}')
+    parser.add_argument('-auto', '--automobile', help=f'{GREEN}automobile module mode{YELLOW}(automobile){RESET}')
+
+    args = parser.parse_args()
+    if not args:
+        parser.print_help()
+    elif args.wifi == 'wifi':
+        wifi = WiFiModule('wlo1')
+        banner()
+        #wifi.setup_monitor_mode()    
+        wifi.setup_manage_mode()
 
 if __name__ == '__main__':
-    wifi = WiFiModule('wlo1')
-    banner()
-    #wifi.setup_monitor_mode()    
-    wifi.setup_manage_mode()
+   main()
