@@ -25,8 +25,8 @@ Geotagging Integration: Correlates all discovered devices and signals with GPS c
 
 Hardware Abstraction Layer: Simplifies the use of complex hardware (SDRs, CAN interfaces) by handling driver communication and configuration automatically.
 
-## 💾 Installation
-  git clone https://github.com/n3tworkh4x/xharvestor.git
+## 💾 Installation:
+    git clone https://github.com/n3tworkh4x/xharvestor.git
 
 
 ## ⚠️ Disclaimer
