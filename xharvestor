@@ -4,7 +4,7 @@ import os
 import argparse
 import time
 import socket
-
+import sys
 
 ### Color Setup ###
 try:
@@ -66,8 +66,8 @@ def show_menu() -> str:
     print(f"{CYAN}\t[5] 🏙️  Industrial Control System - SCADA")
     print(f"{CYAN}\t[6] 🤘 About")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    print(f"{RED}\t[0] ❌ Exit")
-    print(f"{CYAN}\t[99] 🎁 Update XHARVESTOR")
+    print(f"{RED}\t [0] ❌ Exit")
+    print(f"{YELLOW}\t[99] 🎁 Update XHARVESTOR")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
 
 ### Banner Function ###
