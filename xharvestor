@@ -57,7 +57,6 @@ def text_animation():
         print(word, end='', flush=True)
         time.sleep(0.005)
 
-
 ### Display Menu ###
 def show_menu() -> str:
     print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
