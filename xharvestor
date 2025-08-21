@@ -22,7 +22,7 @@ except ImportError:
     # Fallback if colorama is not installed
     GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = RESET = ""
 
-    # Color Status #
+### Color Status ###
 def print_status(message: str) -> None:
     """Print status messages"""
     print(f"{GREEN}[+]{RESET} {message}")
@@ -34,6 +34,71 @@ def print_warning(message: str) -> None:
 def print_error(message: str) -> None:
     """Print error messages"""
     print(f"{RED}[-]{RESET} {message}")
+
+
+### Banner Function ###
+def banner() -> str:
+    """Banner"""
+    os.system('cls' if os.name == 'nt' else 'clear')
+    return f"""
+ _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
+( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
+ )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
+(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
+    """
+    return f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}"
+    return f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}"
+    return f"{RED}Use only for authorized security testing!{RESET}\n"
+
+
+### Text Animation ###
+def text_animation():
+    for word in banner():
+        print(word, end='', flush=True)
+        time.sleep(0.005)
+
+
+### Display Menu ###
+def show_menu() -> str:
+    print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{GREEN}         🚀   XHARVESTOR -- MAIN MENU")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{CYAN}\t[1] 🔀 BlueTooth")
+    print(f"{CYAN}\t[2] 📶 Wifi")
+    print(f"{CYAN}\t[3] 🚖 Automobile")
+    print(f"{CYAN}\t[4] 📡 Radio Frequency")
+    print(f"{CYAN}\t[5] 🏙️  Industrial Control System - SCADA")
+    print(f"{CYAN}\t[6] 🤘 About")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{RED}\t [0] ❌ Exit")
+    print(f"{YELLOW}\t[99] 🎁 Update XHARVESTOR")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
+
+########################################### WiFi Module ###########################################
+class WiFiModule:
+    """WiFi reconnaissance module"""
+    def __init__(self, interface: str) -> None:
+        self.interface = interface
+        self.monitor_interface = f"{interface}mon"
+        self.scan_results = []
+    
+    def setup_monitor_mode(self) -> str:
+        """Put wireless interface into monitor mode"""
+        print_status(f"{YELLOW}Setting up monitor mode on {self.interface}{RESET}") 
+        cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode monitor && sudo ifconfig {self.interface} up && sudo airmon-ng check kill"
+        output = subprocess.check_output(cmd, shell=True, text=True)
+        if output:
+            print_status(f'\n{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}')
+        elif not output:
+            print_error('\nAn error occured during change of mode!')
+    
+    def setup_manage_mode(self) -> str:
+        """Put wireless interface into manage mode"""
+        print(f"\n{YELLOW}[+] Setting up manage mode on {self.interface}{RESET}")
+        cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
+        subprocess.check_output(cmd, shell=True, text=True)
+        print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}')
 
 ### Display About ###
 def about() -> None:
@@ -53,74 +118,19 @@ def about() -> None:
     parser = argparse.ArgumentParser(prog=prog, description=description)
     parser.print_help()
 
-### Display Menu ###
-def show_menu() -> str:
-    print(f"\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t")
-    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    print(f"{GREEN}         🚀   XHARVESTOR -- MAIN MENU")
-    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    print(f"{CYAN}\t[1] 🔀 BlueTooth")
-    print(f"{CYAN}\t[2] 📶 Wifi")
-    print(f"{CYAN}\t[3] 🚖 Automobile")
-    print(f"{CYAN}\t[4] 📡 Radio Frequency")
-    print(f"{CYAN}\t[5] 🏙️  Industrial Control System - SCADA")
-    print(f"{CYAN}\t[6] 🤘 About")
-    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    print(f"{RED}\t [0] ❌ Exit")
-    print(f"{YELLOW}\t[99] 🎁 Update XHARVESTOR")
-    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
-
-### Banner Function ###
-def banner() -> None:
-    """Banner"""
-    os.system('cls' if os.name == 'nt' else 'clear')
-    print(f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
-    {RESET}""")
-    print(f"{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
-    print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}")
-    print(f"{RED}Use only for authorized security testing!{RESET}\n")
-
-
-### Wifi ###
-class WiFiModule:
-    """WiFi reconnaissance module"""
-    def __init__(self, interface: str) -> None:
-        self.interface = interface
-        self.monitor_interface = f"{interface}mon"
-        self.scan_results = []
-    
-    def setup_monitor_mode(self) -> str:
-        """Put wireless interface into monitor mode"""
-        print_status(f"{YELLOW}Setting up monitor mode on {self.interface}{RESET}") 
-        cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode monitor && sudo ifconfig {self.interface} up && sudo airmon-ng check kill"
-        output = subprocess.check_output(cmd, shell=True, text=True)
-        if output:
-            print(f'{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}\n')
-        elif not output:
-            print('An error occured during change of mode!\n')
-    
-    def setup_manage_mode(self) -> str:
-        """Put wireless interface into manage mode"""
-        print_status(f"{YELLOW}Setting up manage mode on {self.interface}{RESET}")
-        cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
-        subprocess.check_output(cmd, shell=True, text=True)
-        print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}\n')
 
 ### Main Function ###
 def main():
     # ========== MAIN LOOP ========== #
-    banner()
+    text_animation()
     while True:
         show_menu()
         choice = input(f"\n{GREEN}root@{socket.gethostname()}:~$ ")
-
         if choice == "0":
-            print(f"\n{RED}[💀] Closing The Program...\n")
-            time.sleep(1)
+            killer = f"\n[💀] Closing The Program...\n"
+            for word in killer:
+              print(word, end='', flush=True)
+              time.sleep(0.05)  
             break
 
         elif choice == "1":
@@ -128,12 +138,11 @@ def main():
             print(f"{RED}[!] This section is still under development...{RESET}")
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
-
+            text_animation()
 
         elif choice == "2":
             wifi = WiFiModule('wlo1')
-            banner()
+            text_animation()
             #wifi.setup_monitor_mode()    
             wifi.setup_manage_mode()
 
@@ -142,21 +151,21 @@ def main():
             print(f"{RED}[!] This section is still under development...{RESET}")
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
+            text_animation()
 
         elif choice == '4':
             print(f"\n--- Radio Frequency ---\n")
             print(f"{RED}[!] This section is still under development...{RESET}")
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
+            text_animation()
 
         elif choice == '5':
             print(f"\n--- Industrial Control System - SCADA ---\n")
             print(f"{RED}[!] This section is still under development...{RESET}")
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
+            text_animation()
 
         elif choice == '6':
             time_choice = str(input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> {RESET}'))
@@ -168,18 +177,20 @@ def main():
                 time.sleep(int(time_choice))
                 
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
+            text_animation()
 
         elif choice == '99':
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
-            print(f"{YELLOW}\t[🚀] Updating XHARVESTOR{RESET}\n")
+            text_animation()
+            print(f"\n{YELLOW}\t[🚀] Updating XHARVESTOR...{RESET}\n")
+            print(f"{YELLOW}\t[🚀] Update & Upgrade Completion...")
 
         else:
-            print(f"{RED}Invalid option. Try again.\n")
             os.system('cls' if os.name == 'nt' else 'clear')
-            banner()
-
+            text_animation()
 
 if __name__ == '__main__':
-   main()
+    if not sys.argv[0]:
+        print_warning(f" Please run as root") 
+    else:
+        main()
