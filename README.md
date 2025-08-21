@@ -13,7 +13,7 @@ Moving beyond traditional web OSINT, xHarvester RF allows security researchers, 
 
 Unified Command & Control: A single Python-based interface to orchestrate a wide array of specialized hardware and software tools.
 
-Modular Architecture: Enables users to run specific reconnaissance modules (--rf, --wifi, --auto, --bt, --ics) independently or in combination for a full-spectrum assessment.
+Modular Architecture: Enables users to run xharvestor in full-spectrum.
 
 Automated Evidence Collection: Automatically saves all findings in structured, standardized formats:
 

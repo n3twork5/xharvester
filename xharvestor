@@ -1,11 +1,12 @@
 #!/bin/env python3
-import argparse
 import subprocess
 import os
-import typing
-import textwrap
+import argparse
+import time
+import socket
 
-# Color setup
+
+### Color Setup ###
 try:
     import colorama
     colorama.init(autoreset=True)
@@ -21,19 +22,55 @@ except ImportError:
     # Fallback if colorama is not installed
     GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = RESET = ""
 
-def show_menu() -> str:
-    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print(f"{GREEN}         🚀        XHARVESTOR             ")
-    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-    print(f"{CYAN} [1] 🔀 BlueTooth")
-    print(f"{CYAN} [2] 📶 Wifi")
-    print(f"{CYAN} [3] 🚖 Automobile")
-    print(f"{CYAN} [4] 📡 Radio Frequency")
-    print(f"{CYAN} [5] 🏙️ Industrial Control System - SCADA")
-    print(f"{RED} [0] ❌ Exit")
-    print(f"{LIGHTCYAN_EX}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━")  
+    # Color Status #
+def print_status(message: str) -> None:
+    """Print status messages"""
+    print(f"{GREEN}[+]{RESET} {message}")
 
-#Banner Function
+def print_warning(message: str) -> None:
+    """Print warning messages"""
+    print(f"{YELLOW}[!]{RESET} {message}")
+
+def print_error(message: str) -> None:
+    """Print error messages"""
+    print(f"{RED}[-]{RESET} {message}")
+
+### Display About ###
+def about() -> None:
+    prog, description='xharvestor', (
+        f'{RED}\t\t\t━━━━━━━━━━\t\t\t'
+        f'{YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,'
+        f'{GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.'
+        f'{RED}\t\t\t━━━━━━━━━━\t\t\t'
+        f'{YELLOW} About: {RESET}{CYAN}xharvestor is a specialized,{RESET} '
+        f'{CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET} '
+        f'{CYAN}wireless (bluetooth & wifi),{RESET} '
+        f'{CYAN}industrial control system (SCADA),{RESET} '
+        f'{CYAN}and automotive systems.{RESET} '
+        f'{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET} '
+        f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
+        )
+    parser = argparse.ArgumentParser(prog=prog, description=description)
+    parser.print_help()
+
+### Display Menu ###
+def show_menu() -> str:
+    print(f"\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{GREEN}         🚀   XHARVESTOR -- MAIN MENU")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{CYAN}\t[1] 🔀 BlueTooth")
+    print(f"{CYAN}\t[2] 📶 Wifi")
+    print(f"{CYAN}\t[3] 🚖 Automobile")
+    print(f"{CYAN}\t[4] 📡 Radio Frequency")
+    print(f"{CYAN}\t[5] 🏙️  Industrial Control System - SCADA")
+    print(f"{CYAN}\t[6] 🤘 About")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{RED}\t[0] ❌ Exit")
+    print(f"{CYAN}\t[99] 🎁 Update XHARVESTOR")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
+
+### Banner Function ###
 def banner() -> None:
     """Banner"""
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -47,19 +84,8 @@ def banner() -> None:
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}")
     print(f"{RED}Use only for authorized security testing!{RESET}\n")
 
-#Color status  
-def print_status(message: str) -> None:
-    """Print status messages"""
-    print(f"{GREEN}[+]{RESET} {message}")
 
-def print_warning(message: str) -> None:
-    """Print warning messages"""
-    print(f"{YELLOW}[!]{RESET} {message}")
-
-def print_error(message: str) -> None:
-    """Print error messages"""
-    print(f"{RED}[-]{RESET} {message}")
-
+### Wifi ###
 class WiFiModule:
     """WiFi reconnaissance module"""
     def __init__(self, interface: str) -> None:
@@ -73,45 +99,36 @@ class WiFiModule:
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode monitor && sudo ifconfig {self.interface} up && sudo airmon-ng check kill"
         output = subprocess.check_output(cmd, shell=True, text=True)
         if output:
-            print(f'{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}')
+            print(f'{GREEN}Successfully set to monitor mode: {self.interface}!{RESET}\n')
         elif not output:
-            print('An error occured during change of mode!')
+            print('An error occured during change of mode!\n')
     
     def setup_manage_mode(self) -> str:
         """Put wireless interface into manage mode"""
         print_status(f"{YELLOW}Setting up manage mode on {self.interface}{RESET}")
         cmd = f"sudo ifconfig {self.interface} down && sudo iwconfig {self.interface} mode manage && sudo ifconfig {self.interface} up && sudo service NetworkManager restart"
         subprocess.check_output(cmd, shell=True, text=True)
-        print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}')
+        print_status(f'{GREEN}Successfully set to manage mode: {self.interface}!{RESET}\n')
 
+### Main Function ###
 def main():
-    """All modules and argparse"""
-    parser = argparse.ArgumentParser(
-    prog='xharvestor',
-    description=(
-        f'{CYAN}xharvestor is a specialized,{RESET} '
-        f'{CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET} '
-        f'{CYAN}wireless (bluetooth & wifi),{RESET} '
-        f'{CYAN}industrial control system (SCADA),{RESET} '
-        f'{CYAN}and automotive systems.{RESET} '
-        f'{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET} '
-        f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
-    ))
-
-    parser.print_help()
-
     # ========== MAIN LOOP ========== #
     banner()
     while True:
         show_menu()
-        choice = input(f"\n{GREEN}[?] Choose option: ")
+        choice = input(f"\n{GREEN}root@{socket.gethostname()}:~$ ")
 
         if choice == "0":
-            print(f"{RED}Exiting...\n")
+            print(f"\n{RED}[💀] Closing The Program...\n")
+            time.sleep(1)
             break
 
         elif choice == "1":
-            pass
+            print(f"\n--- BlueTooth ---\n")
+            print(f"{RED}[!] This section is still under development...{RESET}")
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
 
 
         elif choice == "2":
@@ -121,10 +138,47 @@ def main():
             wifi.setup_manage_mode()
 
         elif choice == "3":
-            pass
+            print(f"\n--- Automobile ---\n")
+            print(f"{RED}[!] This section is still under development...{RESET}")
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
+
+        elif choice == '4':
+            print(f"\n--- Radio Frequency ---\n")
+            print(f"{RED}[!] This section is still under development...{RESET}")
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
+
+        elif choice == '5':
+            print(f"\n--- Industrial Control System - SCADA ---\n")
+            print(f"{RED}[!] This section is still under development...{RESET}")
+            time.sleep(3)
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
+
+        elif choice == '6':
+            time_choice = str(input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> {RESET}'))
+            if not time_choice:
+                about()
+                time.sleep(10)
+            else: 
+                about()
+                time.sleep(int(time_choice))
+                
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
+
+        elif choice == '99':
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
+            print(f"{YELLOW}\t[🚀] Updating XHARVESTOR{RESET}\n")
 
         else:
             print(f"{RED}Invalid option. Try again.\n")
+            os.system('cls' if os.name == 'nt' else 'clear')
+            banner()
 
 
 if __name__ == '__main__':
