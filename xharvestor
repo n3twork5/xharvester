@@ -142,11 +142,11 @@ def update_xharvestor() -> None:
             
             # Clean up
             shutil.rmtree(temp_dir)
-            print_status("Update completed successfully!")
+            print_status(f"{YELLOW}Update completed successfully!")
             
         else:
             # Linux/Mac - use git commands with HTTPS
-            print_status("Unix-like system detected - using git for update")
+            print_status(f"{YELLOW}Unix-like system detected - using git for update")
             
             if os.path.isdir(os.path.join(os.getcwd(), '.git')):
                 # If we're in a git repository, change to HTTPS and pull
@@ -154,11 +154,11 @@ def update_xharvestor() -> None:
                               capture_output=True, text=True)
                 result = subprocess.run(['git', 'pull'], capture_output=True, text=True)
                 if result.returncode == 0:
-                    print_status("Update completed successfully!")
+                    print_status(f"{YELLOW}Update completed successfully!")
                     print(result.stdout)
                 else:
-                    print_error("Update failed!")
-                    print_error(result.stderr)
+                    print_error(f"{RED}Update failed!")
+                    print_error(RED, result.stderr)
             else:
                 # Clone the repository if it doesn't exist
                 print_status("Cloning repository...")
