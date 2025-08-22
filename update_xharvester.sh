@@ -175,7 +175,7 @@ create_shortcut() {
 Version=1.0
 Type=Application
 Name=xharvester
-Comment=Extended Reconnaissance Toolkit - Develop by N3twork(Kofi)
+Comment=Extended Reconnaissance Toolkit - Develop by N3twork -- Kofi Yesu
 Exec=python3 $INSTALL_DIR/$DIR/xharvester
 Icon=utilities-terminal
 Terminal=true
