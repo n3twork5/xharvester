@@ -100,7 +100,7 @@ def about() -> None:
 ### Improved Update Function ###
 def update_xharvestor() -> None:
     """Update XHARVESTOR from GitHub repository"""
-    print_status("Checking for updates...")
+    print_status(f"{YELLOW}Checking for updates...")
     
     # Use HTTPS instead of SSH to avoid authentication issues
     REPO_URL = "https://github.com/n3tworkh4x/xharvestor.git"
