@@ -75,7 +75,7 @@ def about() -> None:
 {YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
 {GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
 {RED}\t\t\t━━━━━━━━━━\t\t\t
-{YELLOW} About: {RESET}{CYAN}xharvester is a specialized,{RESET}
+{YELLOW}About: {RESET}{CYAN}xharvester is a specialized,{RESET}
 {CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
 {CYAN}wireless (bluetooth & wifi),{RESET}
 {CYAN}industrial control system (SCADA),{RESET}
@@ -172,8 +172,6 @@ def main():
         if choice == "0":
             skull = f"{MAGENTA}[💀]{RESET}"
             closing_text = f"{RED}Closing The Program...{RESET}"
-            print('okay')
-            print('okay')
             time.sleep(0.10)
             
             print(f"\n{skull} {closing_text}\n")
