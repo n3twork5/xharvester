@@ -57,7 +57,9 @@ sudo ./xharvester
 ```
 sudo python xharvester
 ```
-## Donate
+## Donation
+
+Ko-fi(Donation[![https://ko-fi.com/n3twork]])
 
 
 ## ⚠️ Disclaimer
