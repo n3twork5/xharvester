@@ -184,7 +184,8 @@ def main():
         if choice == "0":
             skull = f"{MAGENTA}[💀]{RESET}"
             closing_text = f"{RED}Closing The Program...{RESET}"
-            time.sleep(0.005)
+            print('okay')
+            time.sleep(0.10)
             
             print(f"\n{skull} {closing_text}\n")
             active = False
