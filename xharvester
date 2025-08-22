@@ -166,11 +166,11 @@ def update_xharvestor() -> None:
                 if result.returncode == 0:
                     print_status("Clone completed successfully!")
                 else:
-                    print_error("Clone failed!")
+                    print_error(f"{RED}Clone failed!")
                     print_error(result.stderr)
                     
     except Exception as e:
-        print_error(f"Update process failed: {str(e)}")
+        print_error(f"{RED}Update process failed: {str(e)}")
         print_warning("Please update manually from https://github.com/n3tworkh4x/xharvestor")
 
 ### Main Program ###
