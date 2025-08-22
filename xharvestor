@@ -20,7 +20,7 @@ try:
     RESET = colorama.Fore.RESET
 except ImportError:
     # Fallback if colorama is not installed
-    GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = RESET = ""
+    GREEN = YELLOW = RED = BLUE = MAGENTA = CYAN = LIGHTCYAN_EX = RESET = ""
 
 ### Color Status ###
 def print_status(message: str) -> None:
@@ -37,27 +37,34 @@ def print_error(message: str) -> None:
 
 
 ### Banner Function ###
-def banner() -> str:
+def banner() -> None:
     """Banner"""
     os.system('cls' if os.name == 'nt' else 'clear')
-    return f"""
+    banner_text = """
  _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
 ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
  )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
     """
+    print(banner_text)
 
 ### Text Animation ###
 def text_animation():
-    for word in banner():
-        print(word, end='', flush=True)
+    banner_text = """
+ _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
+( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\
+ )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
+(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
+    """
+    for char in banner_text:
+        print(char, end='', flush=True)
         time.sleep(0.005)
-    print(f"\n{CYAN}>>> Extented Reconnaissance Toolkit For Pentesters <<<{RESET}")
+    print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3towrkh4x |{RESET}")
     print(f"{RED}Use only for authorized security testing!{RESET}")
 
 ### Display Menu ###
-def show_menu() -> str:
+def show_menu() -> None:
     text_animation()
     print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
@@ -74,42 +81,22 @@ def show_menu() -> str:
     print(f"{YELLOW}\t[99] 🎁 Update XHARVESTOR")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
 
-########################################### WiFi Module ###########################################
-#class WiFiModule:
-    #"""WiFi reconnaissance module"""
-    #def __init__(self, interface: str) -> None:
-    #    self.interface = interface
-    #   self.monitor_interface = f"{interface}mon"
-    #    self.scan_results = []
-    #"""
-    #def wifi_menu() -> str:
-    #    print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
-    #    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    #   print(f"{GREEN}         🚀   XHARVESTOR -- WIFI MENU")
-    #    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    #    print(f"{CYAN}\t[1] 🔀 Eavesdropping")
-    #    print(f"{CYAN}\t[2] 📶 Evil Twin")
-    #   print(f"{CYAN}\t[3] 🚖 Brute Force Attack")
-    #   print(f"{CYAN}\t[4] 📡 DOS Attack")
-    #    print(f"{YELLOW}\t[0] ⇇  Back")  
-    #    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉\n")"""
-
 ### Display About ###
 def about() -> None:
-    prog, description='xharvestor', (
-        f'{RED}\t\t\t━━━━━━━━━━\t\t\t'
-        f'{YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,'
-        f'{GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.'
-        f'{RED}\t\t\t━━━━━━━━━━\t\t\t'
-        f'{YELLOW} About: {RESET}{CYAN}xharvestor is a specialized,{RESET} '
-        f'{CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET} '
-        f'{CYAN}wireless (bluetooth & wifi),{RESET} '
-        f'{CYAN}industrial control system (SCADA),{RESET} '
-        f'{CYAN}and automotive systems.{RESET} '
-        f'{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET} '
-        f'{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}'
-        )
-    parser = argparse.ArgumentParser(prog=prog, description=description)
+    description = f"""
+{RED}\t\t\t━━━━━━━━━━\t\t\t
+{YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
+{GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
+{RED}\t\t\t━━━━━━━━━━\t\t\t
+{YELLOW} About: {RESET}{CYAN}xharvestor is a specialized,{RESET}
+{CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
+{CYAN}wireless (bluetooth & wifi),{RESET}
+{CYAN}industrial control system (SCADA),{RESET}
+{CYAN}and automotive systems.{RESET}
+{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
+{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
+"""
+    parser = argparse.ArgumentParser(description=description)
     parser.print_help()
 
 
@@ -121,7 +108,7 @@ def main():
         show_menu()
         choice = input(f"\n{GREEN}root@{socket.gethostname()}:~$ ")
         if choice == "0":
-            killer = f"\n[💀] Closing The Program...\n"
+            killer = "\n[💀] Closing The Program...\n"
             for word in killer:
                 print(word, end='', flush=True)
                 time.sleep(0.05)  
@@ -153,13 +140,17 @@ def main():
             time.sleep(3)
 
         elif choice == '6':
-            time_choice = str(input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> '))
+            time_choice = input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> ')
             if not time_choice:
                 about()
                 time.sleep(10)
-            else: 
-                about()
-                time.sleep(int(time_choice))
+            else:
+                try:
+                    about()
+                    time.sleep(int(time_choice))
+                except ValueError:
+                    print_error("Invalid input. Using default time of 10 seconds.")
+                    time.sleep(10)
 
         elif choice == '99':
             print(f"\n{YELLOW}\t[🚀] Updating XHARVESTOR...{RESET}\n")
@@ -174,7 +165,11 @@ def main():
                 time.sleep(0.15)    
 
 if __name__ == '__main__':
-    if sys.argv == 2:
-        print_warning(f" Please run as root") 
+    if os.name != 'nt' and os.geteuid() != 0:
+        warning = "[!] Please run xharvestor as root\n"
+        for word in warning:
+            print(word, end='', flush=True)
+            time.sleep(0.05)
+        sys.exit(1)
     else:
         main()
