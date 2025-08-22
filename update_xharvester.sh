@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# XHARVESTOR Updater Script
-REPO_URL="https://github.com/n3tworkh4x/xharvestor.git"
-DIR="xharvestor"
+# XHARVESTER Updater Script
+REPO_URL="https://github.com/n3tworkh4x/xharvester.git"
+DIR="xharvester"
 BRANCH="main"
 
 # Default installation directory (user home for no sudo required)
@@ -148,16 +148,16 @@ create_symlink() {
     
     # Try system-wide location first (if running as root)
     if [ "$EUID" -eq 0 ]; then
-        ln -sf "$INSTALL_DIR/$DIR/xharvestor" /usr/local/bin/xharvestor 2>/dev/null && \
+        ln -sf "$INSTALL_DIR/$DIR/xharvester" /usr/local/bin/xharvester 2>/dev/null && \
         print_status "System-wide symlink created in /usr/local/bin/"
     else
         # Try user-local bin directory
         if [ -d "$HOME/.local/bin" ]; then
-            ln -sf "$INSTALL_DIR/$DIR/xharvestor" "$HOME/.local/bin/xharvestor" 2>/dev/null && \
+            ln -sf "$INSTALL_DIR/$DIR/xharvester" "$HOME/.local/bin/xharvester" 2>/dev/null && \
             print_status "User symlink created in ~/.local/bin/"
         else
             mkdir -p "$HOME/.local/bin"
-            ln -sf "$INSTALL_DIR/$DIR/xharvestor" "$HOME/.local/bin/xharvestor" 2>/dev/null && \
+            ln -sf "$INSTALL_DIR/$DIR/xharvester" "$HOME/.local/bin/xharvester" 2>/dev/null && \
             print_status "Created ~/.local/bin/ and symlink"
             print_warning "Add $HOME/.local/bin to your PATH if it's not already there"
             echo "Add this to your ~/.bashrc or ~/.zshrc:"
@@ -170,11 +170,11 @@ create_symlink() {
 create_shortcut() {
     if [ -d "$HOME/Desktop" ] && command -v xdg-desktop-menu &> /dev/null; then
         print_info "Creating desktop shortcut..."
-        cat > "/tmp/xharvestor.desktop" << EOF
+        cat > "/tmp/xharvester.desktop" << EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=XHARVESTOR
+Name=XHARVESTER
 Comment=Extended Reconnaissance Toolkit
 Exec=python3 $INSTALL_DIR/$DIR/xharvester
 Icon=utilities-terminal
@@ -187,9 +187,9 @@ EOF
             desktop-file-install --dir=/usr/share/applications /tmp/xharvestor.desktop
         else
             mkdir -p "$HOME/.local/share/applications"
-            cp "/tmp/xharvestor.desktop" "$HOME/.local/share/applications/"
+            cp "/tmp/xharvester.desktop" "$HOME/.local/share/applications/"
         fi
-        rm -f "/tmp/xharvestor.desktop"
+        rm -f "/tmp/xharvester.desktop"
         print_status "Desktop shortcut created!"
     fi
 }
@@ -214,9 +214,9 @@ main() {
         create_shortcut
     fi
     
-    echo -e "${GREEN}XHARVESTOR has been successfully updated/installed!${NC}"
-    echo -e "You can now run it by typing: ${YELLOW}python3 $INSTALL_DIR/$DIR/xharvestor${NC}"
-    echo -e "Or simply: ${YELLOW}xharvestor${NC} (if symlink was created successfully)"
+    echo -e "${GREEN}XHARVESTER has been successfully updated/installed!${NC}"
+    echo -e "You can now run it by typing: ${YELLOW}python3 $INSTALL_DIR/$DIR/xharvester${NC}"
+    echo -e "Or simply: ${YELLOW}xharvester${NC} (if symlink was created successfully)"
 }
 
 # Run main function
