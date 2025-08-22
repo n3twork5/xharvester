@@ -1,5 +1,5 @@
-# XHARVESTOR Updater for Windows (conceptual)
-$repoUrl = "https://github.com/n3tworkh4x/xharvestor.git"
+# XHARVESTER Updater for Windows (conceptual)
+$repoUrl = "https://github.com/n3tworkh4x/xharvester.git"
 $installDir = "$env:USERPROFILE\Tools\xharvestor"
 
 # Check if Git is available
