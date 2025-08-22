@@ -59,7 +59,7 @@ sudo python xharvester
 ```
 ## Donation
 
-Ko-fi(Donation[![https://ko-fi.com/n3twork]])
+(https://ko-fi.com/n3twork)
 
 
 ## ⚠️ Disclaimer

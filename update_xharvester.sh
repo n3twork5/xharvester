@@ -174,12 +174,12 @@ create_shortcut() {
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=XHARVESTER
-Comment=Extended Reconnaissance Toolkit
+Name=xharvester
+Comment=Extended Reconnaissance Toolkit - Develop by N3twork(Kofi)
 Exec=python3 $INSTALL_DIR/$DIR/xharvester
 Icon=utilities-terminal
 Terminal=true
-Categories=Security;
+Categories=information-gathering;
 EOF
         
         # Try to install the desktop file
