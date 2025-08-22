@@ -47,7 +47,7 @@ def text_animation():
         print(char, end='', flush=True)
         time.sleep(0.005)
     print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
-    print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}")
+    print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
     print(f"{RED}Use only for authorized security testing!{RESET}")
 
 ### Display Menu ###
