@@ -35,25 +35,13 @@ def print_error(message: str) -> None:
     """Print error messages"""
     print(f"{RED}[-]{RESET} {message}")
 
-### Banner Function ###
-def banner() -> None:
-    """Banner"""
-    os.system('cls' if os.name == 'nt' else 'clear')
-    banner_text = f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ {RED}
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\{MAGENTA}
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /{RED}
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
-    {RESET}"""
-    print(banner_text)
-
 ### Text Animation ###
 def text_animation():
     banner_text = f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ {RED}
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \\{MAGENTA}
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /{RED}
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
+ _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
+( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
+ )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
+(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
     {RESET}"""
     for char in banner_text:
         print(char, end='', flush=True)
@@ -67,7 +55,7 @@ def show_menu() -> None:
     text_animation()
     print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-    print(f"{GREEN}         🚀   XHARVESTOR -- MAIN MENU")
+    print(f"{GREEN}         🚀   XHARVESTER -- MAIN MENU")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
     print(f"{CYAN}\t[1] 🔀 BlueTooth")
     print(f"{CYAN}\t[2] 📶 Wifi")
@@ -77,7 +65,7 @@ def show_menu() -> None:
     print(f"{CYAN}\t[6] 🤘 About")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
     print(f"{RED}\t [0] ❌ Exit")
-    print(f"{YELLOW}\t[99] 🎁 Update XHARVESTOR")
+    print(f"{YELLOW}\t[99] 🎁 Update XHARVESTER")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
 
 ### Display About ###
@@ -87,7 +75,7 @@ def about() -> None:
 {YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
 {GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
 {RED}\t\t\t━━━━━━━━━━\t\t\t
-{YELLOW} About: {RESET}{CYAN}xharvestor is a specialized,{RESET}
+{YELLOW} About: {RESET}{CYAN}xharvester is a specialized,{RESET}
 {CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
 {CYAN}wireless (bluetooth & wifi),{RESET}
 {CYAN}industrial control system (SCADA),{RESET}
@@ -98,13 +86,13 @@ def about() -> None:
     print(description)
 
 ### Improved Update Function ###
-def update_xharvestor() -> None:
-    """Update XHARVESTOR from GitHub repository"""
+def update_xharvester() -> None:
+    """Update XHARVESTER from GitHub repository"""
     print_status(f"{YELLOW}Checking for updates...")
     
     # Use HTTPS instead of SSH to avoid authentication issues
-    REPO_URL = "https://github.com/n3tworkh4x/xharvestor.git"
-    DIR = "xharvestor"
+    REPO_URL = "https://github.com/n3tworkh4x/xharvester.git"
+    DIR = "xharvester"
     BRANCH = "main"
     
     try:
@@ -114,9 +102,9 @@ def update_xharvestor() -> None:
             
             # Download the latest version as zip
             print_status("Downloading latest version...")
-            zip_url = "https://github.com/n3tworkh4x/xharvestor/archive/refs/heads/main.zip"
+            zip_url = "https://github.com/n3tworkh4x/xharvester/archive/refs/heads/main.zip"
             temp_dir = tempfile.mkdtemp()
-            zip_path = os.path.join(temp_dir, "xharvestor.zip")
+            zip_path = os.path.join(temp_dir, "xharvester.zip")
             
             # Download the zip file
             response = requests.get(zip_url)
@@ -128,7 +116,7 @@ def update_xharvestor() -> None:
                 zip_ref.extractall(temp_dir)
             
             # Copy files to current directory (excluding .git directory if exists)
-            source_dir = os.path.join(temp_dir, "xharvestor-main")
+            source_dir = os.path.join(temp_dir, "xharvester-main")
             for item in os.listdir(source_dir):
                 if item != '.git':  # Don't overwrite .git directory if it exists
                     s = os.path.join(source_dir, item)
@@ -171,7 +159,7 @@ def update_xharvestor() -> None:
                     
     except Exception as e:
         print_error(f"{RED}Update process failed: {str(e)}")
-        print_warning("Please update manually from https://github.com/n3tworkh4x/xharvestor")
+        print_warning("Please update manually from https://github.com/n3tworkh4x/xharvester")
 
 ### Main Program ###
 def main():
@@ -239,7 +227,7 @@ def main():
 
         elif choice == '99':
             os.system('cls' if os.name == 'nt' else 'clear')
-            update_xharvestor()
+            update_xharvester()
             time.sleep(3)
             os.system('cls' if os.name == 'nt' else 'clear')
 
