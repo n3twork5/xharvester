@@ -1,10 +1,10 @@
 ```
-               _  _  _   _    __    ____  _  _  ____  ___  ____  _____  ____ 
-              ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)(  _  )(  _ \
-               )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )(_)(  )   /
-              (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (_____)(_)\_)
+ _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ 
+( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\
+ )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /
+(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
 ```
-⚡ xharvestor is a specialized, Python-based reconnaissance suite designed for security assessments of radio frequency (RF), wireless(bluetooth & wifi), industrial control system(scada), and automotive systems. It integrates multiple tools and scripts into a unified workflow for probing, analyzing, and documenting findings from the physical and wireless world.
+⚡ xharvester is a specialized, Python-based reconnaissance suite designed for security assessments of radio frequency (RF), wireless(bluetooth & wifi), industrial control system(scada), and automotive systems. It integrates multiple tools and scripts into a unified workflow for probing, analyzing, and documenting findings from the physical and wireless world.
 
 ## Overview
 Moving beyond traditional web OSINT, xHarvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automobiles vehicles.
