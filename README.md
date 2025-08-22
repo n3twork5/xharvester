@@ -27,8 +27,8 @@ Hardware Abstraction Layer: Simplifies the use of complex hardware (SDRs, CAN in
 ## 💾 Installation
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/n3tworkh4x/xharvestor.git
-cd xharvestor
+git clone https://github.com/n3tworkh4x/xharvester.git
+cd xharvester
 ```
 ### 2. Virtual Environment Setup
 ##### MacOS/Linux
@@ -51,11 +51,14 @@ python -m venv venv
 #### Cli Base Tool
 ##### MacOS/Linux
 ```
-sudo ./xharvestor 
+sudo ./xharvester 
 ```
 ##### Windows
 ```
-sudo python xharvestor 
+sudo python xharvester
 ```
+## Donate
+
+
 ## ⚠️ Disclaimer
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, catastrophic failure, and severe legal consequences. Always operate within a controlled, legal environment.
