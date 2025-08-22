@@ -134,10 +134,10 @@ install_dependencies() {
     
     # Install required Python packages
     print_info "Installing Python dependencies..."
-    pip3 install colorama requests
+    pip3 install colorama requests --break-system-packages
     
     # Make the script executable
-    chmod +x xharvestor
+    chmod +x xharvester
     
     print_status "Dependency check completed!"
 }
@@ -184,7 +184,7 @@ EOF
         
         # Try to install the desktop file
         if [ "$EUID" -eq 0 ]; then
-            desktop-file-install --dir=/usr/share/applications /tmp/xharvestor.desktop
+            desktop-file-install --dir=/usr/share/applications /tmp/xharvester.desktop
         else
             mkdir -p "$HOME/.local/share/applications"
             cp "/tmp/xharvester.desktop" "$HOME/.local/share/applications/"
