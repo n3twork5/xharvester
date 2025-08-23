@@ -61,8 +61,8 @@ sudo python xharvester
 ```
 pkg update && pkg upgrade -y
 pkg install git python -y
-git 
-cd 
+git clone https://github.com/n3tworkh4x/xharvester.git
+cd xharvester
 pip install -r requirements.txt
 python yourtool.py
 ```
