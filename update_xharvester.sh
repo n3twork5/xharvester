@@ -176,15 +176,15 @@ Version=1.0
 Type=Application
 Name=xharvester
 Comment=Extended Reconnaissance Toolkit - Develop by N3twork -- Kofi Yesu
-Exec=python3 $INSTALL_DIR/$DIR/xharvester
-Icon=utilities-terminal
+Exec=sudo python3 $INSTALL_DIR/$DIR/xharvester
+Icon=/home/y3suh4x/Desktop/tool-dev/jenkins_logo_icon_247972.png
 Terminal=true
 Categories=information-gathering;
 EOF
         
         # Try to install the desktop file
         if [ "$EUID" -eq 0 ]; then
-            desktop-file-install --dir=/usr/share/applications /tmp/xharvester.desktop
+            desktop-file-install --dir=/usr/share/applications sudo /tmp/xharvester.desktop
         else
             mkdir -p "$HOME/.local/share/applications"
             cp "/tmp/xharvester.desktop" "$HOME/.local/share/applications/"
@@ -215,8 +215,8 @@ main() {
     fi
     
     echo -e "${GREEN}XHARVESTER has been successfully updated/installed!${NC}"
-    echo -e "You can now run it by typing: ${YELLOW}python3 $INSTALL_DIR/$DIR/xharvester${NC}"
-    echo -e "Or simply: ${YELLOW}xharvester${NC} (if symlink was created successfully)"
+    echo -e "You can now run it by typing: ${YELLOW}sudo python3 $INSTALL_DIR/$DIR/xharvester${NC}"
+    echo -e "Or simply: ${YELLOW}sudo xharvester${NC} (if symlink was created successfully)"
 }
 
 # Run main function
