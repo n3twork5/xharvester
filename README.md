@@ -59,7 +59,7 @@ sudo python xharvester
 ```
 ##### Termux
 
-###### Installation Of Termux
+###### Installation Of Termux From Play Store
 ```
 Install from Google Play Store (Recommended)
 
