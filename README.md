@@ -57,6 +57,15 @@ sudo ./xharvester
 ```
 sudo python xharvester
 ```
+##### Termux
+```
+pkg update && pkg upgrade -y
+pkg install git python -y
+git clone https://github.com/n3tworkh4x/xharvester.git
+cd xharvester
+pip install -r requirements.txt
+python yourtool.py
+```
 ## Donation
 
 (https://ko-fi.com/n3twork)
