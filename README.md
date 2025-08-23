@@ -74,7 +74,7 @@ Install from Google Play Store (Recommended)
     5. Once installed, open Termux from your app drawer
 ```
 
-###### Installation & Execution
+###### Upgrade & Execution
 ```
 pkg update && pkg upgrade -y
 pkg install git python tsu -y 
