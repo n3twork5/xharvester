@@ -72,7 +72,7 @@ If you find this tool helpful and want to support its development, please consid
 
 [Donate via Ko-fi](https://ko-fi.com/n3twork)
 
-*Your support helps keep the project alive and allows for continuous improvements. Thank you for your generosity!*
+Your support helps keep the project alive and allows for continuous improvements. Thank you for your generosity!
 
 
 ## ⚠️ Disclaimer
