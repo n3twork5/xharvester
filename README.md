@@ -58,13 +58,30 @@ sudo ./xharvester
 sudo python xharvester
 ```
 ##### Termux
+
+###### Installation Of Termux
+```
+Install from Google Play Store (Recommended)
+
+    1. Open the Google Play Store app on your Android device.
+
+    2. Search for Termux.
+
+    3. Select the app published by Fredrik Fornwall.
+
+    4. Tap Install.
+
+    5. Once installed, open Termux from your app drawer
+```
+
+###### Installation & Execution
 ```
 pkg update && pkg upgrade -y
-pkg install git python -y
+pkg install git python tsu -y 
 git clone https://github.com/n3tworkh4x/xharvester.git
 cd xharvester
 pip install -r requirements.txt
-python xharvester
+tsu ./xharvester
 ```
 ## Donation
 
