@@ -300,9 +300,9 @@ Version=1.0
 Type=Application
 Name=XHarvester
 Comment=Extended Reconnaissance Toolkit
-Exec=gnome-terminal --window -- python3 "{script_path}"
-Icon=utilities-terminal
-Terminal=false
+Exec=sudo gnome-terminal --window -- python3 "{script_path}"
+Icon=icons/jenkins_logo_icon_247972.png
+Terminal=True
 Categories=Network;Security;
 '''
                 with open(desktop_file, 'w') as f:
