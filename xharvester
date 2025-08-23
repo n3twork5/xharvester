@@ -100,7 +100,7 @@ def about() -> None:
 {CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
 
 {YELLOW}Version: {RESET}{GREEN}1.0.0{RESET}
-{YELLOW}Last Updated: {RESET}{GREEN}2023-11-15{RESET}
+{YELLOW}Last Updated: {RESET}{GREEN}2025-08-23{RESET}
 """
     print(description)
 
