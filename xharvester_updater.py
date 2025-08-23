@@ -153,7 +153,7 @@ class XHarvesterUpdater:
         requirements_file = self.repo_path / "requirements.txt"
         if requirements_file.exists():
             try:
-                subprocess.run([sys.executable, "-m", "pip", "install", "-r", str(requirements_file)], check=True)
+                subprocess.run([sys.executable,"sudo", "-m", "pip", "install", "-r", str(requirements_file)], check=True)
                 self.print_status("Dependencies installed successfully!")
                 return True
             except subprocess.CalledProcessError:
@@ -161,7 +161,7 @@ class XHarvesterUpdater:
         
         # Fallback to specific packages
         try:
-            subprocess.run([sys.executable, "-m", "pip", "install", "colorama", "requests"], check=True)
+            subprocess.run([sys.executable,"sudo", "-m", "pip", "install", "colorama", "requests"], check=True)
             self.print_status("Dependencies installed successfully!")
             return True
         except subprocess.CalledProcessError:
@@ -259,7 +259,7 @@ Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = "cmd.exe"
 oLink.Arguments = "/k python \"{script_path}\" && pause"
 oLink.WorkingDirectory = "{self.repo_path}"
-oLink.Description = "XHarvester - Extended Reconnaissance Toolkit"
+oLink.Description = "XHarvester - Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu"
 oLink.Save
 '''
                     with open(vbs_script, 'w') as f:
@@ -296,10 +296,10 @@ oLink.Save
                 desktop_file.parent.mkdir(parents=True, exist_ok=True)
                 
                 desktop_content = f'''[Desktop Entry]
-Version=1.0
+Version=1.0.0
 Type=Application
 Name=XHarvester
-Comment=Extended Reconnaissance Toolkit
+Comment=Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu
 Exec=sudo gnome-terminal --window -- python3 "{script_path}"
 Icon=icons/jenkins_logo_icon_247972.png
 Terminal=True
