@@ -186,7 +186,7 @@ def main():
         try:
             choice = input(f"\n{GREEN}root@{get_hostname()}:~$ {RESET}")
         except (KeyboardInterrupt, EOFError):
-            print("\n\nExiting...")
+            print(f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n")
             break
             
         if choice == "0":
@@ -258,4 +258,10 @@ def main():
             time.sleep(2)
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt as err:
+        varerr = f"\n\n\t\t\t{MAGENTA}{err}[💀] {RESET}{RED}Process Terminated by User\n\n"
+        for word in varerr:
+            print(word, end="", flush=True)
+            time.sleep(0.05)

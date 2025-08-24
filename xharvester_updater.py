@@ -5,7 +5,7 @@ import stat
 import shutil
 import platform
 import subprocess
-
+import time
 from pathlib import Path
 
 class XHarvesterUpdater:
@@ -424,28 +424,44 @@ Categories=Network;Security;
 
 # Standalone execution
 if __name__ == "__main__":
-    print(f"{XHarvesterUpdater.Colors.CYAN}")
-    print("┌─────────────────────────────────────────────────────┐")
-    print("│              XHARVESTER UPDATER                     │")
-    print("└─────────────────────────────────────────────────────┘")
-    print(f"{XHarvesterUpdater.Colors.NC}")
-    
-    # Check if running as root (not recommended)
-    if hasattr(os, 'getuid') and os.getuid() == 0:
-        XHarvesterUpdater.print_warning("Running as root - this is not recommended for security reasons")
-        response = input("Continue anyway? (y/N): ")
-        if response.lower() not in ['y', 'yes']:
-            sys.exit(1)
-    
-    # Create updater instance
-    updater = XHarvesterUpdater()
-    
-    # Ask about creating launchers
-    response = input("Create desktop/launcher shortcuts? (Y/n): ")
-    create_launchers = response.lower() not in ['n', 'no']
-    
-    # Run the update
-    success = updater.run(create_launchers=create_launchers)
-    
-    # Exit with appropriate code
-    sys.exit(0 if success else 1)
+    try:
+        # Color codes
+        GREEN = '\033[32m'
+        YELLOW = '\033[33m'
+        RED = '\033[31m'
+        BLUE = '\033[34m'
+        MAGENTA = '\033[35m'
+        CYAN = '\033[36m'
+        LIGHTCYAN_EX = '\033[96m'
+        RESET = '\033[0m'
+
+        print(f"{XHarvesterUpdater.Colors.CYAN}")
+        print("┌─────────────────────────────────────────────────────┐")
+        print("│              XHARVESTER UPDATER                     │")
+        print("└─────────────────────────────────────────────────────┘")
+        print(f"{XHarvesterUpdater.Colors.NC}")
+        
+        # Check if running as root (not recommended)
+        if hasattr(os, 'getuid') and os.getuid() == 0:
+            XHarvesterUpdater.print_warning("Running as root - this is not recommended for security reasons")
+            response = input("Continue anyway? (y/N): ")
+            if response.lower() not in ['y', 'yes']:
+                sys.exit(1)
+        
+        # Create updater instance
+        updater = XHarvesterUpdater()
+        
+        # Ask about creating launchers
+        response = input("Create desktop/launcher shortcuts? (Y/n): ")
+        create_launchers = response.lower() not in ['n', 'no']
+        
+        # Run the update
+        success = updater.run(create_launchers=create_launchers)
+        
+        # Exit with appropriate code
+        sys.exit(0 if success else 1)
+    except KeyboardInterrupt as err:
+        varerr = f"\n\n\t\t\t{MAGENTA}{err}[💀] {RESET}{RED}Process Terminated by User\n\n"
+        for word in varerr:
+            print(word, end="", flush=True)
+            time.sleep(0.05)
