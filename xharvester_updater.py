@@ -283,7 +283,7 @@ oLink.Save
                     f.write('#!/bin/bash\n')
                     f.write(f'cd "{self.repo_path}"\n')
                     f.write('termux-toast "Starting XHarvester..."\n')
-                    f.write(f'python "{script_path}"\n')
+                    f.write(f'tsu ./"{script_path}"\n')
                     f.write('read -p "Press enter to continue"\n')
                 
                 shortcut_script.chmod(0o755)
@@ -300,7 +300,7 @@ Version=1.0.0
 Type=Application
 Name=XHarvester
 Comment=Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu
-Exec=sudo gnome-terminal --window -- python3 "{script_path}"
+Exec=sudo "{script_path}"
 Icon=icons/jenkins_logo_icon_247972.png
 Terminal=True
 Categories=Network;Security;

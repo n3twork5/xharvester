@@ -134,44 +134,44 @@ def check_root() -> bool:
 ### Module placeholder functions ###
 def bluetooth_module():
     """Placeholder for Bluetooth functionality"""
-    print_status("Initializing Bluetooth module...")
+    print_status(f"{CYAN}Initializing Bluetooth module...")
     # Add actual Bluetooth scanning/exploitation code here
     time.sleep(2)
-    print_warning("Bluetooth module is a placeholder - actual functionality not implemented")
+    print_warning(f"{YELLOW}Bluetooth module is a placeholder - actual functionality not implemented")
 
 def wifi_module():
     """Placeholder for WiFi functionality"""
-    print_status("Initializing WiFi module...")
+    print_status(f"{CYAN}Initializing WiFi module...")
     # Add actual WiFi scanning/exploitation code here
     time.sleep(2)
-    print_warning("WiFi module is a placeholder - actual functionality not implemented")
+    print_warning(f"{YELLOW}WiFi module is a placeholder - actual functionality not implemented")
 
 def automobile_module():
     """Placeholder for Automobile functionality"""
-    print_status("Initializing Automobile module...")
+    print_status(f"{CYAN}Initializing Automobile module...")
     # Add actual automobile hacking code here
     time.sleep(2)
-    print_warning("Automobile module is a placeholder - actual functionality not implemented")
+    print_warning(f"{YELLOW}Automobile module is a placeholder - actual functionality not implemented")
 
 def rf_module():
     """Placeholder for Radio Frequency functionality"""
-    print_status("Initializing Radio Frequency module...")
+    print_status(f"{CYAN}Initializing Radio Frequency module...")
     # Add actual RF scanning/exploitation code here
     time.sleep(2)
-    print_warning("RF module is a placeholder - actual functionality not implemented")
+    print_warning(f"{YELLOW}RF module is a placeholder - actual functionality not implemented")
 
 def scada_module():
     """Placeholder for SCADA functionality"""
-    print_status("Initializing SCADA module...")
+    print_status(f"{CYAN}Initializing SCADA module...")
     # Add actual SCADA scanning/exploitation code here
     time.sleep(2)
-    print_warning("SCADA module is a placeholder - actual functionality not implemented")
+    print_warning(f"{YELLOW}SCADA module is a placeholder - actual functionality not implemented")
 
 ### Main Program ###
 def main():
     # Check for root privileges
     if not check_root():
-        warning = "[!] Please run xharvester with administrator/root privileges\n"
+        warning = f"{YELLOW}[!] {RESET}{YELLOW}Please run xharvester with administrator/root privileges!\n"
         for word in warning:
             print(word, end='', flush=True)
             time.sleep(0.05)
@@ -190,11 +190,10 @@ def main():
             break
             
         if choice == "0":
-            skull = f"{MAGENTA}[💀]{RESET}"
-            closing_text = f"{RED}Closing The Program...{RESET}"
-            time.sleep(0.10)
-            
-            print(f"\n{skull} {closing_text}\n")
+            closing_text = f"\n{MAGENTA}[💀] {RESET}{RED}Closing The Program...\n\n"
+            for word in closing_text:
+                print(word, end='', flush=True)
+                time.sleep(0.05)
             active = False
             
         elif choice == "1":
