@@ -100,7 +100,7 @@ def about() -> None:
 {CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {YELLOW}Version: {RESET}{BLUE}1.0.0{RESET}
-{YELLOW}Last Updated: {RESET}{BLUE}2025-08-23{RESET}
+{YELLOW}Time: {RESET}{BLUE}{datetime.now()}{RESET}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
     
