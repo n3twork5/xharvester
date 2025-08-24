@@ -87,10 +87,10 @@ def show_menu() -> None:
 ### Display About ###
 def about() -> None:
     description = f"""
-{RED}\t\t\t━━━━━━━━━━\t\t\t
+{RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
 {GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
-{RED}\t\t\t━━━━━━━━━━\t\t\t
+{RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {YELLOW}About: {RESET}{CYAN}xharvester is a specialized,{RESET}
 {CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
 {CYAN}wireless (bluetooth & wifi),{RESET}
@@ -98,10 +98,12 @@ def about() -> None:
 {CYAN}and automotive systems.{RESET}
 {CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
 {CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
-
-{YELLOW}Version: {RESET}{GREEN}1.0.0{RESET}
-{YELLOW}Last Updated: {RESET}{GREEN}2025-08-23{RESET}
+{RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{YELLOW}Version: {RESET}{BLUE}1.0.0{RESET}
+{YELLOW}Last Updated: {RESET}{BLUE}2025-08-23{RESET}
+{RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
+    
     print(description)
 
 ### Clear screen function with platform detection ###
@@ -186,7 +188,10 @@ def main():
         try:
             choice = input(f"\n{GREEN}root@{get_hostname()}:~$ {RESET}")
         except (KeyboardInterrupt, EOFError):
-            print(f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n")
+            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
+            for word in terminator:
+                print(word, end="", flush=True)
+                time.sleep(0.05)
             break
             
         if choice == "0":
