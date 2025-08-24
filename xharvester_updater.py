@@ -153,7 +153,7 @@ class XHarvesterUpdater:
         requirements_file = self.repo_path / "requirements.txt"
         if requirements_file.exists():
             try:
-                subprocess.run(["pip", "install", "-r", str(requirements_file), "--break-system-packages"], check=True)
+                subprocess.run([sys.executable, "-m", "pip", "install", "-r", str(requirements_file), "--break-system-packages"], check=True)
                 self.print_status("Dependencies installed successfully!")
                 return True
             except subprocess.CalledProcessError:
@@ -161,7 +161,7 @@ class XHarvesterUpdater:
         
         # Fallback to specific packages
         try:
-            subprocess.run(["-m", "pip", "install", "colorama", "requests", "--break-system-packages"], check=True)
+            subprocess.run([sys.executable, "-m", "pip", "install", "colorama", "requests", "--break-system-packages"], check=True)
             self.print_status("Dependencies installed successfully!")
             return True
         except subprocess.CalledProcessError:
