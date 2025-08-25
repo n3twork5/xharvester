@@ -25,12 +25,12 @@ Geotagging Integration: Correlates all discovered devices and signals with GPS c
 Hardware Abstraction Layer: Simplifies the use of complex hardware (SDRs, CAN interfaces) by handling driver communication and configuration automatically.
 
 ## 💾 Installation
-### * Clone the Repository
+### * Clone the Repository *
 ```bash
 git clone https://github.com/n3tworkh4x/xharvester.git
 cd xharvester
 ```
-### * Virtual Environment Setup
+### * Virtual Environment Setup *
 ##### MacOS/Linux
 ```
 python3 -m venv venv
@@ -47,7 +47,7 @@ python -m venv venv
 python -m venv venv
 .\venv\Scripts\activate.bat
 ```
-### Usage
+### * Usage *
 #### Cli Base Tool
 ##### MacOS/Linux
 ```
@@ -83,7 +83,7 @@ cd xharvester
 pip install -r requirements.txt
 tsu ./xharvester
 ```
-## Donation
+## * Donation *
 
 If you find this tool helpful and want to support its development, please consider making a donation:
 

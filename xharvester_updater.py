@@ -23,6 +23,7 @@ class XHarvesterUpdater:
         YELLOW = '\033[1;33m'
         BLUE = '\033[0;34m'
         CYAN = '\033[0;36m'
+        MAGENTA = '\033[0;35m'
         NC = '\033[0m'  # No Color
 
     def __init__(self, install_dir=None):
@@ -59,12 +60,15 @@ class XHarvesterUpdater:
         
         elif "android" in system or "linux" in system:
             # Check if we're on Android (Termux)
-            if hasattr(os, 'getppid') and "termux" in os.readlink(f"/proc/{os.getppid()}/exe"):
-                # Android/Termux
-                return Path.home() / "xharvester"
-            else:
-                # Regular Linux
-                return Path.home() / ".local" / "share" / "xharvester"
+            try:
+                if "termux" in os.readlink(f"/proc/{os.getppid()}/exe"):
+                    # Android/Termux
+                    return Path.home() / "xharvester"
+            except (FileNotFoundError, AttributeError):
+                pass
+            
+            # Regular Linux
+            return Path.home() / ".local" / "share" / "xharvester"
         
         else:
             # macOS or other Unix-like
@@ -92,7 +96,7 @@ class XHarvesterUpdater:
             try:
                 subprocess.run(["pkg", "install", "git", "-y"], check=True)
                 return True
-            except subprocess.CalledProcessError:
+            except (subprocess.CalledProcessError, FileNotFoundError):
                 self.print_error("Failed to install git on Android. Try: pkg install git")
                 return False
                 
@@ -111,7 +115,7 @@ class XHarvesterUpdater:
                 else:
                     self.print_error("Could not detect package manager. Please install git manually.")
                     return False
-            except subprocess.CalledProcessError:
+            except (subprocess.CalledProcessError, FileNotFoundError):
                 self.print_error("Failed to install git. Please install it manually.")
                 return False
                 
@@ -151,9 +155,19 @@ class XHarvesterUpdater:
         self.print_info("Installing Python dependencies...")
         
         requirements_file = self.repo_path / "requirements.txt"
+        pip_command = [sys.executable, "-m", "pip", "install"]
+        
+        # Add --break-system-packages only if supported (Python 3.10+)
+        try:
+            python_version = sys.version_info
+            if python_version.major == 3 and python_version.minor >= 10:
+                pip_command.append("--break-system-packages")
+        except AttributeError:
+            pass
+            
         if requirements_file.exists():
             try:
-                subprocess.run([sys.executable, "-m", "pip", "install", "-r", str(requirements_file), "--break-system-packages"], check=True)
+                subprocess.run(pip_command + ["-r", str(requirements_file)], check=True)
                 self.print_status("Dependencies installed successfully!")
                 return True
             except subprocess.CalledProcessError:
@@ -161,7 +175,7 @@ class XHarvesterUpdater:
         
         # Fallback to specific packages
         try:
-            subprocess.run([sys.executable, "-m", "pip", "install", "colorama", "requests", "--break-system-packages"], check=True)
+            subprocess.run(pip_command + ["colorama", "requests"], check=True)
             self.print_status("Dependencies installed successfully!")
             return True
         except subprocess.CalledProcessError:
@@ -185,11 +199,13 @@ class XHarvesterUpdater:
                     bin_dir = Path.home() / "AppData" / "Local" / "Programs" / "Python" / "Scripts"
                     if not bin_dir.exists():
                         bin_dir = Path(os.environ.get('USERPROFILE', str(Path.home()))) / "AppData" / "Roaming" / "Python" / "Scripts"
+                        if not bin_dir.exists():
+                            bin_dir = Path.home() / "Desktop"
                 
                 if bin_dir.exists():
                     batch_file = bin_dir / "xharvester.bat"
                     with open(batch_file, 'w') as f:
-                        f.write(f'@echo off\npython "{script_path}" %*\n')
+                        f.write(f'@echo off\n"{sys.executable}" "{script_path}" %*\n')
                     self.print_status(f"Created batch file at {batch_file}")
                 else:
                     self.print_warning("Could not find suitable directory for batch file")
@@ -198,7 +214,7 @@ class XHarvesterUpdater:
                 # Unix-like systems (Linux, Android, macOS)
                 bin_dir = Path.home() / ".local" / "bin"
                 if not bin_dir.exists():
-                    bin_dir.mkdir(parents=True)
+                    bin_dir.mkdir(parents=True, exist_ok=True)
                 
                 # Make script executable
                 script_path.chmod(script_path.stat().st_mode | stat.S_IEXEC)
@@ -283,7 +299,7 @@ oLink.Save
                     f.write('#!/bin/bash\n')
                     f.write(f'cd "{self.repo_path}"\n')
                     f.write('termux-toast "Starting XHarvester..."\n')
-                    f.write(f'tsu ./"{script_path}"\n')
+                    f.write(f'python "{script_path.name}"\n')
                     f.write('read -p "Press enter to continue"\n')
                 
                 shortcut_script.chmod(0o755)
@@ -300,16 +316,13 @@ Version=1.0.0
 Type=Application
 Name=XHarvester
 Comment=Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu
-Exec=sudo "{script_path}"
-Icon=icons/jenkins_logo_icon_247972.png
+Exec=python3 "{script_path}"
+Icon=terminal
 Terminal=True
 Categories=Network;Security;
 '''
                 with open(desktop_file, 'w') as f:
                     f.write(desktop_content)
-                
-                # Make it executable
-                desktop_file.chmod(desktop_file.stat().st_mode | stat.S_IEXEC)
                 
                 self.print_status(f"Created desktop launcher at {desktop_file}")
                 
@@ -460,8 +473,9 @@ if __name__ == "__main__":
         
         # Exit with appropriate code
         sys.exit(0 if success else 1)
-    except KeyboardInterrupt as err:
-        varerr = f"\n\n\t\t\t{MAGENTA}{err}[💀] {RESET}{RED}Process Terminated by User\n\n"
-        for word in varerr:
+    except KeyboardInterrupt:
+        msg = f"\n\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Process Terminated by User\n\n"
+        for word in msg:
             print(word, end="", flush=True)
             time.sleep(0.05)
+        sys.exit(1)
