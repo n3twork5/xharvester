@@ -240,6 +240,11 @@ def main():
                 if UPDATER_AVAILABLE:
                     updater = XHarvesterUpdater()
                     # Ask about creating launchers
+                    print(f"{XHarvesterUpdater.Colors.CYAN}")
+                    print("┌─────────────────────────────────────────────────────┐")
+                    print("│              XHARVESTER UPDATER                     │")
+                    print("└─────────────────────────────────────────────────────┘")
+                    print(f"{XHarvesterUpdater.Colors.NC}")
                     response = input("Create desktop/launcher shortcuts? (Y/n): ")
                     create_launchers = response.lower() not in ['n', 'no']
                     
