@@ -239,12 +239,94 @@ class XHarvesterUpdater:
 
     def find_main_script(self):
         """Find the main script in the repository"""
-        possible_names = ["xharvester.py", "xharvester", "main.py", "tool.py"]
+        # First, check for common entry points
+        possible_names = ["xharvester.py", "xharvester", "main.py", "tool.py", "__main__.py"]
+        
         for name in possible_names:
             script_path = self.repo_path / name
             if script_path.exists():
                 return script_path
+        
+        # If not found, look for any Python file that might be the main script
+        for file_path in self.repo_path.glob("*.py"):
+            try:
+                with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
+                    content = f.read()
+                    # Check if it looks like a main script
+                    if "if __name__ == '__main__':" in content or "def main()" in content:
+                        return file_path
+            except Exception:
+                continue
+        
+        # Last resort: check for any executable file
+        for file_path in self.repo_path.iterdir():
+            if file_path.is_file() and (os.access(file_path, os.X_OK) or file_path.suffix == ''):
+                return file_path
+        
         return None
+
+    def verify_installation(self):
+        """Verify that the installation was successful and the command is accessible"""
+        self.print_info("Verifying installation...")
+        
+        # Check if symlink exists and is valid
+        bin_dir = Path.home() / ".local" / "bin"
+        symlink_path = bin_dir / "xharvester"
+        
+        if symlink_path.exists() and symlink_path.is_symlink():
+            self.print_status(f"Symlink exists at {symlink_path}")
+            
+            # Check if it's in PATH
+            path_dirs = os.environ.get('PATH', '').split(':')
+            if str(bin_dir) in path_dirs:
+                self.print_status("Symlink directory is in PATH")
+                
+                # Test if the command works
+                try:
+                    result = subprocess.run(["which", "xharvester"], capture_output=True, text=True, timeout=5)
+                    if result.returncode == 0:
+                        self.print_status("Command 'xharvester' is available in PATH")
+                        return True
+                    else:
+                        self.print_warning("Command 'xharvester' not found in PATH")
+                except (subprocess.TimeoutExpired, FileNotFoundError, Exception):
+                    self.print_warning("Could not verify command availability")
+            else:
+                self.print_warning(f"Symlink directory {bin_dir} is not in PATH")
+                
+                # Offer to add it to PATH
+                response = input("Would you like to add it to your PATH? (Y/n): ")
+                if response.lower() not in ['n', 'no']:
+                    self.add_to_path(bin_dir)
+        else:
+            self.print_error("Symlink was not created successfully")
+        
+        return False
+
+    def add_to_path(self, bin_dir):
+        """Add a directory to the user's PATH"""
+        shell_configs = [
+            Path.home() / ".bashrc",
+            Path.home() / ".bash_profile", 
+            Path.home() / ".profile",
+            Path.home() / ".zshrc"
+        ]
+        
+        for shell_config in shell_configs:
+            if shell_config.exists():
+                path_line = f'\nexport PATH="$PATH:{bin_dir}"\n'
+                
+                try:
+                    with open(shell_config, 'a') as f:
+                        f.write(path_line)
+                    self.print_status(f"Added {bin_dir} to PATH in {shell_config}")
+                    self.print_info(f"Please run 'source {shell_config.name}' or restart your terminal")
+                    return True
+                except Exception as e:
+                    self.print_error(f"Failed to add to PATH in {shell_config}: {e}")
+        
+        self.print_error("Could not find a shell configuration file to modify")
+        return False
 
     def create_desktop_launcher(self):
         """Create a desktop launcher for GUI environments"""
@@ -275,7 +357,7 @@ Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = "cmd.exe"
 oLink.Arguments = "/k python \"{script_path}\" && pause"
 oLink.WorkingDirectory = "{self.repo_path}"
-oLink.Description = "XHarvester - Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu"
+oLink.Description = "xharvester - Extended Reconnaissance Toolkit DEVELOPED BY N3TWORK@(GHANA)"
 oLink.Save
 '''
                     with open(vbs_script, 'w') as f:
@@ -311,18 +393,25 @@ oLink.Save
                 desktop_file = Path.home() / ".local" / "share" / "applications" / "xharvester.desktop"
                 desktop_file.parent.mkdir(parents=True, exist_ok=True)
                 
+                # Use absolute path for the icon or remove it if not available
+                icon_path = self.repo_path / "icons" / "jenkins_logo_icon_247972.png"
+                icon_line = f"Icon={icon_path}" if icon_path.exists() else "Icon=terminal"
+                
                 desktop_content = f'''[Desktop Entry]
 Version=1.0.0
 Type=Application
-Name=XHarvester
-Comment=Extended Reconnaissance Toolkit Developed By n3twork@ Kofi Yesu
-Exec=python3 "{script_path}"
-Icon=terminal
-Terminal=True
+Name=xharvester
+Comment=Extended Reconnaissance Toolkit DEVELOPED BY N3TWORK@(GHANA)
+Exec=sudo python3 "{script_path}"
+{icon_line}
+Terminal=true
 Categories=Network;Security;
 '''
                 with open(desktop_file, 'w') as f:
                     f.write(desktop_content)
+                
+                # Make the desktop file executable
+                desktop_file.chmod(desktop_file.stat().st_mode | stat.S_IEXEC)
                 
                 self.print_status(f"Created desktop launcher at {desktop_file}")
                 
@@ -415,6 +504,9 @@ Categories=Network;Security;
         # Create symlink
         if not self.create_symlink():
             self.print_warning("Symlink creation failed, but installation completed")
+        
+        # Verify installation
+        self.verify_installation()
         
         # Create launchers if requested
         if create_launchers:
