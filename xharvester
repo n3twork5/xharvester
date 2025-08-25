@@ -64,7 +64,8 @@ def text_animation():
         time.sleep(ANIMATION_SPEED)
     print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
-    print(f"{RED}Use only for authorized security testing!{RESET}")
+    print(f"\t\t\t{RED}Developed{YELLOW} By{GREEN} N3TWORK\t\t\t")
+    print(f"{RED} Use only for authorized security testing!{RESET}")
 
 ### Display Menu ###
 def show_menu() -> None:
@@ -186,7 +187,7 @@ def main():
         show_menu()
         
         try:
-            choice = input(f"\n{GREEN}root@{get_hostname()}:~$ {RESET}")
+            choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
         except (KeyboardInterrupt, EOFError):
             terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
             for word in terminator:
