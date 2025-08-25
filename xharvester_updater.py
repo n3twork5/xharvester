@@ -357,7 +357,7 @@ Set oLink = oWS.CreateShortcut(sLinkFile)
 oLink.TargetPath = "cmd.exe"
 oLink.Arguments = "/k python \"{script_path}\" && pause"
 oLink.WorkingDirectory = "{self.repo_path}"
-oLink.Description = "xharvester - Extended Reconnaissance Toolkit DEVELOPED BY N3TWORK@(GHANA)"
+oLink.Description = "xharvester - Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)"
 oLink.Save
 '''
                     with open(vbs_script, 'w') as f:
@@ -401,7 +401,7 @@ oLink.Save
 Version=1.0.0
 Type=Application
 Name=xharvester
-Comment=Extended Reconnaissance Toolkit DEVELOPED BY N3TWORK@(GHANA)
+Comment=Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)
 Exec=sudo python3 "{script_path}"
 {icon_line}
 Terminal=true
