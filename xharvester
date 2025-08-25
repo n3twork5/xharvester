@@ -33,6 +33,7 @@ BLUE = '\033[34m'
 MAGENTA = '\033[35m'
 CYAN = '\033[36m'
 LIGHTCYAN_EX = '\033[96m'
+BLACK = '\x1b[30m'
 RESET = '\033[0m'
 
 # Configuration
@@ -64,7 +65,7 @@ def text_animation():
         time.sleep(ANIMATION_SPEED)
     print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
-    print(f"\t\t\t{RED}Developed{YELLOW} By{GREEN} N3TWORK\t\t\t")
+    print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
     print(f"{RED} Use only for authorized security testing!{RESET}")
 
 ### Display Menu ###
@@ -138,35 +139,30 @@ def check_root() -> bool:
 def bluetooth_module():
     """Placeholder for Bluetooth functionality"""
     print_status(f"{CYAN}Initializing Bluetooth module...")
-    # Add actual Bluetooth scanning/exploitation code here
     time.sleep(2)
     print_warning(f"{YELLOW}Bluetooth module is a placeholder - actual functionality not implemented")
 
 def wifi_module():
     """Placeholder for WiFi functionality"""
     print_status(f"{CYAN}Initializing WiFi module...")
-    # Add actual WiFi scanning/exploitation code here
     time.sleep(2)
     print_warning(f"{YELLOW}WiFi module is a placeholder - actual functionality not implemented")
 
 def automobile_module():
     """Placeholder for Automobile functionality"""
     print_status(f"{CYAN}Initializing Automobile module...")
-    # Add actual automobile hacking code here
     time.sleep(2)
     print_warning(f"{YELLOW}Automobile module is a placeholder - actual functionality not implemented")
 
 def rf_module():
     """Placeholder for Radio Frequency functionality"""
     print_status(f"{CYAN}Initializing Radio Frequency module...")
-    # Add actual RF scanning/exploitation code here
     time.sleep(2)
     print_warning(f"{YELLOW}RF module is a placeholder - actual functionality not implemented")
 
 def scada_module():
     """Placeholder for SCADA functionality"""
     print_status(f"{CYAN}Initializing SCADA module...")
-    # Add actual SCADA scanning/exploitation code here
     time.sleep(2)
     print_warning(f"{YELLOW}SCADA module is a placeholder - actual functionality not implemented")
 
