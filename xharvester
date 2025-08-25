@@ -8,6 +8,7 @@ import subprocess
 import shutil
 from datetime import datetime
 from pathlib import Path
+import bluetooth
 
 try:
     from xharvester_updater import XHarvesterUpdater
@@ -185,12 +186,38 @@ def fix_desktop_launcher():
                 return False
     return False
 
-### Module placeholder functions ###
 def bluetooth_module():
-    """Placeholder for Bluetooth functionality"""
-    print_status(f"{CYAN}Initializing Bluetooth module...")
-    time.sleep(2)
-    print_warning(f"{YELLOW}Bluetooth module is a placeholder - actual functionality not implemented")
+    clear_screen()
+    print_status(f"{CYAN}Initializing Bluetooth module...\n")
+    time.sleep(0.05)
+    text_animation()
+    print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{CYAN}\t[1] 🔀 Device Discovery")
+    print(f"{CYAN}\t[2] 📶 SDP Scan")
+    print(f"{CYAN}\t[3] 🚖 Spoofing Detection")
+    print(f"{CYAN}\t[4] 📡 Dos")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+    print(f"{YELLOW}\t[0] ⇇ Back")
+    print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
+
+    choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
+    if choice == "0":
+        mesg = f"{YELLOW}\t\t\tMoving back..."
+        for word in mesg:
+            print(word, end="", flush=True)
+            time.sleep(0.05)
+
+    elif choice == "1":
+        print(f"\n{GREEN}[+]{CYAN} Scanning for Bluetooth devices...")
+        devices = bluetooth.discover_devices(duration=16, lookup_names=True)
+        for addr, name in devices:
+            scan_result = f"\nDevice: {name} - {addr}"
+            print(scan_result)
+            print(f"Result is stored as: ")
+            time.sleep(0.05)
 
 def wifi_module():
     """Placeholder for WiFi functionality"""
@@ -260,7 +287,7 @@ def main():
             
         elif choice == "1":
             bluetooth_module()
-            input(f"\n{GREEN}Press Enter to continue...{RESET}")
+            
             
         elif choice == "2":
             wifi_module()
