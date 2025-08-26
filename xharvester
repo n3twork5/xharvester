@@ -5,36 +5,8 @@ import socket
 import sys
 import platform
 import subprocess
-import shutil
 from datetime import datetime
 from pathlib import Path
-
-# Handle bluetooth module import with proper error handling
-try:
-    import bluetooth
-    BLUETOOTH_AVAILABLE = True
-except ImportError:
-    BLUETOOTH_AVAILABLE = False
-    print("PyBluez module not available. Bluetooth features will be limited.")
-
-try:
-    from xharvester_updater import XHarvesterUpdater
-    UPDATER_AVAILABLE = True
-except ImportError:
-    UPDATER_AVAILABLE = False
-    # Create a minimal stub for the updater
-    class XHarvesterUpdater:
-        def __init__(self):
-            print("Update functionality is not available. Please ensure xharvester_updater.py is in the same directory.")
-        
-        def run(self, create_launchers=True):
-            print("Update functionality is not available.")
-            return False
-
-# Use proper ANSI escape sequences for all systems with platform compatibility
-if platform.system() == "Windows":
-    # Enable ANSI support on Windows 10+
-    os.system("")  # This enables ANSI escape sequences on Windows
 
 # Color codes
 GREEN = '\033[32m'
@@ -49,19 +21,6 @@ RESET = '\033[0m'
 
 # Configuration
 ANIMATION_SPEED = 0.005
-
-### Color Status ###
-def print_status(message: str) -> None:
-    """Print status messages"""
-    print(f"{GREEN}[+]{RESET} {message}")
-
-def print_warning(message: str) -> None:
-    """Print warning messages"""
-    print(f"{YELLOW}[!]{RESET} {message}")
-
-def print_error(message: str) -> None:
-    """Print error messages"""
-    print(f"{RED}[-]{RESET} {message}")
 
 ### Text Animation ###
 def text_animation():
@@ -186,25 +145,16 @@ def fix_desktop_launcher():
         if desktop_file.exists():
             try:
                 desktop_file.chmod(desktop_file.stat().st_mode | 0o755)
-                print_status("Fixed desktop launcher permissions")
+                print(f"{RED}[!] Fixed desktop launcher permissions")
                 return True
             except Exception as e:
-                print_error(f"Failed to fix desktop launcher permissions: {e}")
+                print(f"{RED}[!] Failed to fix desktop launcher permissions: {e}")
                 return False
     return False
 
 def bluetooth_module():
     clear_screen()
-    print_status(f"{CYAN}Initializing Bluetooth module...\n")
-    
-    # Check if Bluetooth is available
-    if not BLUETOOTH_AVAILABLE:
-        print_error("Bluetooth functionality is not available. PyBluez module is required.")
-        print_warning("On Linux: sudo apt-get install python3-bluez bluetooth")
-        print_warning("On Windows: pip install pybluez2")
-        input(f"\n{GREEN}Press Enter to continue...{RESET}")
-        return
-    
+    print(f"{GREEN}[+] {CYAN}Initializing Bluetooth module...\n")
     time.sleep(0.05)
     active = True
     while active:
@@ -215,10 +165,10 @@ def bluetooth_module():
         print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
         print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
         print(f"{CYAN}\t[1] 📨 Bluejacking")
-        print(f"{CYAN}\t[2] ✉️  Bluesnarfing")
+        print(f"{CYAN}\t[2] ✉️ Bluesnarfing")
         print(f"{CYAN}\t[3] 🐛 Bluebugging")
-        print(f"{CYAN}\t[4] 💻 MITM Attacks")
-        print(f"{CYAN}\t[5] 🎙️  Car Whisperer Attack")
+        print(f"{CYAN}\t[4] ‍💻 MITM Attacks")
+        print(f"{CYAN}\t[5] 🎙️ Car Whisperer Attack")
         print(f"{CYAN}\t[6] 🎭 BLE spoofing")
         print(f"{CYAN}\t[7] 🚦 DOS")
         print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
@@ -277,31 +227,61 @@ def bluetooth_module():
             input(f"{GREEN}Press Enter to continue...{RESET}")
 
         else:
-            print(f"\n{RED}\t\t\t[-] Invalid option. Please try again.")
-            time.sleep(3)
+            print(f"{RED} Invalid option. Please try again.")
+            time.sleep(1)
 
 def wifi_module():
-    print_status(f"{CYAN}Initializing WiFi module...")
+    print(f"{GREEN}[+] {CYAN}Initializing WiFi module...")
     time.sleep(2)
-    print_warning(f"{YELLOW}WiFi module is a placeholder - actual functionality not implemented")
+    print(f"{YELLOW}[!] WiFi module is a placeholder - actual functionality not implemented")
     input(f"\n{GREEN}Press Enter to continue...{RESET}")
 
 def automobile_module():
-    print_status(f"{CYAN}Initializing Automobile module...")
+    print(f"{CYAN}Initializing Automobile module...")
     time.sleep(2)
-    print_warning(f"{YELLOW}Automobile module is a placeholder - actual functionality not implemented")
+    print(f"{YELLOW}Automobile module is a placeholder - actual functionality not implemented")
     input(f"\n{GREEN}Press Enter to continue...{RESET}")
 
 def rf_module():
-    print_status(f"{CYAN}Initializing Radio Frequency module...")
+    print(f"{CYAN}Initializing Radio Frequency module...")
     time.sleep(2)
-    print_warning(f"{YELLOW}RF module is a placeholder - actual functionality not implemented")
+    print(f"{YELLOW}RF module is a placeholder - actual functionality not implemented")
     input(f"\n{GREEN}Press Enter to continue...{RESET}")
 
 def scada_module():
-    print_status(f"{CYAN}Initializing SCADA module...")
+    print(f"{CYAN}Initializing SCADA module...")
     time.sleep(2)
-    print_warning(f"{YELLOW}SCADA module is a placeholder - actual functionality not implemented")
+    print(f"{YELLOW}SCADA module is a placeholder - actual functionality not implemented")
+    input(f"\n{GREEN}Press Enter to continue...{RESET}")
+
+def run_updater():
+    """Run the xharvester_updater.py script as a subprocess"""
+    clear_screen()
+    
+    # Check if updater script exists
+    updater_script = "xharvester_updater.py"
+    if not os.path.exists(updater_script):
+        print(f"Updater script '{updater_script}' not found!")
+        print("Please ensure xharvester_updater.py is in the same directory.")
+        input(f"\n{GREEN}Press Enter to continue...{RESET}")
+        return
+    
+    try:
+        # Run the updater script
+        print(f"{CYAN}Running XHarvester updater...{RESET}\n")
+        result = subprocess.run([sys.executable, updater_script], 
+                              capture_output=False, text=True)
+        
+        if result.returncode == 0:
+            print("Update completed successfully!")
+        else:
+            print("Update failed or was canceled.")
+            
+    except KeyboardInterrupt:
+        print("\nUpdate canceled by user.")
+    except Exception as e:
+        print(f"Error running updater: {e}")
+    
     input(f"\n{GREEN}Press Enter to continue...{RESET}")
 
 def main():
@@ -317,9 +297,9 @@ def main():
             response = input(f"\n{GREEN}Would you like to try fixing the desktop launcher? (Y/n): {RESET}")
             if response.lower() not in ['n', 'no']:
                 if fix_desktop_launcher():
-                    print_status("Desktop launcher fixed. Please try clicking it again.")
+                    print("Desktop launcher fixed. Please try clicking it again.")
                 else:
-                    print_error("Failed to fix desktop launcher.")
+                    print("Failed to fix desktop launcher.")
         
         sys.exit(1)
     
@@ -369,54 +349,14 @@ def main():
                     about()
                     time.sleep(int(time_choice))
             except ValueError:
-                print_error("Invalid input. Using default time of 10 seconds.")
+                print("Invalid input. Using default time of 10 seconds.")
                 time.sleep(10)
             except (KeyboardInterrupt, EOFError):
                 print("\n\nReturning to menu...")
                 time.sleep(1)
 
         elif choice == '99':
-            clear_screen()
-            
-            # Check if updater is available
-            if not UPDATER_AVAILABLE:
-                print_error("Update functionality is not available.")
-                print_warning("Please ensure xharvester_updater.py is in the same directory.")
-                input(f"\n{GREEN}Press Enter to continue...{RESET}")
-                continue
-                
-            try:
-                # Print updater banner using our own colors
-                print(f"{CYAN}")
-                print("┌─────────────────────────────────────────────────────┐")
-                print("│              XHARVESTER UPDATER                     │")
-                print("└─────────────────────────────────────────────────────┘")
-                print(f"{RESET}")
-                
-                # Create updater instance
-                updater = XHarvesterUpdater()
-                
-                # Ask about creating launchers
-                response = input("Create desktop/launcher shortcuts? (Y/n): ")
-                create_launchers = response.lower() not in ['n', 'no']
-        
-                # Run the update
-                success = updater.run(create_launchers=create_launchers)
-        
-                if success:
-                    print_status("Update completed successfully.")
-                    print_warning("Please restart the program to use the updated version.")
-                else:
-                    print_error("Update failed.")
-                    
-                input(f"\n{GREEN}Press Enter to continue...{RESET}")
-                
-            except KeyboardInterrupt:
-                msg = f"\n\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Update canceled by User\n\n"
-                for word in msg:
-                    print(word, end="", flush=True)
-                    time.sleep(0.05)
-                time.sleep(2)
+            run_updater()
 
         else:
             warning = f"\n\t'{choice}' is not a valid menu option!\n"

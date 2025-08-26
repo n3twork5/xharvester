@@ -460,7 +460,7 @@ Version=1.0.0
 Type=Application
 Name=xharvester
 Comment=Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)
-Exec=python3 "{script_path}"
+Exec=sudo python3 "{script_path}"
 {icon_line}
 Terminal=true
 Categories=Network;Security;
