@@ -64,7 +64,7 @@ class XHarvesterUpdater:
                 if "termux" in os.readlink(f"/proc/{os.getppid()}/exe"):
                     # Android/Termux
                     return Path.home() / "xharvester"
-            except (FileNotFoundError, AttributeError):
+            except (FileNotFoundError, AttributeError, OSError):
                 pass
             
             # Regular Linux
@@ -112,6 +112,9 @@ class XHarvesterUpdater:
                 elif shutil.which("pacman"):
                     subprocess.run(["sudo", "pacman", "-S", "git", "--noconfirm"], check=True)
                     return True
+                elif shutil.which("dnf"):
+                    subprocess.run(["sudo", "dnf", "install", "git", "-y"], check=True)
+                    return True
                 else:
                     self.print_error("Could not detect package manager. Please install git manually.")
                     return False
@@ -155,7 +158,7 @@ class XHarvesterUpdater:
         self.print_info("Installing Python dependencies...")
         
         requirements_file = self.repo_path / "requirements.txt"
-        pip_command = [sys.executable, "-m", "pip", "install"]
+        pip_command = [sys.executable, "-m", "pip", "install", "--upgrade"]
         
         # Add --break-system-packages only if supported (Python 3.10+)
         try:
@@ -194,21 +197,27 @@ class XHarvesterUpdater:
         try:
             if system == "windows":
                 # Create a batch file
-                bin_dir = Path(os.environ.get('APPDATA', str(Path.home()))) / "Local" / "Microsoft" / "WindowsApps"
-                if not bin_dir.exists():
-                    bin_dir = Path.home() / "AppData" / "Local" / "Programs" / "Python" / "Scripts"
-                    if not bin_dir.exists():
-                        bin_dir = Path(os.environ.get('USERPROFILE', str(Path.home()))) / "AppData" / "Roaming" / "Python" / "Scripts"
-                        if not bin_dir.exists():
-                            bin_dir = Path.home() / "Desktop"
+                bin_dirs = [
+                    Path(os.environ.get('APPDATA', '')) / "Local" / "Microsoft" / "WindowsApps",
+                    Path.home() / "AppData" / "Local" / "Programs" / "Python" / "Scripts",
+                    Path(os.environ.get('USERPROFILE', '')) / "AppData" / "Roaming" / "Python" / "Scripts",
+                    Path.home() / "Desktop"
+                ]
                 
-                if bin_dir.exists():
-                    batch_file = bin_dir / "xharvester.bat"
-                    with open(batch_file, 'w') as f:
-                        f.write(f'@echo off\n"{sys.executable}" "{script_path}" %*\n')
-                    self.print_status(f"Created batch file at {batch_file}")
-                else:
-                    self.print_warning("Could not find suitable directory for batch file")
+                bin_dir = None
+                for candidate in bin_dirs:
+                    if candidate.exists():
+                        bin_dir = candidate
+                        break
+                
+                if bin_dir is None:
+                    bin_dir = Path.home()
+                
+                batch_file = bin_dir / "xharvester.bat"
+                with open(batch_file, 'w') as f:
+                    f.write(f'@echo off\n"{sys.executable}" "{script_path}" %*\n')
+                self.print_status(f"Created batch file at {batch_file}")
+                return True
                     
             else:
                 # Unix-like systems (Linux, Android, macOS)
@@ -222,7 +231,11 @@ class XHarvesterUpdater:
                 # Create symlink
                 symlink_path = bin_dir / "xharvester"
                 if symlink_path.exists():
-                    symlink_path.unlink()
+                    if symlink_path.is_symlink():
+                        symlink_path.unlink()
+                    else:
+                        self.print_warning(f"{symlink_path} exists but is not a symlink, skipping")
+                        return False
                 
                 os.symlink(script_path, symlink_path)
                 self.print_status(f"Created symlink at {symlink_path}")
@@ -230,8 +243,8 @@ class XHarvesterUpdater:
                 # Add to PATH if not already there
                 if str(bin_dir) not in os.environ.get('PATH', ''):
                     self.print_warning(f"Add {bin_dir} to your PATH to run xharvester from anywhere")
-            
-            return True
+                
+                return True
             
         except Exception as e:
             self.print_error(f"Failed to create symlink/batch file: {e}")
@@ -269,64 +282,109 @@ class XHarvesterUpdater:
         """Verify that the installation was successful and the command is accessible"""
         self.print_info("Verifying installation...")
         
-        # Check if symlink exists and is valid
-        bin_dir = Path.home() / ".local" / "bin"
-        symlink_path = bin_dir / "xharvester"
+        system = platform.system().lower()
         
-        if symlink_path.exists() and symlink_path.is_symlink():
-            self.print_status(f"Symlink exists at {symlink_path}")
+        if system == "windows":
+            # Check for batch file on Windows
+            bin_dirs = [
+                Path(os.environ.get('APPDATA', '')) / "Local" / "Microsoft" / "WindowsApps",
+                Path.home() / "AppData" / "Local" / "Programs" / "Python" / "Scripts",
+                Path(os.environ.get('USERPROFILE', '')) / "AppData" / "Roaming" / "Python" / "Scripts",
+                Path.home() / "Desktop"
+            ]
             
-            # Check if it's in PATH
-            path_dirs = os.environ.get('PATH', '').split(':')
-            if str(bin_dir) in path_dirs:
-                self.print_status("Symlink directory is in PATH")
-                
-                # Test if the command works
-                try:
-                    result = subprocess.run(["which", "xharvester"], capture_output=True, text=True, timeout=5)
-                    if result.returncode == 0:
-                        self.print_status("Command 'xharvester' is available in PATH")
-                        return True
-                    else:
-                        self.print_warning("Command 'xharvester' not found in PATH")
-                except (subprocess.TimeoutExpired, FileNotFoundError, Exception):
-                    self.print_warning("Could not verify command availability")
+            batch_file = None
+            for bin_dir in bin_dirs:
+                potential_batch = bin_dir / "xharvester.bat"
+                if potential_batch.exists():
+                    batch_file = potential_batch
+                    break
+            
+            if batch_file:
+                self.print_status(f"Batch file exists at {batch_file}")
+                # Check if it's in PATH
+                path_dirs = [Path(p) for p in os.environ.get('PATH', '').split(';')]
+                if batch_file.parent in path_dirs:
+                    self.print_status("Batch file directory is in PATH")
+                    return True
+                else:
+                    self.print_warning(f"Batch file directory {batch_file.parent} is not in PATH")
+                    return False
             else:
-                self.print_warning(f"Symlink directory {bin_dir} is not in PATH")
-                
-                # Offer to add it to PATH
-                response = input("Would you like to add it to your PATH? (Y/n): ")
-                if response.lower() not in ['n', 'no']:
-                    self.add_to_path(bin_dir)
+                self.print_error("Batch file was not created successfully")
+                return False
         else:
-            self.print_error("Symlink was not created successfully")
-        
-        return False
+            # Check if symlink exists and is valid on Unix systems
+            bin_dir = Path.home() / ".local" / "bin"
+            symlink_path = bin_dir / "xharvester"
+            
+            if symlink_path.exists() and symlink_path.is_symlink():
+                self.print_status(f"Symlink exists at {symlink_path}")
+                
+                # Check if it's in PATH
+                path_dirs = [Path(p) for p in os.environ.get('PATH', '').split(':')]
+                if bin_dir in path_dirs:
+                    self.print_status("Symlink directory is in PATH")
+                    
+                    # Test if the command works
+                    try:
+                        result = subprocess.run(["which", "xharvester"], capture_output=True, text=True, timeout=5)
+                        if result.returncode == 0:
+                            self.print_status("Command 'xharvester' is available in PATH")
+                            return True
+                        else:
+                            self.print_warning("Command 'xharvester' not found in PATH")
+                    except (subprocess.TimeoutExpired, FileNotFoundError, Exception):
+                        self.print_warning("Could not verify command availability")
+                else:
+                    self.print_warning(f"Symlink directory {bin_dir} is not in PATH")
+                    
+                    # Offer to add it to PATH
+                    response = input("Would you like to add it to your PATH? (Y/n): ")
+                    if response.lower() not in ['n', 'no']:
+                        self.add_to_path(bin_dir)
+            else:
+                self.print_error("Symlink was not created successfully")
+            
+            return False
 
     def add_to_path(self, bin_dir):
         """Add a directory to the user's PATH"""
-        shell_configs = [
-            Path.home() / ".bashrc",
-            Path.home() / ".bash_profile", 
-            Path.home() / ".profile",
-            Path.home() / ".zshrc"
-        ]
+        system = platform.system().lower()
         
-        for shell_config in shell_configs:
-            if shell_config.exists():
-                path_line = f'\nexport PATH="$PATH:{bin_dir}"\n'
-                
-                try:
-                    with open(shell_config, 'a') as f:
-                        f.write(path_line)
-                    self.print_status(f"Added {bin_dir} to PATH in {shell_config}")
-                    self.print_info(f"Please run 'source {shell_config.name}' or restart your terminal")
-                    return True
-                except Exception as e:
-                    self.print_error(f"Failed to add to PATH in {shell_config}: {e}")
-        
-        self.print_error("Could not find a shell configuration file to modify")
-        return False
+        if system == "windows":
+            self.print_info(f"Please add {bin_dir} to your PATH manually on Windows")
+            self.print_info("Instructions:")
+            self.print_info("1. Right-click on 'This PC' or 'My Computer' and select 'Properties'")
+            self.print_info("2. Click on 'Advanced system settings'")
+            self.print_info("3. Click on 'Environment Variables'")
+            self.print_info("4. Under 'User variables', find and select the 'Path' variable")
+            self.print_info("5. Click 'Edit' and add the path to the directory")
+            return False
+        else:
+            # Unix-like systems
+            shell_configs = [
+                Path.home() / ".bashrc",
+                Path.home() / ".bash_profile", 
+                Path.home() / ".profile",
+                Path.home() / ".zshrc"
+            ]
+            
+            for shell_config in shell_configs:
+                if shell_config.exists():
+                    path_line = f'\nexport PATH="$PATH:{bin_dir}"\n'
+                    
+                    try:
+                        with open(shell_config, 'a') as f:
+                            f.write(path_line)
+                        self.print_status(f"Added {bin_dir} to PATH in {shell_config}")
+                        self.print_info(f"Please run 'source {shell_config.name}' or restart your terminal")
+                        return True
+                    except Exception as e:
+                        self.print_error(f"Failed to add to PATH in {shell_config}: {e}")
+            
+            self.print_error("Could not find a shell configuration file to modify")
+            return False
 
     def create_desktop_launcher(self):
         """Create a desktop launcher for GUI environments"""
@@ -364,7 +422,7 @@ oLink.Save
                         f.write(vbs_content)
                     
                     # Run the VBS script to create the shortcut
-                    subprocess.run(["cscript", "icons/jenkins_logo_icon_247972.ico", str(vbs_script)], check=True)
+                    subprocess.run(["cscript", str(vbs_script)], check=True)
                     vbs_script.unlink()  # Clean up
                     
                     self.print_status(f"Created desktop shortcut at {shortcut_path}")
@@ -402,7 +460,7 @@ Version=1.0.0
 Type=Application
 Name=xharvester
 Comment=Extended Reconnaissance Toolkit Developed By N3TWORK@(GHANA)
-Exec=sudo python3 "{script_path}"
+Exec=python3 "{script_path}"
 {icon_line}
 Terminal=true
 Categories=Network;Security;
@@ -528,7 +586,7 @@ Categories=Network;Security;
 
 
 # Standalone execution
-if __name__ == "__main__":
+def main():
     try:
         # Color codes
         GREEN = '\033[32m'
@@ -571,3 +629,7 @@ if __name__ == "__main__":
             print(word, end="", flush=True)
             time.sleep(0.05)
         sys.exit(1)
+
+# Allow the script to be imported without running
+if __name__ == "__main__":
+    main()

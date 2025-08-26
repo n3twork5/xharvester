@@ -215,10 +215,10 @@ def bluetooth_module():
         print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
         print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
         print(f"{CYAN}\t[1] 📨 Bluejacking")
-        print(f"{CYAN}\t[2] ✉️ Bluesnarfing")
+        print(f"{CYAN}\t[2] ✉️  Bluesnarfing")
         print(f"{CYAN}\t[3] 🐛 Bluebugging")
-        print(f"{CYAN}\t[4] 👂 MITM Attacks")
-        print(f"{CYAN}\t[5] ‍💻🎙️ Car Whisperer Attack")
+        print(f"{CYAN}\t[4] 💻 MITM Attacks")
+        print(f"{CYAN}\t[5] 🎙️  Car Whisperer Attack")
         print(f"{CYAN}\t[6] 🎭 BLE spoofing")
         print(f"{CYAN}\t[7] 🚦 DOS")
         print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
@@ -277,8 +277,8 @@ def bluetooth_module():
             input(f"{GREEN}Press Enter to continue...{RESET}")
 
         else:
-            print_error("Invalid option. Please try again.")
-            time.sleep(1)
+            print(f"\n{RED}\t\t\t[-] Invalid option. Please try again.")
+            time.sleep(3)
 
 def wifi_module():
     print_status(f"{CYAN}Initializing WiFi module...")
@@ -328,7 +328,6 @@ def main():
     while active:
         clear_screen()
         show_menu()
-        
         try:
             choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
         except (KeyboardInterrupt, EOFError):
@@ -378,28 +377,46 @@ def main():
 
         elif choice == '99':
             clear_screen()
+            
+            # Check if updater is available
+            if not UPDATER_AVAILABLE:
+                print_error("Update functionality is not available.")
+                print_warning("Please ensure xharvester_updater.py is in the same directory.")
+                input(f"\n{GREEN}Press Enter to continue...{RESET}")
+                continue
+                
             try:
-                if UPDATER_AVAILABLE:
-                    updater = XHarvesterUpdater()
-                    # Ask about creating launchers
-                    print(f"{XHarvesterUpdater.Colors.CYAN if hasattr(XHarvesterUpdater, 'Colors') else CYAN}")
-                    print("┌─────────────────────────────────────────────────────┐")
-                    print("│              XHARVESTER UPDATER                     │")
-                    print("└─────────────────────────────────────────────────────┘")
-                    print(f"{XHarvesterUpdater.Colors.NC if hasattr(XHarvesterUpdater, 'Colors') else RESET}")
-                    response = input("Create desktop/launcher shortcuts? (Y/n): ")
-                    create_launchers = response.lower() not in ['n', 'no']
-                    
-                    success = updater.run(create_launchers=create_launchers)
-                    if success:
-                        print_status("Update completed successfully!")
-                    else:
-                        print_error("Update failed!")
+                # Print updater banner using our own colors
+                print(f"{CYAN}")
+                print("┌─────────────────────────────────────────────────────┐")
+                print("│              XHARVESTER UPDATER                     │")
+                print("└─────────────────────────────────────────────────────┘")
+                print(f"{RESET}")
+                
+                # Create updater instance
+                updater = XHarvesterUpdater()
+                
+                # Ask about creating launchers
+                response = input("Create desktop/launcher shortcuts? (Y/n): ")
+                create_launchers = response.lower() not in ['n', 'no']
+        
+                # Run the update
+                success = updater.run(create_launchers=create_launchers)
+        
+                if success:
+                    print_status("Update completed successfully.")
+                    print_warning("Please restart the program to use the updated version.")
                 else:
-                    print_error("Update functionality is not available. Please ensure xharvester_updater.py is in the same directory.")
-            except Exception as e:
-                print_error(f"Update failed: {str(e)}")
-            input(f"\n{GREEN}Press Enter to continue...{RESET}")
+                    print_error("Update failed.")
+                    
+                input(f"\n{GREEN}Press Enter to continue...{RESET}")
+                
+            except KeyboardInterrupt:
+                msg = f"\n\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Update canceled by User\n\n"
+                for word in msg:
+                    print(word, end="", flush=True)
+                    time.sleep(0.05)
+                time.sleep(2)
 
         else:
             warning = f"\n\t'{choice}' is not a valid menu option!\n"
