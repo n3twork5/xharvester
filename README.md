@@ -4,10 +4,10 @@
  )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
 ```
-⚡ xharvester is a specialized, Python-based reconnaissance suite designed for security assessments of radio frequency (RF), wireless(bluetooth & wifi), industrial control system(scada), and automotive systems. It integrates multiple tools and scripts into a unified workflow for probing, analyzing, and documenting findings from the physical and wireless world.
+⚡ xharvester is a specialized, Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless(bluetooth & wifi), industrial control system(scada), and automotive systems. It integrates multiple tools and scripts into a unified workflow for probing, analyzing, and documenting findings from the physical and wireless world.
 
 ## Overview
-Moving beyond traditional web OSINT, xHarvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automobiles vehicles.
+Moving beyond traditional web OSINT, xHarvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automobiles vehicles.
 
 ## ✨ Core Framework Features
 Unified Command & Control: A single Python-based interface to orchestrate a wide array of specialized hardware and software tools.
@@ -92,5 +92,5 @@ If you find this tool helpful and want to support its development, please consid
 Your support helps keep the project alive and allows for continuous improvements. Thank you for your generosity!
 
 
-## ⚠️ Disclaimer
+## * ⚠️ Disclaimer *
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, catastrophic failure, and severe legal consequences. Always operate within a controlled, legal environment.
