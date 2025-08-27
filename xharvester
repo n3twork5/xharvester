@@ -5,22 +5,9 @@ import socket
 import sys
 import platform
 import subprocess
-import asyncio
 from datetime import datetime
 from pathlib import Path
-
-# Try to import Bluetooth modules
-try:
-    import bluetooth
-    CLASSIC_BT_AVAILABLE = True
-except ImportError:
-    CLASSIC_BT_AVAILABLE = False
-
-try:
-    from bleak import BleakScanner, BleakClient
-    BLE_AVAILABLE = True
-except ImportError:
-    BLE_AVAILABLE = False
+from modules.bluetooth_module import BluetoothModule
 
 # Color codes
 GREEN = '\033[32m'
@@ -33,7 +20,7 @@ LIGHTCYAN_EX = '\033[96m'
 BLACK = '\x1b[30m'
 RESET = '\033[0m'
 
-# Configuration
+# Speed Conf
 ANIMATION_SPEED = 0.005
 
 ### Color Status ###
@@ -98,21 +85,16 @@ def about() -> None:
 {CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
 {CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{YELLOW}Version: {RESET}{BLUE}1.0.0{RESET}
-{YELLOW}Time: {RESET}{BLUE}{datetime.now()}{RESET}
+{YELLOW}Version: {RESET}{BLUE}1.0{RESET}
+{YELLOW}Date: {RESET}{BLUE}{datetime.now().strftime(f"%d/%m/%Y {YELLOW}Time:{RESET}{BLUE} %H:%M")}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
-    
     print(description)
 
-### Clear screen function with platform detection ###
 def clear_screen() -> None:
-    """Clear the terminal screen based on the operating system"""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-### Get hostname with error handling ###
 def get_hostname() -> str:
-    """Get hostname with proper error handling"""
     try:
         return socket.gethostname()
     except:
@@ -158,7 +140,6 @@ def check_desktop_launcher() -> bool:
         desktop_file = Path.home() / ".local" / "share" / "applications" / "xharvester.desktop"
         if desktop_file.exists():
             return True
-    
     return False
 
 ### Fix desktop launcher permissions ###
@@ -179,285 +160,8 @@ def fix_desktop_launcher():
                 return False
     return False
 
-### Bluetooth Functions ###
-def check_bluetooth_dependencies():
-    """Check if Bluetooth dependencies are available"""
-    if not CLASSIC_BT_AVAILABLE:
-        print_error("PyBluez not available for classic Bluetooth")
-        print_warning("Install with: pip install pybluez2")
-    
-    if not BLE_AVAILABLE:
-        print_error("Bleak not available for BLE")
-        print_warning("Install with: pip install bleak")
-    
-    return CLASSIC_BT_AVAILABLE or BLE_AVAILABLE
-
-def discover_classic_devices():
-    """Discover classic Bluetooth devices"""
-    if not CLASSIC_BT_AVAILABLE:
-        return []
-    
-    try:
-        print_status("Scanning for classic Bluetooth devices (this may take 10-15 seconds)...")
-        devices = bluetooth.discover_devices(lookup_names=True, duration=10, flush_cache=True)
-        return devices
-    except Exception as e:
-        print_error(f"Classic Bluetooth discovery failed: {e}")
-        return []
-
-async def discover_ble_devices():
-    """Discover BLE devices"""
-    if not BLE_AVAILABLE:
-        return []
-    
-    try:
-        print_status("Scanning for BLE devices...")
-        devices = await BleakScanner.discover(timeout=10.0)
-        return devices
-    except Exception as e:
-        print_error(f"BLE discovery failed: {e}")
-        return []
-
-def list_services(address):
-    """List services for a Bluetooth device"""
-    if not CLASSIC_BT_AVAILABLE:
-        print_error("PyBluez not available")
-        return
-    
-    try:
-        print_status(f"Discovering services for {address}...")
-        services = bluetooth.find_service(address=address)
-        
-        if not services:
-            print_warning("No services found")
-            return
-        
-        for service in services:
-            print(f"{CYAN}Service: {service['name']}")
-            print(f"  Host: {service['host']}")
-            print(f"  Description: {service['description']}")
-            print(f"  Provider: {service['provider']}")
-            print(f"  Protocol: {service['protocol']}")
-            print(f"  Port: {service['port']}")
-            print(f"  Service ID: {service['service-id']}{RESET}")
-            print()
-            
-    except Exception as e:
-        print_error(f"Service discovery failed: {e}")
-
-def bluejacking_demo(target_name="Phone"):
-    """Demo of bluejacking concept"""
-    print_status("Bluejacking Demo")
-    print(f"{YELLOW}Bluejacking involves sending unsolicited messages to Bluetooth devices.")
-    print(f"This is a demonstration of the concept - not an actual attack.{RESET}")
-    print()
-    
-    # Discover devices
-    devices = discover_classic_devices()
-    
-    if not devices:
-        print_warning("No devices found for bluejacking demo")
-        return
-    
-    print(f"{GREEN}Found devices:{RESET}")
-    for i, (addr, name) in enumerate(devices):
-        print(f"{i+1}. {name} ({addr})")
-    
-    try:
-        choice = int(input(f"\n{YELLOW}Select device to send demo message to (0 to cancel): {RESET}"))
-        if choice == 0:
-            return
-        
-        addr, name = devices[choice-1]
-        message = "This is a bluejacking demo message from XHarvester"
-        
-        print_status(f"Sending demo message to {name} ({addr})")
-        print(f"{CYAN}Message: {message}{RESET}")
-        print()
-        print_warning("Note: Actual bluejacking requires specific OBEX protocols and vulnerable devices")
-        
-    except (ValueError, IndexError):
-        print_error("Invalid selection")
-
-def bluesnarfing_info():
-    """Information about bluesnarfing"""
-    print_status("Bluesnarfing Information")
-    print(f"{YELLOW}Bluesnarfing is an attack that extracts information from Bluetooth devices.")
-    print(f"It typically targets the OBEX Push Profile to access calendars, contacts, etc.{RESET}")
-    print()
-    print(f"{RED}WARNING: Bluesnarfing is illegal without explicit permission.{RESET}")
-    print(f"{YELLOW}This tool provides information only - not actual attack capabilities.{RESET}")
-    print()
-    print(f"{GREEN}Vulnerable devices often:{RESET}")
-    print(f"  - Have Bluetooth in discoverable mode")
-    print(f"  - Use weak or default PINs")
-    print(f"  - Have outdated firmware")
-    print()
-    print(f"{GREEN}Protection measures:{RESET}")
-    print(f"  - Keep Bluetooth in non-discoverable mode when not in use")
-    print(f"  - Use strong PINs/passkeys")
-    print(f"  - Keep devices updated")
-    print(f"  - Disable unnecessary Bluetooth services")
-
-async def ble_scan():
-    """Scan for BLE devices"""
-    if not BLE_AVAILABLE:
-        print_error("Bleak library not available")
-        print_warning("Install with: pip install bleak")
-        return
-    
-    print_status("Scanning for BLE devices...")
-    
-    try:
-        devices = await BleakScanner.discover(timeout=15.0)
-        
-        if not devices:
-            print_warning("No BLE devices found")
-            return
-        
-        print(f"{GREEN}Found {len(devices)} BLE devices:{RESET}")
-        for i, device in enumerate(devices):
-            print(f"{i+1}. {device.name} - {device.address}")
-            print(f"   RSSI: {device.rssi} dBm")
-            print(f"   Details: {device.details}")
-            print()
-            
-    except Exception as e:
-        print_error(f"BLE scan failed: {e}")
-
-def run_ble_scan():
-    """Run BLE scan in async context"""
-    if not BLE_AVAILABLE:
-        print_error("BLE functionality not available")
-        return
-    
-    try:
-        asyncio.run(ble_scan())
-    except Exception as e:
-        print_error(f"Error running BLE scan: {e}")
-
-def bluetooth_module():
-    clear_screen()
-    print_status(f"{CYAN}Initializing Bluetooth module...\n")
-    
-    # Check if Bluetooth is available
-    if not check_bluetooth_dependencies():
-        print_error("Bluetooth functionality is not available.")
-        print_warning("Please install the required dependencies:")
-        print_warning("  pip install pybluez2 bleak")
-        input(f"\n{GREEN}Press Enter to continue...{RESET}")
-        return
-    
-    time.sleep(0.05)
-    active = True
-    while active:
-        clear_screen()
-        text_animation()
-        print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
-        print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-        print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
-        print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-        print(f"{CYAN}\t[1] 📨 Bluejacking Demo")
-        print(f"{CYAN}\t[2] ✉️ Bluesnarfing Info")
-        print(f"{CYAN}\t[3] 🐛 Bluebugging Info")
-        print(f"{CYAN}\t[4] 👂 MITM Attacks Info")
-        print(f"{CYAN}\t[5] 🎙️ Car Whisperer Info")
-        print(f"{CYAN}\t[6] 🎭 BLE Scanning")
-        print(f"{CYAN}\t[7] 📡 Classic BT Scanning")
-        print(f"{CYAN}\t[8] 🔍 List Services")
-        print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-        print(f"{YELLOW}\t[0] ⇇ Back")
-        print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
-
-        try:
-            choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
-        except (KeyboardInterrupt, EOFError):
-            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
-            for word in terminator:
-                print(word, end="", flush=True)
-                time.sleep(0.05)
-            break
-            
-        if choice == "0":
-            mesg = f"{YELLOW}\n\t\t\tMoving back..."
-            for word in mesg:
-                print(word, end="", flush=True)
-                time.sleep(0.05)
-            active = False
-
-        elif choice == "1":
-            bluejacking_demo()
-
-        elif choice == "2":
-            bluesnarfing_info()
-
-        elif choice == "3":
-            print(f"\n{GREEN}  Bluebugging:{CYAN} Gaining unauthorized access to a Bluetooth device.")
-            print(f"{GREEN}  Impact:{CYAN} Allows attacker to make calls, send messages, read contacts.")
-            print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
-            print(f"{RED}  WARNING: This is illegal without permission.{RESET}\n")
-
-        elif choice == "4":
-            print(f"\n{GREEN}  MITM Attacks:{CYAN} Intercepting Bluetooth communication.")
-            print(f"{GREEN}  Techniques:{CYAN} Impersonation, encryption downgrade, key negotiation.")
-            print(f"{GREEN}  Protection:{CYAN} Use secure pairing, verify devices, monitor connections.{RESET}\n")
-
-        elif choice == "5":
-            print(f"\n{GREEN}  Car Whisperer:{CYAN} Attack against vehicle Bluetooth systems.")
-            print(f"{GREEN}  Impact:{CYAN} Eavesdrop on conversations or inject audio into the vehicle.")
-            print(f"{GREEN}  Protection:{CYAN} Change default PINs, disable Bluetooth when not in use.{RESET}\n")
-
-        elif choice == "6":
-            run_ble_scan()
-
-        elif choice == "7":
-            devices = discover_classic_devices()
-            if devices:
-                print(f"{GREEN}Found {len(devices)} classic Bluetooth devices:{RESET}")
-                for i, (addr, name) in enumerate(devices):
-                    print(f"{i+1}. {name} ({addr})")
-            else:
-                print_warning("No classic Bluetooth devices found")
-
-        elif choice == "8":
-            addr = input(f"{YELLOW}Enter device address to list services: {RESET}")
-            if addr:
-                list_services(addr)
-
-        else:
-            print_error("Invalid option. Please try again.")
-        
-        if choice != "0":
-            input(f"\n{GREEN}Press Enter to continue...{RESET}")
-
-def wifi_module():
-    print_status(f"{CYAN}Initializing WiFi module...")
-    time.sleep(2)
-    print_warning(f"{YELLOW}WiFi module is a placeholder - actual functionality not implemented")
-    input(f"\n{GREEN}Press Enter to continue...{RESET}")
-
-def automobile_module():
-    print_status(f"{CYAN}Initializing Automobile module...")
-    time.sleep(2)
-    print_warning(f"{YELLOW}Automobile module is a placeholder - actual functionality not implemented")
-    input(f"\n{GREEN}Press Enter to continue...{RESET}")
-
-def rf_module():
-    print_status(f"{CYAN}Initializing Radio Frequency module...")
-    time.sleep(2)
-    print_warning(f"{YELLOW}RF module is a placeholder - actual functionality not implemented")
-    input(f"\n{GREEN}Press Enter to continue...{RESET}")
-
-def scada_module():
-    print_status(f"{CYAN}Initializing SCADA module...")
-    time.sleep(2)
-    print_warning(f"{YELLOW}SCADA module is a placeholder - actual functionality not implemented")
-    input(f"\n{GREEN}Press Enter to continue...{RESET}")
-
 def run_updater():
-    """Run the xharvester_updater.py script as a subprocess"""
     clear_screen()
-    
     # Check if updater script exists
     updater_script = "xharvester_updater.py"
     if not os.path.exists(updater_script):
@@ -470,19 +174,37 @@ def run_updater():
         # Run the updater script
         print(f"{CYAN}Running XHarvester updater...{RESET}\n")
         result = subprocess.run([sys.executable, updater_script], 
-                              capture_output=False, text=True)
+                              capture_output=True, text=True)
         
         if result.returncode == 0:
             print_status("Update completed successfully!")
+            time.sleep(ANIMATION_SPEED)
         else:
             print_error("Update failed or was canceled.")
+            time.sleep(ANIMATION_SPEED)
             
     except KeyboardInterrupt:
-        print_error("\nUpdate canceled by user.")
+        print_error("Update canceled by user.")
     except Exception as e:
         print_error(f"Error running updater: {e}")
     
-    input(f"\n{GREEN}Press Enter to continue...{RESET}")
+    input(f"\n{GREEN}Press Enter to continue...")
+
+def info() -> str:
+    try:
+        time_choice = input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> ')
+        if not time_choice:
+            about()
+            time.sleep(10)
+        else:
+            about()
+            time.sleep(int(time_choice))
+    except ValueError:
+        print_error("Invalid input. Using default time of 10 seconds.")
+        time.sleep(10)
+    except (KeyboardInterrupt, EOFError):
+        print(f"\n\t\t\t{YELLOW}[⇇] Returning to menu...")
+        time.sleep(2)
 
 def main():
     # Check for root privileges
@@ -500,7 +222,6 @@ def main():
                     print_status("Desktop launcher fixed. Please try clicking it again.")
                 else:
                     print_error("Failed to fix desktop launcher.")
-        
         sys.exit(1)
     
     # ========== MAIN LOOP ========== #
@@ -518,48 +239,40 @@ def main():
             break
             
         if choice == "0":
-            closing_text = f"\n{MAGENTA}[💀] {RESET}{RED}Closing The Program...\n\n"
+            closing_text = f"\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Closing The Program...\n\n"
             for word in closing_text:
                 print(word, end='', flush=True)
                 time.sleep(0.05)
             active = False
             
         elif choice == "1":
-            bluetooth_module()
-            
+            blue = BluetoothModule()
+            blue.main()
+
         elif choice == "2":
-            wifi_module()
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
+            time.sleep(2)
 
         elif choice == "3":
-            automobile_module()
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
+            time.sleep(2)
 
         elif choice == '4':
-            rf_module()
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
+            time.sleep(2)
 
         elif choice == '5':
-            scada_module()
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
+            time.sleep(2)
 
         elif choice == '6':
-            try:
-                time_choice = input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> {RESET}')
-                if not time_choice:
-                    about()
-                    time.sleep(10)
-                else:
-                    about()
-                    time.sleep(int(time_choice))
-            except ValueError:
-                print_error("Invalid input. Using default time of 10 seconds.")
-                time.sleep(10)
-            except (KeyboardInterrupt, EOFError):
-                print("\n\nReturning to menu...")
-                time.sleep(1)
+            info()
 
         elif choice == '99':
             run_updater()
 
         else:
-            warning = f"\n\t'{choice}' is not a valid menu option!\n"
+            warning = f"\n\t\t\t{choice} is not a valid menu option!\n"
             print(warning)
             time.sleep(2)
 

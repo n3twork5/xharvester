@@ -48,7 +48,7 @@ python -m venv venv
 .\venv\Scripts\activate.bat
 ```
 ### * Usage *
-#### Cli Base Tool
+#### Multi OS CLI Base Tool For Recon & Exploitation
 ##### MacOS/Linux
 ```
 sudo ./xharvester 
@@ -74,12 +74,14 @@ Install from Google Play Store (Recommended)
     5. Once installed, open Termux from your app drawer
 ```
 
-###### Upgrade & Execution
+###### Upgrade, Installation & Execution
 ```
 pkg update && pkg upgrade -y
 pkg install git python tsu -y 
 git clone https://github.com/n3tworkh4x/xharvester.git
 cd xharvester
+python -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
 tsu ./xharvester
 ```
