@@ -81,8 +81,8 @@ class BluetoothModule:
             print(f"{CYAN}\t[1] 📨 BlueJacking")
             print(f"{CYAN}\t[2] ✉️  BlueSnarfing")
             print(f"{CYAN}\t[3] 🐛 BlueBugging")
-            print(f"{CYAN}\t[4] 👂 MITM Attacks")
-            print(f"{CYAN}\t[5] 🎙️  Car Whisperer")
+            print(f"{CYAN}\t[4] 🎙️  BlueBorne Attack")
+            print(f"{CYAN}\t[5] KNOB Attack")
             print(f"{CYAN}\t[6] 🎭 BLE Scanning")
             print(f"{CYAN}\t[7] 📡 Classic BT Scanning")
             print(f"{CYAN}\t[8] 🔍 List Services")
@@ -113,17 +113,17 @@ class BluetoothModule:
                 print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
 
             elif choice == "2":
-                print(f"\n{GREEN}  BlueSnarfing:{CYAN} Gaining unauthorized access to a Bluetooth device.")
-                print(f"{GREEN}  Impact:{CYAN} Allows attacker to make calls, send messages, read contacts.")
+                print(f"\n{GREEN}  BlueSnarfing:{CYAN} Information theft from a wireless device through a bluetooth connection.")
+                print(f"{GREEN}  Impact:{CYAN} Allows attacker to download system info like contacts, emails, photos and videos.")
                 print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
 
             elif choice == "3":
-                print(f"\n{GREEN}  BlueBugging:{CYAN} Gaining unauthorized access to a Bluetooth device.")
-                print(f"{GREEN}  Impact:{CYAN} Allows attacker to make calls, send messages, read contacts.")
-                print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
-
+                print(f"\n{GREEN}  Bluebugging:{CYAN} Gaining unauthorized access to a Bluetooth device.")
+                print(f"{GREEN}  Impact:{CYAN} Allows attacker to sneak malware or spyware and download files from your device via bluetooth")
+                print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode, turn off the bluetooth device when not in used.{RESET}")
+        
             elif choice == "4":
-                print(f"\n{GREEN}  MITM Attacks:{CYAN} Intercepting Bluetooth communication.")
+                print(f"\n{GREEN}  BlueBorne Attacks:{CYAN} Intercepting Bluetooth communication.")
                 print(f"{GREEN}  Techniques:{CYAN} Impersonation, encryption downgrade, key negotiation.")
                 print(f"{GREEN}  Protection:{CYAN} Use secure pairing, verify devices, monitor connections.{RESET}\n")
 
@@ -153,10 +153,7 @@ class BluetoothModule:
                     pass
             
             elif choice == "9":
-                print(f"\n{GREEN}  Bluebugging:{CYAN} Gaining unauthorized access to a Bluetooth device.")
-                print(f"{GREEN}  Impact:{CYAN} Allows attacker to make calls, send messages, read contacts.")
-                print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
-
+                pass
             else:
                 error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
                 for word in error:

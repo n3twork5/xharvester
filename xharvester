@@ -52,6 +52,8 @@ def text_animation():
     print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
     print(f"{RED} Use only for authorized security testing!{RESET}")
 
+global update
+
 ### Display Menu ###
 def show_menu() -> None:
     text_animation()
@@ -87,10 +89,11 @@ def about() -> None:
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {YELLOW}Version: {RESET}{BLUE}1.0{RESET}
 {YELLOW}Date: {RESET}{BLUE}{datetime.now().strftime(f"%d/%m/%Y {YELLOW}Time:{RESET}{BLUE} %H:%M")}
+{update}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
     print(description)
-
+    
 def clear_screen() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -172,21 +175,22 @@ def run_updater():
     
     try:
         # Run the updater script
-        print(f"{CYAN}Running XHarvester updater...{RESET}\n")
+        print(f"{CYAN}\t\t\tRunning XHarvester updater...\t\t\t\n")
         result = subprocess.run([sys.executable, updater_script], 
                               capture_output=True, text=True)
         
         if result.returncode == 0:
-            print_status("Update completed successfully!")
+            print(f"{GREEN}\t\t\t[+] Update completed successfully!\t\t\t\n")
+            update = datetime.now().strftime(f"{YELLOW}Last Updated: {BLUE}%d/%m/%Y")
             time.sleep(ANIMATION_SPEED)
         else:
-            print_error("Update failed or was canceled.")
+            print(f"{GREEN}\t\t\t[-] Update failed or was canceled.\t\t\t\n")
             time.sleep(ANIMATION_SPEED)
             
     except KeyboardInterrupt:
-        print_error("Update canceled by user.")
+        print(f"{RED}\t\t\t[-] Update canceled by user.\t\t\t\n")
     except Exception as e:
-        print_error(f"Error running updater: {e}")
+        print(f"{RED}\t\t\t[!] Error running updater: {e}\t\t\t\n")
     
     input(f"\n{GREEN}Press Enter to continue...")
 
@@ -200,11 +204,16 @@ def info() -> str:
             about()
             time.sleep(int(time_choice))
     except ValueError:
-        print_error("Invalid input. Using default time of 10 seconds.")
-        time.sleep(10)
+        mesg = f"{RED}\t\t\t[!] Invalid input. Using default time of 10 seconds.\t\t\t"
+        for word in mesg:
+            print(word, end="", flush=True)
+            time.sleep(0.05)
     except (KeyboardInterrupt, EOFError):
-        print(f"\n\t\t\t{YELLOW}[⇇] Returning to menu...")
-        time.sleep(2)
+        mesg = f"\n\t\t\t{MAGENTA}[⇇]{YELLOW} Returning to menu...\t\t\t"
+        for word in mesg:
+            print(word, end="", flush=True)
+            time.sleep(0.05)
+        
 
 def main():
     # Check for root privileges
@@ -213,15 +222,6 @@ def main():
         for word in warning:
             print(word, end='', flush=True)
             time.sleep(0.05)
-        
-        # Offer to fix desktop launcher if it exists but isn't working
-        if check_desktop_launcher():
-            response = input(f"\n{GREEN}Would you like to try fixing the desktop launcher? (Y/n): {RESET}")
-            if response.lower() not in ['n', 'no']:
-                if fix_desktop_launcher():
-                    print_status("Desktop launcher fixed. Please try clicking it again.")
-                else:
-                    print_error("Failed to fix desktop launcher.")
         sys.exit(1)
     
     # ========== MAIN LOOP ========== #
@@ -232,38 +232,38 @@ def main():
         try:
             choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
         except (KeyboardInterrupt, EOFError):
-            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
+            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\t\t\t\n\n"
             for word in terminator:
                 print(word, end="", flush=True)
                 time.sleep(0.05)
             break
             
         if choice == "0":
-            closing_text = f"\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Closing The Program...\n\n"
+            closing_text = f"\n\t\t\t{MAGENTA}[💀] {RESET}{RED}Closing The Program...\t\t\t\n\n"
             for word in closing_text:
                 print(word, end='', flush=True)
                 time.sleep(0.05)
             active = False
             
         elif choice == "1":
-            blue = BluetoothModule()
-            blue.main()
+            bluetooth = BluetoothModule()
+            bluetooth.main()
 
         elif choice == "2":
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
-            time.sleep(2)
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Wi-Fi Still Under Development!\n")
+            time.sleep(3)
 
         elif choice == "3":
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
-            time.sleep(2)
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Automobile Still Under Development!\n")
+            time.sleep(3)
 
         elif choice == '4':
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
-            time.sleep(2)
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Raio Frequency Still Under Development!\n")
+            time.sleep(3)
 
         elif choice == '5':
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Still Under Development!\n")
-            time.sleep(2)
+            print(f"\n\t\t\t{RED}[!]{YELLOW} Industrial Control System Still Under Development!\n")
+            time.sleep(3)
 
         elif choice == '6':
             info()
@@ -272,9 +272,9 @@ def main():
             run_updater()
 
         else:
-            warning = f"\n\t\t\t{choice} is not a valid menu option!\n"
+            warning = f"\n\n\t\t\t{choice} is not a valid menu option!\n"
             print(warning)
-            time.sleep(2)
+            time.sleep(3)
 
 if __name__ == '__main__':
     try:
