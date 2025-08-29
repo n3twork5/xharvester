@@ -8,6 +8,10 @@ import subprocess
 from datetime import datetime
 from pathlib import Path
 from modules.bluetooth_module import BluetoothModule
+from modules.wifi_module import WifiModule
+from modules.rf_module import RFModule
+from modules.automobile_module import AutomobileModule
+from modules.ics_module import ICSModule
 
 # Color codes
 GREEN = '\033[32m'
@@ -47,7 +51,7 @@ def text_animation():
     for char in banner_text:
         print(char, end='', flush=True)
         time.sleep(ANIMATION_SPEED)
-    print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
+    print(f"\n{CYAN}>>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
     print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
     print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
     print(f"{RED} Use only for authorized security testing!{RESET}")
@@ -57,7 +61,7 @@ global update
 ### Display Menu ###
 def show_menu() -> None:
     text_animation()
-    print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+    print(f"\n\t\t\t{LIGHTCYAN_EX}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
     print(f"{GREEN}         🚀   XHARVESTER -- MAIN MENU")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
@@ -76,20 +80,31 @@ def show_menu() -> None:
 def about() -> None:
     description = f"""
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{YELLOW}Bio: {RESET}{GREEN}I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
-{GREEN}Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
+{YELLOW}Bio: {RESET}
+{GREEN}     I am a 19-year-old skilled hacker and programmer with expertise in ICS/SCADA security,
+{GREEN}     Wireless exploitation (Wi-Fi/Bluetooth/RF) & Automotive systems hacking.
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-{YELLOW}About: {RESET}{CYAN}xharvester is a specialized,{RESET}
-{CYAN}modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
-{CYAN}wireless (bluetooth & wifi),{RESET}
-{CYAN}industrial control system (SCADA),{RESET}
-{CYAN}and automotive systems.{RESET}
-{CYAN}It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
-{CYAN}analyzing, and documenting findings from the physical and wireless world.{RESET}
+{YELLOW}Tag Lines: {RESET}
+{BLUE}    * Coding Is My Weapon, Hacking Is My Art
+{BLUE}    * I Craft Backdoors & Close Loopholes
+{BLUE}    * I Hack To Protect, Not To Destroy
+{BLUE}    * I Loving Crafting Backdoors
+{BLUE}    * Breaking Systems, Building Knowledge
+{BLUE}    * I Hack To Protect, Not To Destroy   
+{BLUE}    * Pseudo Code: Print 'Our Democracy Has Been Hacked'
+{BLUE}    * Plant Backdoors, Gain Power
+{RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{YELLOW}About: {RESET}
+{CYAN}      xharvester is a specialized,{RESET}
+{CYAN}      modular Python-based reconnaissance suite designed for security assessments of radio frequency (RF),{RESET}
+{CYAN}      wireless (bluetooth & wifi),{RESET}
+{CYAN}      industrial control system (SCADA),{RESET}
+{CYAN}      and automotive systems.{RESET}
+{CYAN}      It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
+{CYAN}      analyzing, and documenting findings from the physical and wireless world.{RESET}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 {YELLOW}Version: {RESET}{BLUE}1.0{RESET}
 {YELLOW}Date: {RESET}{BLUE}{datetime.now().strftime(f"%d/%m/%Y {YELLOW}Time:{RESET}{BLUE} %H:%M")}
-{update}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 """
     print(description)
@@ -181,7 +196,7 @@ def run_updater():
         
         if result.returncode == 0:
             print(f"{GREEN}\t\t\t[+] Update completed successfully!\t\t\t\n")
-            update = datetime.now().strftime(f"{YELLOW}Last Updated: {BLUE}%d/%m/%Y")
+            #update = datetime.now().strftime(f"{YELLOW}Last Updated: {BLUE}%d/%m/%Y")
             time.sleep(ANIMATION_SPEED)
         else:
             print(f"{GREEN}\t\t\t[-] Update failed or was canceled.\t\t\t\n")
@@ -192,11 +207,11 @@ def run_updater():
     except Exception as e:
         print(f"{RED}\t\t\t[!] Error running updater: {e}\t\t\t\n")
     
-    input(f"\n{GREEN}Press Enter to continue...")
+    input(f"\n  {GREEN}Press Enter to continue...")
 
 def info() -> str:
     try:
-        time_choice = input(f'{GREEN}[?] Choose time stamps [Read Bio & About][default = 10]>>> ')
+        time_choice = input(f'{GREEN}  [?] Choose time stamps [Read Bio & About][default = 10]>>> ')
         if not time_choice:
             about()
             time.sleep(10)
@@ -230,7 +245,7 @@ def main():
         clear_screen()
         show_menu()
         try:
-            choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
+            choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
         except (KeyboardInterrupt, EOFError):
             terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\t\t\t\n\n"
             for word in terminator:
@@ -250,20 +265,20 @@ def main():
             bluetooth.main()
 
         elif choice == "2":
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Wi-Fi Still Under Development!\n")
-            time.sleep(3)
+            wifi = WifiModule()
+            wifi.main()
 
         elif choice == "3":
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Automobile Still Under Development!\n")
-            time.sleep(3)
+            auto = AutomobileModule()
+            auto.main()
 
         elif choice == '4':
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Raio Frequency Still Under Development!\n")
-            time.sleep(3)
+            rf = RFModule()
+            rf.main()
 
         elif choice == '5':
-            print(f"\n\t\t\t{RED}[!]{YELLOW} Industrial Control System Still Under Development!\n")
-            time.sleep(3)
+            ics = ICSModule()
+            ics.main()
 
         elif choice == '6':
             info()

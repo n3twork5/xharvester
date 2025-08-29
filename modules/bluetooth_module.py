@@ -47,7 +47,7 @@ class BluetoothModule:
         for char in banner_text:
             print(char, end='', flush=True)
             time.sleep(ANIMATION_SPEED)
-        print(f"\n{CYAN}>>> Extended Reconnaissance Toolkit For Pentesters <<<{RESET}")
+        print(f"\n{CYAN}>>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
         print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
         print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
@@ -74,7 +74,7 @@ class BluetoothModule:
         while active:
             self.clear_screen()
             self.text_animation()
-            print(f"\n\t\t\t(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+            print(f"\n\t\t\t{LIGHTCYAN_EX}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
@@ -92,7 +92,7 @@ class BluetoothModule:
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
 
             try:
-                choice = input(f"\n  {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
+                choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
             except (KeyboardInterrupt, EOFError):
                 terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
                 for word in terminator:
@@ -123,12 +123,12 @@ class BluetoothModule:
                 print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode, turn off the bluetooth device when not in used.{RESET}")
         
             elif choice == "4":
-                print(f"\n{GREEN}  BlueBorne Attacks:{CYAN} Intercepting Bluetooth communication.")
+                print(f"\n{GREEN}  BlueBorne Attacks:{CYAN} Intercepting bluetooth communication.")
                 print(f"{GREEN}  Techniques:{CYAN} Impersonation, encryption downgrade, key negotiation.")
                 print(f"{GREEN}  Protection:{CYAN} Use secure pairing, verify devices, monitor connections.{RESET}\n")
 
             elif choice == "5":
-                print(f"\n{GREEN}  Car Whisperer:{CYAN} Attack against vehicle Bluetooth systems.")
+                print(f"\n{GREEN}  KNOB Atack:{CYAN} Attack against vehicle Bluetooth systems.")
                 print(f"{GREEN}  Impact:{CYAN} Eavesdrop on conversations or inject audio into the vehicle.")
                 print(f"{GREEN}  Protection:{CYAN} Change default PINs, disable Bluetooth when not in use.{RESET}\n")
 
@@ -138,13 +138,7 @@ class BluetoothModule:
                 print(f"{GREEN}  Protection:{CYAN} Keep devices updated, use non-discoverable mode.{RESET}")
 
             elif choice == "7":
-                devices = self.discover_classic_devices()
-                if devices:
-                    print(f"{GREEN}Found {len(devices)} classic Bluetooth devices!{RESET}")
-                    for i, (addr, name) in enumerate(devices):
-                        print(f"{i+1}. {name} ({addr})")
-                else:
-                    self.print_warning("No classic Bluetooth devices found")
+                pass
 
             elif choice == "8":
                 addr = input(f"{YELLOW}  Enter device address to list services: ")
@@ -159,9 +153,6 @@ class BluetoothModule:
                 for word in error:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
-                
-            if choice != "0":
-                input(f"\n{GREEN}Press Enter to continue...")
 
 if __name__ == "__main__":
     blue = BluetoothModule()
