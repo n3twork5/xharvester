@@ -38,16 +38,16 @@ class WifiModule:
     ### Text Animation ###
     def text_animation(self):
         banner_text = f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
+  _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
+ ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
+  )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
+ (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
         {RESET}"""
 
         for char in banner_text:
             print(char, end='', flush=True)
             time.sleep(ANIMATION_SPEED)
-        print(f"\n{CYAN}>>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
+        print(f"\n{CYAN} >>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
         print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
         print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
@@ -78,11 +78,13 @@ class WifiModule:
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{GREEN}         🚀   XHARVESTER -- WIFI MENU")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{CYAN}\t[1] Captive Portal(Evil Twin)")
-            print(f"{CYAN}\t[2] Handshake Sniffer")
-            print(f"{CYAN}\t[3] MITM & ARP Spoofing")
-            print(f"{CYAN}\t[4] Deauth Attack(DOS)")
-            print(f"{CYAN}\t[5] KRACK")
+            print(f"{CYAN}\t[1] 😈 Captive Portal")
+            print(f"{CYAN}\t[2] 🤝 Handshake Sniffer")
+            print(f"{CYAN}\t[3] 🕵️  MITM & ARP Spoofing")
+            print(f"{CYAN}\t[4] 🚦 Deauth (DOS Attack)")
+            print(f"{CYAN}\t[5] 🔑 KRACK (Key Reinstallation Attack)")
+            print(f"{CYAN}\t[6] 📍 WPS Attacks")
+            print(f"{CYAN}\t[7] 👯 AP Spoofing (Evil Twin)")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{YELLOW}\t[0] ⇇ Back")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
@@ -104,24 +106,39 @@ class WifiModule:
                 active = False
 
             elif choice == "1":
-                pass
+                print(f"\n{GREEN}  Captive Portal:{CYAN} A fake login page used to steal user credentials.")
+                print(f"{GREEN}  Impact:{CYAN} Can lead to compromised accounts and identity theft.")
+                print(f"{GREEN}  Protection:{CYAN} Verify the URL is legitimate, look for HTTPS encryption, and avoid entering sensitive information on public networks.{RESET}")
 
             elif choice == "2":
-                print(f"\n{GREEN}  Handshake Sniffer:{CYAN} Intercepting unencrypted wireless traffic to steal sensitive information.")
-                print(f"{GREEN}  Impact:{CYAN} It can lead to lost of privacy and data leakages.")
-                print(f"{GREEN}  Protection:{CYAN} Make certain to use https not http, turn off servers down to disconnect the attacker.{RESET}")
-
+                print(f"\n{GREEN}  Handshake Sniffer:{CYAN} Intercepts unencrypted wireless traffic to steal sensitive information.")
+                print(f"{GREEN}  Impact:{CYAN} Can lead to loss of privacy and data leaks.")
+                print(f"{GREEN}  Protection:{CYAN} Ensure you use HTTPS instead of HTTP, and shut down servers to disconnect attackers.{RESET}")
 
             elif choice == "3":
-                print(f"\n{GREEN}  MITM & ARP Spoofing:{CYAN} Intercepting unencrypted wireless traffic to redirect user & steal sensitive information.")
-                print(f"{GREEN}  Impact:{CYAN} It can lead to lost of privacy and data leakages.")
-                print(f"{GREEN}  Protection:{CYAN} Make certain to use https not http, turn routers & servers down to disconnect the attacker.{RESET}")
+                print(f"\n{GREEN}  Man-in-the-Middle (MITM) & ARP Spoofing:{CYAN} Redirecting and intercepting unencrypted network traffic by poisoning the ARP cache.")
+                print(f"{GREEN}  Impact:{CYAN} Leads to a loss of privacy, data leaks, and the theft of sensitive information like login credentials.")
+                print(f"{GREEN}  Protection:{CYAN} Always use HTTPS instead of HTTP, employ a VPN, and configure your network to use ARP spoofing detection tools.{RESET}")
 
             elif choice == "4":
-                print(f"\n{GREEN}  Deauth Attack(DOS):{CYAN} Forcing devices off a network to capture handshakes or disrupt services.")
-                print(f"{GREEN}  Impact:{CYAN} It can lead to disruption of services and take routers down.")
-                print(f"{GREEN}  Protection:{CYAN} Implement WPA3(SAE) to simultaneously change your bssid to prevent unresponsiveness when DOS.{RESET}")
+                print(f"\n{GREEN}  Deauth Attack (DoS):{CYAN} Broadcasting forged deauthentication frames to forcibly disconnect devices from a Wi-Fi network.")
+                print(f"{GREEN}  Impact:{CYAN} Causes service disruption, network unavailability, and can be used to capture handshakes for password cracking.")
+                print(f"{GREEN}  Protection:{CYAN} Upgrade to WPA3, which provides management frame protection (802.11w), making deauth attacks significantly harder.{RESET}")
 
+            elif choice == "5":
+                print(f"\n{GREEN}  KRACK (Key Reinstallation Attack):{CYAN} Exploiting WPA2 handshake vulnerabilities to reinstall encryption keys and decrypt traffic.")
+                print(f"{GREEN}  Impact:{CYAN} Decryption of WPA2 traffic, data theft.")
+                print(f"{GREEN}  Protection:{CYAN} Apply firmware/OS patches, upgrade to WPA3, use VPNs.{RESET}")
+
+            elif choice == "6":
+                print(f"\n{GREEN}  WPS Attacks:{CYAN} Exploiting WPA2 handshake vulnerabilities to reinstall encryption keys and decrypt traffic.")
+                print(f"{GREEN}  Impact:{CYAN} Unauthorized network access via WPS PIN brute force attack.")
+                print(f"{GREEN}  Protection:{CYAN} Unauthorized network access via WPS PIN brute force attack.{RESET}")
+
+            elif choice == "7":
+                print(f"\n{GREEN}  AP Spoofing (Evil Twin):{CYAN} Creating a rogue access point that mimics a legitimate network.")
+                print(f"{GREEN}  Impact:{CYAN} Users unknowingly connect to malicious networks, enabling traffic interception.")
+                print(f"{GREEN}  Protection:{CYAN} Verify network names carefully, use VPNs on public networks, and avoid auto-connecting to open Wi-Fi.{RESET}")
 
             else:
                 error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
@@ -129,6 +146,9 @@ class WifiModule:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
                 time.sleep(3)
+
+            if choice != "0":
+                input(f"\n  {GREEN}Press Enter to continue...")
 
 if __name__ == "__main__":
     wifi = WifiModule()

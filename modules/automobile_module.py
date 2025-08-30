@@ -38,16 +38,16 @@ class AutomobileModule:
     ### Text Animation ###
     def text_animation(self):
         banner_text = f"""{MAGENTA}
- _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
-( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
- )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
-(_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
+  _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
+ ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
+  )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
+ (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
         {RESET}"""
 
         for char in banner_text:
             print(char, end='', flush=True)
             time.sleep(ANIMATION_SPEED)
-        print(f"\n{CYAN}>>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
+        print(f"\n{CYAN} >>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
         print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
         print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
@@ -78,7 +78,11 @@ class AutomobileModule:
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{GREEN}         🚀   XHARVESTER -- AUTOMOBILE MENU")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{RED}\tStill under development!")
+            print(f"{CYAN}\t[1] 🔩 CAN Message Injection")
+            print(f"{CYAN}\t[2] 💾 ECU Firmware Attack")
+            print(f"{CYAN}\t[3] 📶 Wireless Gateway Exploit")
+            print(f"{CYAN}\t[4] 📡 Sensor Spoofing")
+            print(f"{CYAN}\t[5] 🚦 CAN Bus Flood")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{YELLOW}\t[0] ⇇ Back")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
@@ -98,6 +102,34 @@ class AutomobileModule:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
                 active = False
+
+            elif choice == "1":
+                print(f"\n{GREEN}  CAN Message Injection:{CYAN} Attacker injects malicious commands onto the vehicle's internal network via OBD-11 PORT.")
+                print(f"{GREEN}  Impact:{CYAN} Can lead to unauthorized control of critical systems like brakes or steering.")
+                print(f"{GREEN}  Protection:{CYAN} Implement message authentication (e.g., SecOC) and network segmentation.{RESET}")
+
+            elif choice == "2":
+                print(f"\n{GREEN}  ECU Firmware Attack:{CYAN} Flashing malicious software onto a vehicle's electronic control units.")
+                print(f"{GREEN}  Impact:{CYAN} Permanently alters vehicle behavior, disables safety features, or bricks the ECU.")
+                print(f"{GREEN}  Protection:{CYAN} Use secure boot processes and cryptographically signed firmware updates.{RESET}")
+                
+            elif choice == "3":
+                print(f"\n{GREEN}  Wireless Gateway Exploit:{CYAN} Attacking via Bluetooth, Wi-Fi, or cellular to access internal networks.")
+                print(f"{GREEN}  Impact:{CYAN} Provides a remote entry point to steal data or send commands to critical systems.")
+                print(f"{GREEN}  Protection:{CYAN} Harden external interfaces, use firewalls, and employ secure protocols (TLS).{RESET}")
+                
+            elif choice == "4":
+                print(f"\n{GREEN}  Sensor Spoofing:{CYAN} Sending falsified data from spoofed sensors (e.g., GPS, wheel speed).")
+                print(f"{GREEN}  Impact:{CYAN} Misleads autonomous systems, causing incorrect navigation or unsafe maneuvers.")
+                print(f"{GREEN}  Protection:{CYAN} Implement sensor data validation and anomaly-based intrusion detection systems.{RESET}")
+
+            elif choice == "5":
+                print(f"\n{GREEN}  CAN Bus Flood:{CYAN} Flooding the network with high-priority messages to block communication.")
+                print(f"{GREEN}  Impact:{CYAN} Renders safety-critical systems unresponsive, potentially immobilizing the vehicle.")
+                print(f"{GREEN}  Protection:{CYAN} Deploy intrusion detection systems (IDS) to monitor for anomalous message rates.{RESET}")
+                
+
+
 
             else:
                 error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
