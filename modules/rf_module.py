@@ -80,7 +80,7 @@ class RFModule:
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{CYAN}\t[1] 👂 RF Eavesdropping")
             print(f"{CYAN}\t[2] 🔁 RF Replay Attack")
-            print(f"{CYAN}\t[3] 📶 RF Jamming")
+            print(f"{CYAN}\t[3] 🚫 RF Jamming")
             print(f"{CYAN}\t[4] 📡 RF Spoofing")
             print(f"{CYAN}\t[5] 🕵️  RF Man-in-the-Middle (MITM)")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")

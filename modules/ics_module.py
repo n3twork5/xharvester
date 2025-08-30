@@ -78,7 +78,11 @@ class ICSModule:
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{GREEN}         🚀   XHARVESTER -- ICS MENU")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{RED}\tStill under development!")
+            print(f"{CYAN}\t[1] ⚡ Unauthorized Command Injection")
+            print(f"{CYAN}\t[2] 💣 ICS Malware (e.g., Triton)")
+            print(f"{CYAN}\t[3] 🔁 ICS Replay Attack")
+            print(f"{CYAN}\t[4] 🚫 ICS DoS Attack")
+            print(f"{CYAN}\t[5] 📦 Supply Chain Attack")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{YELLOW}\t[0] ⇇ Back")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
@@ -100,8 +104,30 @@ class ICSModule:
                 active = False
 
             elif choice == "1":
-                pass
+                print(f"\n{GREEN}  Unauthorized Command Injection:{CYAN} Sending malicious commands to ICS devices like PLCs or RTUs.")
+                print(f"{GREEN}  Impact:{CYAN} Can cause physical damage to machinery, unsafe operations, and production downtime.")
+                print(f"{GREEN}  Protection:{CYAN} Implement strict access control, network segmentation, and use application whitelisting.{RESET}")
             
+            elif choice == "2":
+                print(f"\n{GREEN}  ICS Malware (e.g., Triton):{CYAN} Malicious software specifically designed to target and disrupt industrial control systems.")
+                print(f"{GREEN}  Impact:{CYAN} Safety system disablement, equipment hijacking, and potential physical destruction.")
+                print(f"{GREEN}  Protection:{CYAN} Secure HMIs and workstations, use specialized ICS antivirus, and enforce air-gapping where possible.{RESET}")
+
+            elif choice == "3":
+                print(f"\n{GREEN}  ICS Replay Attack:{CYAN} Capturing and retransmitting legitimate operational commands to disrupt processes.")
+                print(f"{GREEN}  Impact:{CYAN} Causes unexpected machine behavior, process anomalies, and potential safety incidents.")
+                print(f"{GREEN}  Protection:{CYAN} Use protocols with sequence numbers or timestamps to prevent command replay.{RESET}")
+
+            elif choice == "4":
+                print(f"\n{GREEN}  ICS DoS Attack:{CYAN} Flooding controllers or network channels to cripple operational technology (OT) networks.")
+                print(f"{GREEN}  Impact:{CYAN} Halts production, disrupts critical monitoring, and can lead to unsafe plant conditions.")
+                print(f"{GREEN}  Protection:{CYAN} Segment networks rigorously, prioritize ICS traffic, and deploy OT-specific intrusion detection systems.{RESET}")
+
+            elif choice == "5":
+                print(f"\n{GREEN}  Supply Chain Attack:{CYAN} Introducing vulnerabilities into ICS systems through compromised firmware or vendor software.")
+                print(f"{GREEN}  Impact:{CYAN} Provides a hidden backdoor for attackers, leading to widespread system compromise and data manipulation.")
+                print(f"{GREEN}  Protection:{CYAN} Vet suppliers rigorously, verify firmware checksums, and maintain an isolated patch management network.{RESET}")
+
             else:
                 error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
                 for word in error:
@@ -109,7 +135,7 @@ class ICSModule:
                     time.sleep(0.05)
                 
             if choice != "0":
-                input(f"\n{GREEN}Press Enter to continue...")
+                input(f"\n  {GREEN}Press Enter to continue...")
 
 if __name__ == "__main__":
     ics = ICSModule()
