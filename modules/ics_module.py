@@ -134,8 +134,7 @@ class ICSModule:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
                 
-            if choice != "0":
-                
+            if choice != "0":                
                 input(f"\n  {GREEN}Press Enter to continue...")
 
 if __name__ == "__main__":
