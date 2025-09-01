@@ -25,15 +25,15 @@ class BluetoothModule:
     ### Color Status ###
     def print_status(message: str) -> None:
         """Print status messages"""
-        print(f"{GREEN}[+]{RESET} {message}")
+        print(f"{GREEN}[✚]{RESET} {message}")
 
     def print_warning(message: str) -> None:
         """Print warning messages"""
-        print(f"{YELLOW}[!]{RESET} {message}")
+        print(f"{YELLOW}[❕️]{RESET} {message}")
 
     def print_error(message: str) -> None:
         """Print error messages"""
-        print(f"{RED}[-]{RESET} {message}")
+        print(f"{RED}[━]{RESET} {message}")
 
     ### Text Animation ###
     def text_animation(self):
@@ -49,7 +49,7 @@ class BluetoothModule:
             time.sleep(ANIMATION_SPEED)
         print(f"\n{CYAN} >>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
         print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
-        print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
+        print(f"\t\t{YELLOW}ℬ y{GREEN} 𝓝𝓮𝓽𝔀𝓸𝓻𝓴({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
 
 
@@ -74,34 +74,34 @@ class BluetoothModule:
         while active:
             self.clear_screen()
             self.text_animation()
-            print(f"\n\t\t\t{LIGHTCYAN_EX}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{GREEN}         🚀   XHARVESTER -- BLUETOOTH MENU")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{CYAN}\t[1] 📱 BlueJacking")
-            print(f"{CYAN}\t[2] 📝 BlueSnarfing")
-            print(f"{CYAN}\t[3] 🕵️  BlueBugging")
-            print(f"{CYAN}\t[4] 💣 BlueBorne Attack")
-            print(f"{CYAN}\t[5] 🔑 KNOB Attack")
-            print(f"{CYAN}\t[6] 🎭 BLE Scanning")
-            print(f"{CYAN}\t[7] 📡 Classic BT Scanning")
-            print(f"{CYAN}\t[8] 🔍 List Services")
-            print(f"{CYAN}\t[9] 💥 BlueSmacking")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{YELLOW}\t[0] ⇇ Back")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
+            print(f"\n\t\t{LIGHTCYAN_EX} ︻芫═─── {RED}💥 {YELLOW}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{GREEN}         {LIGHTCYAN_EX}🚀{RESET}{GREEN}   XHARVESTER -- BLUETOOTH MENU   {LIGHTCYAN_EX}🕷{GREEN}")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{GREEN}\t[1]{MAGENTA} 📱{CYAN} BlueJacking")
+            print(f"{GREEN}\t[2]{MAGENTA} 🖥{CYAN}  BlueSnarfing")
+            print(f"{GREEN}\t[3]{MAGENTA} 🐞{CYAN} BlueBugging")
+            print(f"{GREEN}\t[4]{MAGENTA} 💣{CYAN} BlueBorne Attack")
+            print(f"{GREEN}\t[5]{MAGENTA} 🗝{CYAN}  KNOB Attack")
+            print(f"{GREEN}\t[6]{MAGENTA} 🎭{CYAN} BLE Scanning")
+            print(f"{GREEN}\t[7]{MAGENTA} 📡{CYAN} Classic BT Scanning")
+            print(f"{GREEN}\t[8]{MAGENTA} 🔍{CYAN} List Services")
+            print(f"{GREEN}\t[9]{MAGENTA} 💥{CYAN} BlueSmacking")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{YELLOW}\t[0] 🚪🔙 Back")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
 
             try:
                 choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
             except (KeyboardInterrupt, EOFError):
-                terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
+                terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting・・・\n\n"
                 for word in terminator:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
                 break
                     
             if choice == "0":
-                mesg = f"{MAGENTA}\n\t\t\t[⇇]{YELLOW} Moving Back...\n\n"
+                mesg = f"{MAGENTA}\n\t\t\t🚪🔙{YELLOW} Moving Back・・・\n\n"
                 for word in mesg:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
@@ -159,7 +159,7 @@ class BluetoothModule:
                     time.sleep(0.05)
 
             if choice != "0":
-                input(f"\n  {GREEN}Press Enter to continue...")
+                input(f"\n  {GREEN}Press Enter to continue・・・")
 
 if __name__ == "__main__":
     blue = BluetoothModule()

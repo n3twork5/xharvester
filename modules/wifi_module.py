@@ -25,15 +25,15 @@ class WifiModule:
     ### Color Status ###
     def print_status(message: str) -> None:
         """Print status messages"""
-        print(f"{GREEN}[+]{RESET} {message}")
+        print(f"{GREEN}[✚]{RESET} {message}")
 
     def print_warning(message: str) -> None:
         """Print warning messages"""
-        print(f"{YELLOW}[!]{RESET} {message}")
+        print(f"{YELLOW}[❕️]{RESET} {message}")
 
     def print_error(message: str) -> None:
         """Print error messages"""
-        print(f"{RED}[-]{RESET} {message}")
+        print(f"{RED}[━]{RESET} {message}")
 
     ### Text Animation ###
     def text_animation(self):
@@ -49,7 +49,7 @@ class WifiModule:
             time.sleep(ANIMATION_SPEED)
         print(f"\n{CYAN} >>> Extended Reconnaissance & Exploitation Toolkit For Newbies <<<{RESET}")
         print(f"{GREEN}| GitHub:{RESET}{YELLOW} @n3tworkh4x |{RESET}{MAGENTA} Ko-fi{YELLOW}(Donation):{RESET}{GREEN} https://ko-fi.com/n3twork |")
-        print(f"\t\t\t{RED}DEVELOPED{YELLOW} BY{GREEN} N3TWORK({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
+        print(f"\t\t{YELLOW}ℬ y{GREEN} 𝓝𝓮𝓽𝔀𝓸𝓻𝓴({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
 
 
@@ -74,32 +74,32 @@ class WifiModule:
         while active:
             self.clear_screen()
             self.text_animation()
-            print(f"\n\t\t\t{LIGHTCYAN_EX}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{GREEN}         🚀   XHARVESTER -- WIFI MENU")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{CYAN}\t[1] 😈 Captive Portal")
-            print(f"{CYAN}\t[2] 🤝 Handshake Sniffer")
-            print(f"{CYAN}\t[3] 🕵️  MITM & ARP Spoofing")
-            print(f"{CYAN}\t[4] 🚦 Deauth (DOS Attack)")
-            print(f"{CYAN}\t[5] 🔑 KRACK (Key Reinstallation Attack)")
-            print(f"{CYAN}\t[6] 📍 WPS Attacks")
-            print(f"{CYAN}\t[7] 👯 AP Spoofing (Evil Twin)")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
-            print(f"{YELLOW}\t[0] ⇇ Back")
-            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━⇉")  
+            print(f"\n\t\t{LIGHTCYAN_EX} ︻芫═─── {RED}💥 {YELLOW}(▀̿Ĺ̯▀̿ ̿)\t\t\t\n")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{GREEN}         {LIGHTCYAN_EX}🚀{RESET}{GREEN}   XHARVESTER -- WIFI MENU   {LIGHTCYAN_EX}🕷{GREEN}")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{GREEN}\t[1]{MAGENTA} 😈 {CYAN} Captive Portal")
+            print(f"{GREEN}\t[2]{MAGENTA} 🤝 {CYAN} Handshake Sniffer")
+            print(f"{GREEN}\t[3]{MAGENTA}👨🏿 {CYAN}MITM & ARP Spoofing")
+            print(f"{GREEN}\t[4]{MAGENTA} 🚫 {CYAN} Deauth (DOS Attack)")
+            print(f"{GREEN}\t[5]{MAGENTA} 🗝 {CYAN}  KRACK (Key Reinstallation Attack)")
+            print(f"{GREEN}\t[6]{MAGENTA} 📍 {CYAN} WPS Attacks")
+            print(f"{GREEN}\t[7]{MAGENTA} 👥 {CYAN} Evil Twin")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
+            print(f"{YELLOW}\t[0] 🚪🔙 Back")
+            print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉") 
 
             try:
                 choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
             except (KeyboardInterrupt, EOFError):
-                terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting...\n\n"
+                terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting・・・\n\n"
                 for word in terminator:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
                 break
                     
             if choice == "0":
-                mesg = f"{MAGENTA}\n\t\t\t[⇇]{YELLOW} Moving Back...\n\n"
+                mesg = f"{MAGENTA}\n\t\t\t🚪🔙{YELLOW} Moving Back・・・\n\n"
                 for word in mesg:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
@@ -148,7 +148,7 @@ class WifiModule:
                 time.sleep(3)
 
             if choice != "0":
-                input(f"\n  {GREEN}Press Enter to continue...")
+                input(f"\n  {GREEN}Press Enter to continue・・・")
 
 if __name__ == "__main__":
     wifi = WifiModule()
