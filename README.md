@@ -47,6 +47,25 @@ python -m venv venv
 python -m venv venv
 .\venv\Scripts\activate.bat
 ```
+### * Installing Requirements *
+```
+pip install -r requirements.txt
+```
+#### macOS
+``` 
+brew install dbus bluez
+pip install pyobjc==9.2
+```
+#### Ubuntu/Debian
+```
+sudo apt update
+sudo apt install libdbus-1-dev libgirepository1.0-dev libcairo2-dev \
+libbluetooth-dev bluez
+pip install PyBluez==0.30 dbus-python==1.3.2 pydbus==0.6.0 PyGObject==3.48.1 pycairo==1.26.0
+sudo apt update
+sudo apt install aircrack-ng hostapd dnsmasq iptables
+```
+
 ### * Usage *
 #### Multi OS CLI Base Tool For Recon & Exploitation
 ##### MacOS/Linux

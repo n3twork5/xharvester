@@ -97,9 +97,7 @@ def about() -> None:
 {YELLOW}About: {RESET}
 {CYAN}      xharvester is a specialized,{RESET}
 {CYAN}      modular Python-based reconnaissance and eexploitation suite designed for security assessments of radio frequency (RF),{RESET}
-{CYAN}      wireless (bluetooth & wifi),{RESET}
-{CYAN}      industrial control system (SCADA),{RESET}
-{CYAN}      and automotive systems.{RESET}
+{CYAN}      wireless (bluetooth & wifi), industrial control system (SCADA), and automotive systems.{RESET}
 {CYAN}      It integrates multiple tools and scripts into a unified workflow for probing,{RESET}
 {CYAN}      analyzing, and documenting findings from the physical and wireless world.{RESET}
 {RED}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -183,9 +181,9 @@ def run_updater():
     # Check if updater script exists
     updater_script = "xharvester_updater.py"
     if not os.path.exists(updater_script):
-        print_error(f"Updater script '{updater_script}' not found!")
-        print_warning("Please ensure xharvester_updater.py is in the same directory.")
-        input(f"\n{GREEN}Press Enter to continue・・・{RESET}")
+        print_error(f"  Updater script '{updater_script}' not found!")
+        print_warning("  Please ensure xharvester_updater.py is in the same directory.")
+        input(f"\n{GREEN}  Press Enter to continue・・・{RESET}")
         return
     
     try:
@@ -211,7 +209,7 @@ def run_updater():
 
 def info() -> str:
     try:
-        time_choice = input(f'{GREEN}  [❔] Choose time stamps [Read Bio & About][default = 10]>>> ')
+        time_choice = input(f'{GREEN}  [❔] Choose time stamps [Read Bio & About][default = 10]>>> {YELLOW}')
         if not time_choice:
             about()
             time.sleep(10)
@@ -219,7 +217,7 @@ def info() -> str:
             about()
             time.sleep(int(time_choice))
     except ValueError:
-        mesg = f"{RED}\t\t\t[❕️] Invalid input. Using default time of 10 seconds.\t\t\t"
+        mesg = f"{RED}\t\t\t Invalid input. Using default time of 10 seconds.\t\t\t"
         for word in mesg:
             print(word, end="", flush=True)
             time.sleep(0.05)
@@ -233,7 +231,7 @@ def info() -> str:
 def main():
     # Check for root privileges
     if not check_root():
-        warning = f"{YELLOW}[❕️] {RESET}{YELLOW}Please run xharvester with administrator/root privileges!\n"
+        warning = f"{YELLOW} Please run xharvester with administrator/root privileges ❕️\n"
         for word in warning:
             print(word, end='', flush=True)
             time.sleep(0.05)
@@ -247,7 +245,7 @@ def main():
         try:
             choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
         except (KeyboardInterrupt, EOFError):
-            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting・・・\t\t\t\n\n"
+            terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Forcefully Terminated By User・・・\t\t\t\n\n"
             for word in terminator:
                 print(word, end="", flush=True)
                 time.sleep(0.05)

