@@ -31,7 +31,7 @@ class AutomobileModule:
         self.setup_can_interface()   
 
 
-        
+
 
     # ========= Text Animation ========= #
     def text_animation(self):
@@ -462,18 +462,43 @@ class AutomobileModule:
             
             #Set up a notifier to read messages
             try:
+                prev_timestamp = None
+                prev_data = None
                 while (duration == 0) or (time.time() - start_time < duration):
                     time.sleep(0.08)
-                    message = self.bus.recv(timeout=0.3)
-                    if message:
-                        if not filter_list or message.arbitration_id in filter_list:
+                    msg = self.bus.recv()
+                    if msg:
+                        if not filter_list or msg.arbitration_id in filter_list:
                             message_count += 1
-                            timestamp = ['00099', '00100', '00102', '00040', '00010', '00300']
-                            can_id = f"{message.arbitration_id:03X}"
-                            data_hex = ''.join(f"{byte:02X}" for byte in message.data)
-                            print(f"{CYAN}    {random.choice(timestamp)}{f'{YELLOW}   |  {CYAN}':6}{can_id}{f'{YELLOW}  | {CYAN}':10}{data_hex}")
+
+                            current_timestamp = msg.timestamp
+                            if prev_timestamp is None:
+                                delta_ms = 0
+                            else:
+                                delta_ms = (current_timestamp - prev_timestamp) * 1000
+
+                            prev_timestamp = current_timestamp
+
+                            can_id = f"{msg.arbitration_id:03X}"
+
+                            # Highlight changed bytes in yellow, unchanged in default (e.g. cyan)
+                            data_display = []
+                            for i, byte in enumerate(msg.data):
+                                byte_hex = f"{byte:02X}"
+                                if prev_data and i < len(prev_data) and byte == prev_data[i]:
+                                    # Unchanged byte
+                                    data_display.append(f"{CYAN}{byte_hex}")
+                                else:
+                                    # Changed byte
+                                    data_display.append(f"{RED}{byte_hex}")
+                            data_hex = ''.join(data_display)
+
+                            prev_data = msg.data
+
+                            print(f"{CYAN}{delta_ms:7.3f}{YELLOW}     |  {CYAN}{can_id:03}{YELLOW}  | {data_hex}")
+
             except KeyboardInterrupt as err:
-                print(f"{RED}{err}Monitoring stopped by user")
+                print(f"{RED}{err} Monitoring stopped by user")
             
             print(f"{CYAN}  [{GREEN}+{CYAN}] Monitoring completed. Captured {YELLOW}{message_count}{CYAN} messages.")
             
