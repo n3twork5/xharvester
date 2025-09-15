@@ -194,7 +194,7 @@ def run_updater():
                               capture_output=True, text=True)
         
         if result.returncode == 0:
-            print(f"{GREEN}\t\t\t[✚] Update completed successfully!\t\t\t\n")
+            print(f"{GREEN}\t\t\t[+] Update completed successfully!\t\t\t\n")
             time.sleep(ANIMATION_SPEED)
         else:
             print(f"{GREEN}\t\t\t[✗] Update failed or was canceled.\t\t\t\n")
@@ -205,7 +205,7 @@ def run_updater():
     except Exception as e:
         print(f"{RED}\t\t\t  Error running updater: {e}\t\t\t\n")
     
-    input(f"\n  {GREEN}Press Enter to continue・・・")
+    input(f"\n  {GREEN}Press Enter to continue...")
 
 
 
@@ -284,7 +284,7 @@ def main():
                 time.sleep(3)
 
         except (KeyboardInterrupt, EOFError):
-            terminator = f"\n\n\t\t{CYAN}[{MAGENTA}💀{CYAN}]{RED} Forcefully Terminated By User・・・\t\t\t\n\n"
+            terminator = f"\n\n\t\t{CYAN}[{MAGENTA}💀{CYAN}]{RED} Forcefully Terminated By User...\t\t\t\n\n"
             for char in terminator:
                 print(char, end="", flush=True)
                 time.sleep(0.05)

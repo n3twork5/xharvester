@@ -61,7 +61,7 @@ class AutomobileModule:
 
 
 
-    # ========= CAN Bus Operations ========= #
+    # ========= CAN Bus Setup & Setdown Operations ========= #
     def setup_can_interface(self):
         """Set up CAN interface for simulation"""
         try:
@@ -128,10 +128,10 @@ class AutomobileModule:
             
             # Create appropriate malicious data based on the system
             if system == "Speed":
-                speed = int(input(f"{GREEN}  Enter speed value ({YELLOW}0-255{GREEN}): {YELLOW}"))
+                speed = int(input(f"{GREEN}  Enter speed value ({YELLOW}0-255{GREEN})({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}"))
                 malicious_data = [0, 0, 0, speed, 150]
             elif system == "RPM":
-                rpm = int(input(f"{GREEN}  Enter RPM value ({YELLOW}0-65535{GREEN}): {YELLOW}"))
+                rpm = int(input(f"{GREEN}  Enter RPM value ({YELLOW}0-65535{GREEN})({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}"))
                 malicious_data = [rpm >> 8, rpm & 0xFF, 0, 0, 0, 0, 0, 0]
             elif system == "Turn Signals":
                 malicious_data = [random.randint(0, 3), 0, 0, 0, 0, 0, 0, 0]
@@ -142,12 +142,12 @@ class AutomobileModule:
             
             if self.bus:
                 active = 0
-                num = int(input(f"{GREEN}  Enter the number of times the can packet should be send:{YELLOW} ") or "2")
+                num = int(input(f"{GREEN}  Enter the number of times for CAN packet({RED}default {GREEN}= {CYAN}5{GREEN}):{YELLOW} ") or "5")
                 while active < num:
                     time.sleep(1)
                     self.bus.send(message)
                     print(f"{GREEN}  Injected malicious CAN message to {system} (ID: 0x{can_id:03X})")
-                    print(f"{BLUE}  Data:{YELLOW} {[hex(x) for x in malicious_data]}")
+                    print(f"{BLUE}  Data:{YELLOW} {[hex(x) for x in malicious_data]}\a")
                     active += 1
                     if active == num:
                         break                      
@@ -155,16 +155,16 @@ class AutomobileModule:
                 print(f"{YELLOW}  Would inject: {system} - ID: 0x{can_id:03X}, Data: {malicious_data}")
                 
         except (ValueError, IndexError):
-            print(f"{RED}  Invalid selection")
+            print(f"{RED}  Invalid selection!\a")
         except Exception as e:
-            print(f"{RED}  Injection failed: {e}")
+            print(f"{RED}  Injection failed: {e}\a")
 
 
 
     # ========== ECU Firmware Attack ========= #
     def ecu_firmware_attack(self):
         """Simulate ECU firmware attack"""
-        print(f"{GREEN}  Starting ECU Firmware Attack...")
+        print(f"\n{CYAN}  [{GREEN}+{CYAN}] Starting ECU Firmware Attack...")
         
         # Simulate firmware extraction and modification
         print(f"{YELLOW}  Extracting current ECU firmware...")
@@ -180,7 +180,7 @@ class AutomobileModule:
         time.sleep(3)
         
         print(f"{GREEN}  ECU firmware compromised! Backdoor installed.")
-        print(f"{RED}  Vehicle may behave unpredictably or be remotely controlled")
+        print(f"{RED}  Vehicle may behave unpredictably or be remotely controlled\a")
 
 
 
@@ -213,10 +213,10 @@ class AutomobileModule:
             time.sleep(2)
             
             print(f"{GREEN}  Successfully compromised {vector}!")
-            print(f"{GREEN}  Gained access to vehicle internal network")
+            print(f"{GREEN}  Gained access to vehicle internal network\a")
             
         except (ValueError, IndexError):
-            print(f"{RED}  Invalid selection")
+            print(f"{RED}  Invalid selection!\a")
 
 
 
@@ -224,7 +224,7 @@ class AutomobileModule:
     # ========= Sensor Spoofing Fucntion & It Helper Function ========= #
     def sensor_spoofing(self):
         """Simulate sensor spoofing attack with vehicle integration"""
-        print(f"{CYAN}  [{GREEN}+{CYAN}] Starting Sensor Spoofing for ICSim")
+        print(f"\n{CYAN}  [{GREEN}+{CYAN}] Starting Sensor Spoofing for ICSim")
     
         # Dictionary mapping sensor names to their CAN ID and a spoofing function
         sensors = {
@@ -285,35 +285,35 @@ class AutomobileModule:
                 print(f"{BLUE}  Would inject: {YELLOW}{sensor_name}{BLUE} - ID: {YELLOW}0x{can_id:03X}{BLUE}, Data:{YELLOW} {spoofed_data}")
             
             time.sleep(1)
-            print(f"{GREEN}  {YELLOW}{sensor_name}{GREEN} spoofing successful!")
-            print(f"{YELLOW}  ICSim dashboard should now show the spoofed value.")
+            print(f"{GREEN}  {MAGENTA}{sensor_name}{GREEN} spoofing successful!")
+            print(f"{YELLOW}  ICSim dashboard should now show the spoofed value.\a")
     
         except (ValueError, IndexError):
-            print(f"{RED}  Invalid selection")
+            print(f"{RED}  Invalid selection!\a")
         except Exception as e:
-            print(f"{RED}  Spoofing failed: {e}")
+            print(f"{RED}  Spoofing failed: {e}\a")
     
     # --- Helper Functions For Each Sensor Type --- #
     def _spoof_speed(self):
         """Spoof the vehicle speed sensor (ICSim ID 0x244)"""
         try:
-            speed = int(input(f"{GREEN}  Enter speed value ({YELLOW}0-255 {MAGENTA}km/h{GREEN}): {YELLOW}"))
+            speed = int(input(f"{GREEN}  Enter speed value ({YELLOW}0-255 {MAGENTA}km/h{GREEN})({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}") or "0")
             speed = max(0, min(255, speed))  #Clamp value
             return [0x00, 0x00, 0x00, speed, 150]
         except ValueError:
-            print(f"\n{RED}  Invalid speed value")
+            print(f"\n{RED}  Invalid speed value!\a")
             return None
     
     def _spoof_rpm(self):
         """Spoof the engine RPM sensor (ICSim ID 0x201)"""
         try:
-            rpm = int(input(f"{GREEN}  Enter RPM value ({YELLOW}0-8000{GREEN}): {YELLOW}"))
+            rpm = int(input(f"{GREEN}  Enter RPM value ({YELLOW}0-8000{GREEN})({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}") or "0")
             rpm = max(0, min(8000, rpm))  #Clamp value
             byte1 = (rpm >> 8) & 0xFF  # High byte
             byte2 = rpm & 0xFF         # Low byte
             return [byte1, byte2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         except ValueError:
-            print(f"\n{RED}  Invalid RPM value")
+            print(f"\n{RED}  Invalid RPM value!\a")
             return None
     
     def _spoof_turn_signal(self):
@@ -325,13 +325,12 @@ class AutomobileModule:
         print(f"  {GREEN}[{WHITE}3{GREEN}]{MAGENTA} Hazard (Both)")
         
         try:
-            choice = int(input(f"{GREEN}  Selection: {YELLOW}"))
+            choice = int(input(f"{GREEN}  Selection({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}") or "0")
             states = {0: 0x00, 1: 0x01, 2: 0x02, 3: 0x03}
             state_byte = states.get(choice, 0x00)
-            # The turn signal state is typically in the first byte
             return [state_byte, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         except ValueError:
-            print(f"\n{RED}  Invalid selection")
+            print(f"\n{RED}  Invalid selection!\a")
             return None
     
     def _spoof_doors(self):
@@ -341,11 +340,11 @@ class AutomobileModule:
         print(f"{GREEN}  [{WHITE}1{GREEN}]{MAGENTA} Unlocked")
         
         try:
-            choice = int(input(f"{GREEN}  Selection: {YELLOW}"))
+            choice = int(input(f"{GREEN}  Selection({RED}default {GREEN}= {CYAN}0{GREEN}): {YELLOW}") or "0")
             state_byte = 0x0F if choice == 0 else 0x00
             return [0x00, 0x00, state_byte, 0x00, 0x00, 0x00]
         except ValueError:
-            print(f"\n{RED}  [!] Invalid selection")
+            print(f"\n{RED}  Invalid selection!\a")
             return None
     
     def _spoof_lights(self):
@@ -355,11 +354,11 @@ class AutomobileModule:
         print(f"{GREEN}  [{WHITE}1{GREEN}] {MAGENTA}On")
         
         try:
-            choice = int(input(f"{GREEN}  Selection:{YELLOW} "))
+            choice = int(input(f"{GREEN}  Selection({RED}default {GREEN}= {CYAN}0{GREEN}):{YELLOW} ") or "0")
             state_byte = 0x01 if choice == 1 else 0x00
             return [state_byte, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]
         except ValueError:
-            print(f"\n{RED}  [!] Invalid selection")
+            print(f"\n{RED}  Invalid selection!\a")
             return None
         
 
@@ -367,10 +366,10 @@ class AutomobileModule:
     # ========= Can Bus Flood Function ========= #
     def can_bus_flood(self):
         """Simulate CAN bus flooding attack with vehicle-specific IDs"""
-        print(f"{CYAN}  [{GREEN}+{CYAN}] Starting CAN Bus Flood")
+        print(f"\n{CYAN}  [{GREEN}+{CYAN}] Starting CAN Bus Flood")
         
         try:
-            duration = int(input(f"{GREEN}  Flood duration ({YELLOW}seconds{GREEN}) [{YELLOW}default: {CYAN}5{GREEN}]: {YELLOW}") or "5")
+            duration = int(input(f"{GREEN}  Flood duration ({YELLOW}seconds{GREEN}) [{RED}default {GREEN}= {CYAN}5{GREEN}]: {YELLOW}") or "5")
             priority = input(f"{CYAN}  Message priority [{RED}high{GREEN}/{YELLOW}medium{GREEN}/low, {MAGENTA}default:{RED} high{GREEN}]: {YELLOW}") or "high"
             
             print(f"\n{CYAN}  [{RED}ℹ{CYAN}] Flooding CAN bus with {MAGENTA}{priority}{CYAN} priority messages for {MAGENTA}{duration}{CYAN} seconds...")
@@ -419,7 +418,7 @@ class AutomobileModule:
             flood_thread.join()
             
             print(f"{CYAN}  [{GREEN}+{CYAN}]{GREEN} CAN bus flood completed!")
-            print(f"{YELLOW}  Vehicle may become unresponsive or display erratic behavior!")
+            print(f"{YELLOW}  Vehicle may become unresponsive or display erratic behavior!\a")
             
         except ValueError:
             print(f"{CYAN}  [{RED}-{CYAN}]{RED} Invalid input")
@@ -454,7 +453,7 @@ class AutomobileModule:
                     return
             
             print(f"{CYAN}  [{RED}ℹ{CYAN}]{RED} Starting monitor... Press Ctrl+C to stop")
-            print(f"{CYAN}  Timestamp{f'{YELLOW} |{CYAN}':6} CANID{f'{YELLOW} |{CYAN}':6}   Data")
+            print(f"{CYAN}    Delta  {f'{YELLOW} |{CYAN}':6} CANID{f'{YELLOW} |{CYAN}':6}   Data")
             print(f"  {YELLOW}{'-'*36}{RESET}")
             
             start_time = time.time()
@@ -491,7 +490,7 @@ class AutomobileModule:
                                 else:
                                     # Changed byte
                                     data_display.append(f"{RED}{byte_hex}")
-                            data_hex = ''.join(data_display)
+                            data_hex = ' '.join(data_display)
 
                             prev_data = msg.data
 
@@ -500,7 +499,7 @@ class AutomobileModule:
             except KeyboardInterrupt as err:
                 print(f"{RED}{err} Monitoring stopped by user")
             
-            print(f"{CYAN}  [{GREEN}+{CYAN}] Monitoring completed. Captured {YELLOW}{message_count}{CYAN} messages.")
+            print(f"{CYAN}  [{GREEN}+{CYAN}] Monitoring completed. Captured {YELLOW}{message_count}{CYAN} messages.\a")
             
         except Exception as e:
             print(f"{RED}  Monitoring failed: {e}")
