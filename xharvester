@@ -2,7 +2,7 @@
 import os
 import time
 import socket
-import sys
+import sysaa
 from datetime import datetime
 from pathlib import Path
 from modules.automobile_module import AutomobileModule
