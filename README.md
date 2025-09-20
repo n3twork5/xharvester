@@ -24,19 +24,19 @@ Geotagging Integration: Correlates all discovered devices and signals with GPS c
 
 Hardware Abstraction Layer: Simplifies the use of complex hardware (SDRs, CAN interfaces) by handling driver communication and configuration automatically.
 
-## 📦 Installation
+🛠️ Installation Guide
 ### **Clone the Repository**
 ```bash
 git clone https://github.com/n3tworkh4x/xharvester.git
 cd xharvester
 ```
 ### **Virtual Environment Setup**
-##### **🍎MacOS/🐧Linux**
+##### **🍎 MacOS/ 🐧 Linux**
 ```
 python3 -m venv venv
 source venv/bin/activate
 ```
-#### **🪟Windows**
+#### **🪟 Windows**
 ```
 ###### Powershell ######
 python -m venv venv
@@ -52,12 +52,12 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 ***External Requirements***
-#### 🍎macOS
+#### 🍎 macOS
 ``` 
 brew install dbus bluez
 pip install pyobjc==9.2
 ```
-#### 🐧Ubuntu/Debian
+#### 🐧 Ubuntu/Debian
 ```
 sudo apt update
 sudo apt install libdbus-1-dev libgirepository1.0-dev libcairo2-dev \
@@ -69,16 +69,14 @@ sudo apt install aircrack-ng hostapd dnsmasq iptables
 
 #### **⚡ Usage Notes**
 #### Multi OS CLI Base Tool For Recon & Exploitation
-##### 🍎MacOS/🐧Linux
+##### 🍎 MacOS/ 🐧 Linux
 ```
 sudo ./xharvester 
 ```
-##### 🪟Windows
-```
-sudo python xharvester
-```
-##### Termux
+##### 🪟 Windows
+**Open Git or Command Prompt with Administration & Type:```python xharvester``` in the location of the tool.**
 
+##### 🤖 Android (Termux)
 ###### Installation Of Termux From Play Store
 ```
 Install from Google Play Store (Recommended)
@@ -106,12 +104,12 @@ pip install -r requirements.txt
 tsu ./xharvester
 ```
 
-### 💝Support Xharvester's Growth
+### 💝 Support Xharvester's Growth
 **🚀 If Xharvester helps you, consider [sponsoring](https://ko-fi.com/n3twork) -- 100% of support goes to keeping it free forever.**
 
 - **$5/month**: Coffie Tier ☕
 - **$25/month**: Bug Prioritizer 🐛
 
 
-#### **⚠️Disclaimer**
+#### **📌 Disclaimer**
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, catastrophic failure, and severe legal consequences. Always operate within a controlled, legal environment.
