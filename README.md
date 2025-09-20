@@ -104,13 +104,11 @@ source venv/bin/activate
 pip install -r requirements.txt
 tsu ./xharvester
 ```
-## * Donation *
+## 💝Support Xharvester's Growth
+**🚀 If Xharvester helps you, consider [sponsoring](https://ko-fi.com/n3twork) -- 100% of support goes to keeping it free forever.**
 
-If you find this tool helpful and want to support its development, please consider making a donation:
-
-[Donate via Ko-fi](https://ko-fi.com/n3twork)
-
-Your support helps keep the project alive and allows for continuous improvements. Thank you for your generosity!
+- **$5/month**: Coffie Tier ☕
+- **$25/month**: Bug Prioritizer 🐛
 
 
 ## * ⚠️ Disclaimer *
