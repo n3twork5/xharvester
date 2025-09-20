@@ -1,4 +1,4 @@
-#!/home/y3suh4x/Desktop/tool-dev/xharvester/venv/bin/python
+#!/home/unknown/Desktop/xharvester/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

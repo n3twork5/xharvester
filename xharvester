@@ -3,8 +3,6 @@ import os
 import time
 import socket
 import sys
-import platform
-import subprocess
 from datetime import datetime
 from pathlib import Path
 from modules.automobile_module import AutomobileModule
@@ -28,7 +26,7 @@ ANIMATION_SPEED = 0.005
 def text_animation():
     banner_text = f"""{MAGENTA}
   _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ {RED}
- ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \\{MAGENTA}
+ ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \{MAGENTA}
   )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /{RED}
  (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
     {RESET}"""
@@ -110,104 +108,7 @@ def get_hostname() -> str:
     except:
         return "unknown"
     
-
-
-# ========= Check for ADMIN/ROOT privileges ========= #
-def check_root() -> bool:
-    """Check if the script is running with root privileges on WINDOWS & UNIX/LINUX"""
-    if platform.system() == "Windows":
-        try:
-            import ctypes
-            return ctypes.windll.shell32.IsUserAnAdmin() != 0
-        except:
-            return False
-    else:
-        return os.geteuid() == 0
     
-
-
-# ========= Check if desktop launcher exists ========= #
-def check_desktop_launcher() -> bool:
-    """Check if desktop launcher exists and is accessible"""
-    system = platform.system().lower()
-    # Check for Windows desktop launcher
-    if system == "windows":
-        desktop = Path.home() / "Desktop" / "XHarvester.lnk"
-        if desktop.exists():
-            return True
-        
-        # Check other possible locations
-        possible_locations = [
-            Path.home() / "OneDrive" / "Desktop" / "XHarvester.lnk",
-            Path(os.environ.get('USERPROFILE', '')) / "Desktop" / "XHarvester.lnk"
-        ]
-        
-        for location in possible_locations:
-            if location.exists():
-                return True
-                
-    else:
-        # Check for Linux desktop launcher
-        desktop_file = Path.home() / ".local" / "share" / "applications" / "xharvester.desktop"
-        if desktop_file.exists():
-            return True
-    return False
-
-
-
-# ========= Fix desktop launcher permissions ========= #
-def fix_desktop_launcher():
-    """Fix desktop launcher permissions and accessibility"""
-    system = platform.system().lower()
-    
-    if system != "windows":
-        # For Linux systems, ensure the desktop file is executable
-        desktop_file = Path.home() / ".local" / "share" / "applications" / "xharvester.desktop"
-        if desktop_file.exists():
-            try:
-                desktop_file.chmod(desktop_file.stat().st_mode | 0o755)
-                print(f"{YELLOW}  Fixed desktop launcher permissions")
-                return True
-            except Exception as e:
-                print(f"{RED}  Failed to fix desktop launcher permissions: {e}")
-                return False
-    return False
-
-
-
-# ========= Run The Updater ========= #
-def run_updater():
-    '''Run this updater to upgrade the features of the program'''
-    clear_screen()
-    # Check if updater script exists
-    updater_script = "xharvester_updater.py"
-    if not os.path.exists(updater_script):
-        print(f"{RED}  Updater script '{updater_script}' not found!")
-        print(f"{YELLOW}  Please ensure xharvester_updater.py is in the same directory.")
-        input(f"\n{GREEN}  Press Enter to continue・・・{RESET}")
-        return
-    
-    try:
-        # Run the updater script
-        print(f"{CYAN}\t\t\tRunning XHarvester updater・・・\t\t\t\n")
-        result = subprocess.run([sys.executable, updater_script], 
-                              capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            print(f"{GREEN}\t\t\t[+] Update completed successfully!\t\t\t\n")
-            time.sleep(ANIMATION_SPEED)
-        else:
-            print(f"{GREEN}\t\t\t[✗] Update failed or was canceled.\t\t\t\n")
-            time.sleep(ANIMATION_SPEED)
-            
-    except KeyboardInterrupt:
-        print(f"{RED}\t\t\t[✗] Update canceled by user.\t\t\t\n")
-    except Exception as e:
-        print(f"{RED}\t\t\t  Error running updater: {e}\t\t\t\n")
-    
-    input(f"\n  {GREEN}Press Enter to continue...")
-
-
 
 # ========= Option For The About Function ========= #
 def info() -> None:
@@ -235,7 +136,7 @@ def info() -> None:
 # ========= Main Loop For Xharvester ========== #
 def main():
     ''' Check for root privileges '''
-    if not check_root():
+    if not os.geteuid() == 0:
         warning = f"{YELLOW} Please run xharvester with administrator/root privileges!\n"
         for char in warning:
             print(char, end='', flush=True)
@@ -257,26 +158,41 @@ def main():
                 active = False
 
             elif choice == "1":
-                pass
+                notdone = f"\t\t\t{RED}Not implemented yet!\a"
+                for char in notdone:
+                    print(char, end="", flush=True)
+                    time.sleep(0.05)
 
             elif choice == "2":
-                pass
+                notdone = f"\t\t\t{RED}Not implemented yet!\a"
+                for char in notdone:
+                    print(char, end="", flush=True)
+                    time.sleep(0.05)
 
             elif choice == "3":
                 auto = AutomobileModule()
                 auto.main()
 
             elif choice == '4':
-                pass
+                notdone = f"\t\t\t{RED}Not implemented yet!\a"
+                for char in notdone:
+                    print(char, end="", flush=True)
+                    time.sleep(0.05)
 
             elif choice == '5':
-                pass
+                notdone = f"\t\t\t{RED}Not implemented yet!\a"
+                for char in notdone:
+                    print(char, end="", flush=True)
+                    time.sleep(0.05)
 
             elif choice == '6':
                 info()
 
             elif choice == '99':
-                run_updater()
+                notdone = f"\t\t\t{RED}Not implemented yet!\a"
+                for char in notdone:
+                    print(char, end="", flush=True)
+                    time.sleep(0.05)
 
             else:
                 warning = f"\n\n\t\t\t{choice} is not a valid menu option!\n"
