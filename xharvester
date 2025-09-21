@@ -2,7 +2,7 @@
 import os
 import time
 import socket
-import sysaa
+import sys
 from datetime import datetime
 from pathlib import Path
 from modules.automobile_module import AutomobileModule
@@ -51,7 +51,7 @@ def show_menu() -> None:
     print(f"{CYAN}\t[{WHITE}2{CYAN}]{MAGENTA} 🌐 {CYAN}Wifi")
     print(f"{CYAN}\t[{WHITE}3{CYAN}]{MAGENTA} 🚖 {CYAN}Automobile")
     print(f"{CYAN}\t[{WHITE}4{CYAN}]{MAGENTA} 📡 {CYAN}Radio Frequency")
-    print(f"{CYAN}\t[{WHITE}5{CYAN}]{MAGENTA} 🏙️  {CYAN}Industrial Control System - SCADA")
+    print(f"{CYAN}\t[{WHITE}5{CYAN}]{MAGENTA} 🏗️  {CYAN}Industrial Control System - SCADA")
     print(f"{CYAN}\t[{WHITE}6{CYAN}]{MAGENTA} 🛈  {CYAN}About")
     print(f"{LIGHTCYAN_EX}  ⇇━━━━━━━━━━━━━━━━━━━━━━━━୨ৎ━━━━━━━━━━━━━━━━━━━━━━━━━⇉")
     print(f"{CYAN}\t [{RED}0{CYAN}]{RED} ✗ Exit")
