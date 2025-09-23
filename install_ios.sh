@@ -238,7 +238,7 @@ cat > "$HOME/xharvester_ios_launch.txt" << EOF
 EOF
 
 echo ""
-echo "✅ xharvester iOS Integration installed successfully!"
+echo "xharvester iOS Integration installed successfully!"
 echo ""
 echo "📋 Installation Summary:"
 echo "   Environment: $ENV_TYPE"
