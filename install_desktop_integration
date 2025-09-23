@@ -54,7 +54,7 @@ fi
 
 echo ""
 echo "🚀 Running $OS_NAME desktop integration installer..."
-echo "   This will create desktop shortcuts and system integration"
+echo "   This will create desktop shortcut and system integration"
 echo ""
 
 # Run OS-specific installer
