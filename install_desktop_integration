@@ -1,0 +1,67 @@
+#!/bin/bash
+# xharvester Universal Desktop Integration Installer
+# Detects OS and runs appropriate installation script
+
+set -e
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "🔍 xharvester Desktop Integration Installer"
+echo "   Detecting operating system..."
+
+# Detect operating system
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Check if running in Termux (Android)
+    if [[ -n "$PREFIX" && -d "/data/data/com.termux" ]]; then
+        OS="android"
+        OS_NAME="Android/Termux"
+        INSTALLER="$SCRIPT_DIR/icons/android/install_termux_integration.sh"
+    else
+        OS="linux"
+        OS_NAME="Linux"
+        INSTALLER="$SCRIPT_DIR/icons/linux/install_desktop_integration.sh"
+    fi
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    OS="macos"
+    OS_NAME="macOS"
+    INSTALLER="$SCRIPT_DIR/icons/macos/install_desktop_integration.sh"
+elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    OS="windows"
+    OS_NAME="Windows"
+    INSTALLER="$SCRIPT_DIR/icons/windows/install_desktop_integration.bat"
+else
+    echo "❌ Unsupported operating system: $OSTYPE"
+    echo "   Supported: Linux, macOS, Windows, Android/Termux"
+    exit 1
+fi
+
+echo "✅ Detected: $OS_NAME ($OS)"
+echo "   Installer: $INSTALLER"
+
+# Check if installer exists
+if [[ ! -f "$INSTALLER" ]]; then
+    echo "❌ Installer not found: $INSTALLER"
+    echo "   Please check the icons directory structure"
+    exit 1
+fi
+
+echo ""
+echo "🚀 Running $OS_NAME desktop integration installer..."
+echo "   This will create desktop shortcuts and system integration"
+echo ""
+
+# Run OS-specific installer
+case $OS in
+    "linux"|"macos"|"android")
+        exec bash "$INSTALLER"
+        ;;
+    "windows")
+        echo "⚠️  For Windows: Please run icons/windows/install_desktop_integration.bat"
+        echo "   This script cannot execute Windows batch files on this system"
+        exit 1
+        ;;
+    *)
+        echo "❌ Unknown OS: $OS"
+        exit 1
+        ;;
+esac

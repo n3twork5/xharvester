@@ -1,2 +1,111 @@
-2025-09-22 13:18:51,714 - xharvester - INFO - Starting xharvester v2.0
-2025-09-22 13:19:04,513 - xharvester - INFO - User accessed unimplemented feature: BlueTooth module
+2025-09-22 14:39:20,452 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 14:39:54,210 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 14:39:58,037 - xharvester - WARNING - Invalid menu choice: "7"
+2025-09-22 14:40:02,797 - xharvester - INFO - Application closed by user
+2025-09-22 14:40:39,792 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 14:40:47,085 - xharvester - INFO - Application closed by user
+2025-09-22 14:44:28,235 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 14:44:41,887 - xharvester - INFO - Application closed by user
+2025-09-22 17:11:55,189 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 17:32:58,435 - xharvester - INFO - Starting xharvester v2.1 on linux
+2025-09-22 17:47:22,227 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:48:40,456 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:48:52,772 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:50:17,611 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:53:35,197 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:53:38,982 - xharvester - ERROR - Error in 'displaying about information': object of type 'int' has no len()
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 391, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 66, in show_about_info
+    timeout = InputValidator.validate_integer(10, 1, 60)
+  File "/home/unknown/Desktop/xharvester/utils.py", line 45, in validate_integer
+    if len(value) > Config.MAX_INPUT_LENGTH:
+       ~~~^^^^^^^
+TypeError: object of type 'int' has no len()
+2025-09-22 17:55:19,958 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:56:15,010 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:57:45,855 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:58:13,441 - xharvester - INFO - Application closed by user
+2025-09-22 17:59:53,493 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 17:59:58,640 - xharvester - INFO - Application closed by user
+2025-09-22 18:00:25,299 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:00:27,349 - xharvester - INFO - Application closed by user
+2025-09-22 18:01:50,445 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:01:55,968 - xharvester - INFO - Application closed by user
+2025-09-22 18:02:02,752 - xharvester - INFO - Application closed by user
+2025-09-22 18:02:14,010 - xharvester - INFO - Application closed by user
+2025-09-22 18:02:20,447 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:05:20,560 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:05:54,850 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:06:00,717 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:07:14,424 - xharvester - ERROR - Error in 'launching Bluetooth module': name 'BluetoothModule' is not defined
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 391, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 123, in _handle_bluetooth_module
+    bt_module = BluetoothModule()
+                ^^^^^^^^^^^^^^^
+NameError: name 'BluetoothModule' is not defined
+2025-09-22 18:10:37,494 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:13:28,267 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:14:02,676 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:15:00,420 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 18:17:35,648 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 20:24:42,845 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 20:24:53,264 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 20:24:56,166 - xharvester - ERROR - Error in 'launching Bluetooth module': name 'BluetoothModule' is not defined
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 420, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 123, in _handle_bluetooth_module
+    bt_module = BluetoothModule()
+                ^^^^^^^^^^^^^^^
+NameError: name 'BluetoothModule' is not defined
+2025-09-22 20:47:46,677 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:21:33,110 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:22:16,029 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:27:18,903 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:27:59,133 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:28:16,445 - xharvester - ERROR - Error in 'launching Bluetooth module': name 'BluetoothModule' is not defined
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 420, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 123, in _handle_bluetooth_module
+    bt_module = BluetoothModule()
+                ^^^^^^^^^^^^^^^
+NameError: name 'BluetoothModule' is not defined
+2025-09-22 21:38:54,630 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:38:59,100 - xharvester - ERROR - Error in 'launching Bluetooth module': name 'BluetoothModule' is not defined
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 420, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 123, in _handle_bluetooth_module
+    bt_module = BluetoothModule()
+                ^^^^^^^^^^^^^^^
+NameError: name 'BluetoothModule' is not defined
+2025-09-22 21:39:07,123 - xharvester - WARNING - Invalid menu choice: 
+2025-09-22 21:39:12,774 - xharvester - WARNING - Invalid menu choice: 
+2025-09-22 21:39:18,429 - xharvester - WARNING - Invalid menu choice: 
+2025-09-22 21:43:29,879 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:53:55,282 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:56:36,581 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:57:10,817 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:58:36,745 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 21:58:59,053 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 22:00:24,792 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 22:00:28,447 - xharvester - WARNING - Invalid menu choice: 
+2025-09-22 22:00:59,767 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-22 22:03:33,984 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:41:10,242 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:42:04,449 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:42:12,948 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:51:09,938 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:51:19,578 - xharvester - WARNING - Invalid menu choice: [B[B[B[A[B[B
+2025-09-23 12:51:30,696 - xharvester - WARNING - Invalid menu choice: ;
+2025-09-23 12:52:48,561 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:58:49,532 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 12:59:41,717 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 13:04:51,796 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 13:05:13,087 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 13:16:03,868 - xharvester - INFO - Starting xharvester v1.0 on linux

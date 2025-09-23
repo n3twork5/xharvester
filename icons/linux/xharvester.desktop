@@ -1,0 +1,20 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=xharvester
+Comment=Extended Reconnaissance & Exploitation Toolkit
+Comment[en]=Cross-platform security testing framework
+Exec=/usr/local/bin/xharvester
+Icon=/usr/local/share/icons/xharvester.png
+Terminal=true
+Categories=Development;Security;Network;
+Keywords=security;hacking;penetration;testing;bluetooth;wifi;automobile;rf;scada;
+StartupNotify=true
+StartupWMClass=xharvester
+MimeType=application/x-executable;
+Actions=run-as-root;
+
+[Desktop Action run-as-root]
+Name=Run as Root
+Exec=pkexec /usr/local/bin/xharvester
+Icon=/usr/local/share/icons/xharvester.png

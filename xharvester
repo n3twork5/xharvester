@@ -3,8 +3,8 @@
 xharvester - Extended Reconnaissance & Exploitation Toolkit
 Main application entry point with improved error handling and structure
 
-Author: Network(GHANA)
-Version: 2.0
+Author: N3twork(GHANA) - Computer Programmer & Hacker
+Version: 1.0
 """
 
 import sys
@@ -17,6 +17,11 @@ from utils import (
     InputValidator, create_about_text
 )
 from modules.automobile_module import AutomobileModule
+from modules.bluetooth_module import BluetoothModule
+from modules.wifi_module import WifiModule
+from modules.rf_module import RFModule
+from modules.scada_module import SCADAModule
+from update_manager import UpdateManager
 
 
 class XHarvesterApp:
@@ -25,21 +30,22 @@ class XHarvesterApp:
     def __init__(self):
         self.logger = Logger.get_logger("xharvester")
         self.hostname = SystemUtils.get_hostname()
-        self.logger.info(f"Starting {Config.APP_NAME} v{Config.VERSION}")
+        self.update_manager = UpdateManager()
+        self.logger.info(f"Starting {Config.APP_NAME} v{Config.VERSION} on {Config.CURRENT_PLATFORM}")
     
     def show_main_menu(self) -> None:
         """Display the main application menu"""
         Animation.display_banner()
         MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} MAIN MENU")
         
-        # Define icons for menu options
+        # Define clean icons for menu options
         icons = {
-            "1": "ᛒ",
+            "1": "📱",
             "2": "🛜", 
-            "3": "🚖",
+            "3": "🚗",
             "4": "📡",
-            "5": "🏗️",
-            "6": "🛈"
+            "5": "🏭",
+            "6": "❓"
         }
         
         MenuRenderer.render_menu_options(MenuConfig.MAIN_MENU_OPTIONS, icons)
@@ -48,18 +54,16 @@ class XHarvesterApp:
     
     def show_about_info(self) -> None:
         """Display about information with user-configurable timeout"""
-        with error_handler("displaying about information", self.logger):
-            print(create_about_text())
-            
+        with error_handler("displaying about information", self.logger): 
             try:
-                time_input = input(f'{Colors.CYAN}  [{Colors.GREEN}❔{Colors.CYAN}]{Colors.GREEN} Choose the timestamp [{Colors.CYAN}Read Bio{Colors.GREEN} & {Colors.CYAN}About{Colors.GREEN}][{Colors.RED}default {Colors.GREEN}={Colors.YELLOW} 10{Colors.GREEN}]>>> {Colors.YELLOW}')
+                time_input = input(f'{Colors.CYAN}  [{Colors.GREEN}❔{Colors.CYAN}]{Colors.GREEN} Choose the timestamp [{Colors.CYAN}Read Bio{Colors.GREEN} & {Colors.CYAN}About{Colors.GREEN}][{Colors.RED}default {Colors.GREEN}={Colors.YELLOW} 10{Colors.GREEN}]>>> {Colors.YELLOW}') or "10"
                 
                 if time_input:
                     timeout = InputValidator.validate_integer(time_input, 1, 60)
+                    print(create_about_text())
+                    Animation.show_loading("\t\tReading information\t", timeout)
                 else:
-                    timeout = 10
-                    
-                Animation.show_loading("Reading information", timeout)
+                    pass
                 
             except ValueError as e:
                 Animation.typewriter_line(f"{Colors.ERROR}Invalid input: {e}. Using default time of 10 seconds.{Colors.RESET}")
@@ -86,19 +90,19 @@ class XHarvesterApp:
                 if choice == "0":
                     self._handle_exit()
                 elif choice == "1":
-                    self.handle_not_implemented("BlueTooth module")
+                    self._handle_bluetooth_module()
                 elif choice == "2":
-                    self.handle_not_implemented("WiFi module")
+                    self._handle_wifi_module()
                 elif choice == "3":
                     self._handle_automobile_module()
                 elif choice == "4":
-                    self.handle_not_implemented("Radio Frequency module")
+                    self._handle_rf_module()
                 elif choice == "5":
-                    self.handle_not_implemented("SCADA module")
+                    self._handle_scada_module()
                 elif choice == "6":
                     self.show_about_info()
                 elif choice == "99":
-                    self.handle_not_implemented("Update functionality")
+                    self._handle_update()
                 else:
                     self._handle_invalid_choice(choice)
                     
@@ -111,10 +115,19 @@ class XHarvesterApp:
     
     def _handle_exit(self) -> NoReturn:
         """Handle application exit"""
-        message = f"\n\t\t\t{Colors.CYAN} [{Colors.MAGENTA}💀{Colors.CYAN}]{Colors.RED} Closing The Program...\t\t\t"
-        Animation.typewriter_line(message)
-        self.logger.info("Application closed by user")
         SystemUtils.safe_exit()
+    
+    def _handle_bluetooth_module(self) -> None:
+        """Handle Bluetooth module execution"""
+        with error_handler("launching Bluetooth module", self.logger):
+            bt_module = BluetoothModule()
+            bt_module.main()            
+    
+    def _handle_wifi_module(self) -> None:
+        """Handle WiFi module execution"""
+        with error_handler("launching WiFi module", self.logger):
+            wifi_module = WifiModule()
+            wifi_module.main()
     
     def _handle_automobile_module(self) -> None:
         """Handle automobile module execution"""
@@ -122,11 +135,53 @@ class XHarvesterApp:
             auto_module = AutomobileModule()
             auto_module.main()
     
+    def _handle_rf_module(self) -> None:
+        """Handle RF module execution"""
+        with error_handler("launching RF module", self.logger):
+            rf_module = RFModule()
+            rf_module.main()
+
+    def _handle_scada_module(self) -> None:
+        """Handle SCADA module execution"""
+        with error_handler("launching SCADA module", self.logger):
+            scada_module = SCADAModule()
+            scada_module.main()
+                
+    def _handle_update(self) -> None:
+        """Handle xharvester update functionality"""
+        with error_handler("updating xharvester", self.logger):
+            print(f"\n{Colors.CYAN}  [{Colors.GREEN}+{Colors.CYAN}] XHARVESTER UPDATE MANAGER")
+            print(f"{Colors.INFO}  Platform: {Colors.YELLOW}{Config.CURRENT_PLATFORM}")
+            if Config.IS_TERMUX:
+                print(f"{Colors.INFO}  Environment: {Colors.YELLOW}Termux/Android")
+                print(f"{Colors.WARNING}  Note: Android/Termux environment detected")
+            
+            # Show current version info
+            self.update_manager.show_update_info()
+            
+            try:
+                # Perform the update
+                if self.update_manager.perform_update():
+                    # Update successful - ask if user wants to restart
+                    restart = input(f"\n{Colors.GREEN}  Restart xharvester now? ({Colors.CYAN}y{Colors.GREEN}/{Colors.RED}N{Colors.GREEN}): {Colors.YELLOW}").strip().lower()
+                    if restart in ['y', 'yes']:
+                        print(f"{Colors.SUCCESS}  Restarting xharvester...")
+                        self.logger.info("Restarting after update")
+                        # Exit with special code to indicate restart needed
+                        SystemUtils.safe_exit("Restarting for update...", 2)
+                else:
+                    print(f"{Colors.INFO}  Update process completed.")
+                    
+            except KeyboardInterrupt:
+                print(f"\n{Colors.WARNING}  Update cancelled by user.")
+            except Exception as e:
+                print(f"{Colors.ERROR}  Update failed: {e}")
+                self.logger.error(f"Update failed: {e}", exc_info=True)
+    
     def _handle_invalid_choice(self, choice: str) -> None:
         """Handle invalid menu choices"""
         message = f"\n\t\t\t{Colors.WARNING}'{choice}' is not a valid menu option!{Colors.RESET}"
         Animation.typewriter_line(message)
-        self.logger.warning(f"Invalid menu choice: {choice}")
         time.sleep(2)
 
 

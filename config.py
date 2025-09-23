@@ -5,6 +5,8 @@ Centralizes all settings, colors, and constants
 """
 
 import os
+import sys
+import platform
 from pathlib import Path
 from typing import Dict, Any
 
@@ -29,15 +31,58 @@ class Colors:
     HIGHLIGHT = MAGENTA
 
 
+class PlatformDetector:
+    """Platform detection utilities"""
+    
+    @staticmethod
+    def get_platform() -> str:
+        """Detect current platform"""
+        system = platform.system().lower()
+        
+        # Check for Android/Termux
+        if 'ANDROID_DATA' in os.environ or 'ANDROID_ROOT' in os.environ:
+            return 'android'
+        
+        # Check for other platforms
+        if system == 'linux':
+            return 'linux'
+        elif system == 'windows':
+            return 'windows'
+        elif system == 'darwin':
+            return 'macos'
+        else:
+            return 'unknown'
+    
+    @staticmethod
+    def is_termux() -> bool:
+        """Check if running in Termux environment"""
+        return ('TERMUX_VERSION' in os.environ or 
+                'PREFIX' in os.environ and '/data/data/com.termux' in os.environ.get('PREFIX', ''))
+    
+    @staticmethod
+    def is_root_required() -> bool:
+        """Check if root privileges are required for current platform"""
+        platform_name = PlatformDetector.get_platform()
+        # Android/Termux usually doesn't need root for basic operations
+        return platform_name not in ['android', 'windows']
+
+
 class Config:
-    """Main configuration class"""
+    """Main configuration class with cross-platform support"""
     
     # Application metadata
     APP_NAME = "xharvester"
-    VERSION = "2.0"
-    AUTHOR = "Network(GHANA)"
+    VERSION = "1.0"
+    AUTHOR = f"N3twork({Colors.RED}G{Colors.YELLOW}H{Colors.GREEN}A{Colors.BLACK}N{Colors.RED}A{Colors.GREEN}) {Colors.YELLOW}- {Colors.RED}Computer Hacker {Colors.YELLOW}&{Colors.GREEN} Programmer"
     GITHUB = "@n3tworkh4x"
+    GITHUB_REPO = "n3tworkh4x/xharvester"
+    GITHUB_API_URL = f"https://api.github.com/repos/n3tworkh4x/xharvester"
+    GITHUB_REPO_URL = f"https://github.com/n3tworkh4x/xharvester"
     DONATION_URL = "https://ko-fi.com/n3twork"
+    
+    # Platform detection
+    CURRENT_PLATFORM = PlatformDetector.get_platform()
+    IS_TERMUX = PlatformDetector.is_termux()
     
     # Animation settings
     ANIMATION_SPEED = 0.005
@@ -83,10 +128,44 @@ class Config:
     MAX_LOG_SIZE = 10 * 1024 * 1024  # 10MB
     LOG_BACKUP_COUNT = 5
     
+    # Platform-specific settings
+    PLATFORM_SETTINGS = {
+        'linux': {
+            'can_interfaces': ["vcan0", "can0", "can1", "slcan0"],
+            'require_root': True,
+            'package_manager': 'apt',
+            'shell_commands': True
+        },
+        'android': {
+            'can_interfaces': ["vcan0"],  # Limited CAN support
+            'require_root': False,  # Termux doesn't require root
+            'package_manager': 'pkg',
+            'shell_commands': True
+        },
+        'windows': {
+            'can_interfaces': ["vcan0"],
+            'require_root': False,  # Windows uses different privilege model
+            'package_manager': None,
+            'shell_commands': True
+        },
+        'macos': {
+            'can_interfaces': ["vcan0", "can0"],
+            'require_root': True,
+            'package_manager': 'brew',
+            'shell_commands': True
+        }
+    }
+    
     # Security settings
-    REQUIRE_ROOT = True
+    REQUIRE_ROOT = PLATFORM_SETTINGS.get(CURRENT_PLATFORM, {}).get('require_root', True)
     MAX_INPUT_LENGTH = 1024
-    ALLOWED_CAN_INTERFACES = ["vcan0", "can0", "can1", "slcan0"]
+    ALLOWED_CAN_INTERFACES = PLATFORM_SETTINGS.get(CURRENT_PLATFORM, {}).get('can_interfaces', ["vcan0"])
+    
+    # Update settings
+    UPDATE_CHECK_INTERVAL = 86400  # 24 hours in seconds
+    AUTO_UPDATE = False  # User must confirm updates
+    BACKUP_COUNT = 3  # Number of backups to keep
+    UPDATE_TIMEOUT = 300  # 5 minutes timeout for updates
     
     @classmethod
     def ensure_directories(cls):
@@ -130,7 +209,7 @@ class MenuConfig:
     
     MAIN_MENU_OPTIONS = {
         "1": "BlueTooth",
-        "2": "Wifi", 
+        "2": "WiFi",
         "3": "Automobile",
         "4": "Radio Frequency",
         "5": "Industrial Control System - SCADA",
@@ -146,7 +225,7 @@ class MenuConfig:
         "4": "Sensor Spoofing",
         "5": "CAN Bus Flood",
         "6": "Real-time CAN Monitor",
-        "0": "Back"
+        "0": "Return to Main Menu"
     }
     
     MENU_DECORATORS = {

@@ -1,0 +1,21 @@
+2025-09-22 21:56:43,957 - wifi_module - ERROR - WiFi module error: 'set' object has no attribute 'items'
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/modules/wifi_module.py", line 1169, in main
+    self.show_menu()
+    ~~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/xharvester/modules/wifi_module.py", line 636, in show_menu
+    MenuRenderer.render_menu_options(menu_options, icons)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "/home/unknown/Desktop/xharvester/utils.py", line 331, in render_menu_options
+    for key, name in options.items():
+                     ^^^^^^^^^^^^^
+AttributeError: 'set' object has no attribute 'items'
+2025-09-22 21:58:41,015 - wifi_module - ERROR - WiFi module error: list index out of range
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/modules/wifi_module.py", line 1169, in main
+    self.show_menu()
+    ~~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/xharvester/modules/wifi_module.py", line 633, in show_menu
+    icons = {opt[0].split()[1]: opt[1].split()[0] for opt in options}
+             ~~~~~~~~~~~~~~^^^
+IndexError: list index out of range

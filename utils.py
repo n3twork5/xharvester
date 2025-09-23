@@ -99,6 +99,85 @@ class InputValidator:
         return interface
     
     @staticmethod
+    def validate_float(value: str, min_val: float = 0.0, max_val: float = float('inf')) -> float:
+        """
+        Validate and convert string to float within specified range
+        
+        Args:
+            value: Input string to validate
+            min_val: Minimum allowed value
+            max_val: Maximum allowed value
+            
+        Returns:
+            Validated float value
+            
+        Raises:
+            ValueError: If validation fails
+        """
+        if len(value) > Config.MAX_INPUT_LENGTH:
+            raise ValueError("Input too long")
+        
+        try:
+            float_val = float(value)
+            if not (min_val <= float_val <= max_val):
+                raise ValueError(f"Value must be between {min_val} and {max_val}")
+            return float_val
+        except ValueError as e:
+            raise ValueError(f"Invalid float: {e}")
+    
+    @staticmethod
+    def validate_mac_address(mac: str) -> bool:
+        """
+        Validate MAC address format
+        
+        Args:
+            mac: MAC address string to validate
+            
+        Returns:
+            True if valid MAC address format
+        """
+        # Support multiple MAC address formats
+        patterns = [
+            r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',  # XX:XX:XX:XX:XX:XX or XX-XX-XX-XX-XX-XX
+            r'^([0-9A-Fa-f]{4}\.){2}([0-9A-Fa-f]{4})$',    # XXXX.XXXX.XXXX
+            r'^([0-9A-Fa-f]{12})$'                           # XXXXXXXXXXXX
+        ]
+        
+        for pattern in patterns:
+            if re.match(pattern, mac):
+                return True
+        return False
+    
+    @staticmethod
+    def validate_float(value: str, min_val: float = 0.0, max_val: float = float('inf')) -> float:
+        """Validate and convert string to float within specified range"""
+        if len(value) > Config.MAX_INPUT_LENGTH:
+            raise ValueError("Input too long")
+        
+        try:
+            float_val = float(value)
+            if not (min_val <= float_val <= max_val):
+                raise ValueError(f"Value must be between {min_val} and {max_val}")
+            return float_val
+        except ValueError as e:
+            raise ValueError(f"Invalid float: {e}")
+    
+    @staticmethod
+    def validate_mac_address(mac: str) -> bool:
+        """Validate MAC address format"""
+        # Support multiple MAC address formats
+        patterns = [
+            r'^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$',  # XX:XX:XX:XX:XX:XX or XX-XX-XX-XX-XX-XX
+            r'^([0-9A-Fa-f]{4}\.){2}([0-9A-Fa-f]{4})$',    # XXXX.XXXX.XXXX
+            r'^([0-9A-Fa-f]{12})$'                           # XXXXXXXXXXXX
+        ]
+        
+        for pattern in patterns:
+            if re.match(pattern, mac):
+                return True
+        return False
+    
+    @staticmethod
     def sanitize_input(value: str) -> str:
         """
         Sanitize user input by removing potentially dangerous characters
@@ -192,16 +271,30 @@ class SystemUtils:
     
     @staticmethod
     def ensure_root() -> None:
-        """Ensure application is running with root privileges"""
+        """Ensure application is running with appropriate privileges for the platform"""
         if Config.REQUIRE_ROOT and not SystemUtils.check_root_privileges():
-            error_msg = f"{Colors.WARNING}Please run {Config.APP_NAME} with administrator/root privileges!{Colors.RESET}"
-            Animation.typewriter_line(error_msg)
+            platform_msg = {
+                'linux': f"Please run {Config.APP_NAME} with root privileges: sudo ./{Config.APP_NAME}",
+                'android': f"Note: Some features may require 'tsu' (root) in Termux",
+                'windows': f"Please run {Config.APP_NAME} as Administrator",
+                'macos': f"Please run {Config.APP_NAME} with root privileges: sudo ./{Config.APP_NAME}"
+            }
+            
+            error_msg = platform_msg.get(Config.CURRENT_PLATFORM, 
+                                        f"Please run {Config.APP_NAME} with appropriate privileges!")
+            
+            print(f"{Colors.WARNING}{error_msg}{Colors.RESET}")
+            
+            if Config.CURRENT_PLATFORM == 'android':
+                print(f"{Colors.INFO}Continuing without root privileges on Android/Termux...{Colors.RESET}")
+                return  # Don't exit on Android/Termux
+            
             sys.exit(1)
     
     @staticmethod
-    def safe_exit(message: str = "Exiting...", code: int = 0) -> None:
+    def safe_exit(message: str = "\n\t\t\t💀 Exiting...", code: int = 0) -> None:
         """Safe application exit with message"""
-        Animation.typewriter_line(f"{Colors.INFO}{message}{Colors.RESET}")
+        Animation.typewriter_line(f"{Colors.RED}{message}{Colors.RESET}")
         sys.exit(code)
 
 
@@ -237,12 +330,16 @@ class MenuRenderer:
         
         for key, name in options.items():
             icon = icons.get(key, "")
+            # Add space after icon only if icon exists and doesn't already have one
+            if icon and not icon.endswith(" "):
+                icon += " "
+            
             if key == "0":
-                print(f"{Colors.CYAN}\t [{Colors.RED}{key}{Colors.CYAN}]{Colors.RED} ✗ {name}")
+                print(f"{Colors.CYAN}\t[{Colors.RED}{key}{Colors.CYAN}]{Colors.RED} ✗  {name}")
             elif key == "99":
                 print(f"{Colors.CYAN}\t[{Colors.YELLOW}{key}{Colors.CYAN}]{Colors.YELLOW} 🎁 {name}")
             else:
-                print(f"{Colors.CYAN}\t[{Colors.WHITE}{key}{Colors.CYAN}]{Colors.BLUE} {icon} {Colors.CYAN}{name}")
+                print(f"{Colors.CYAN}\t[{Colors.WHITE}{key}{Colors.CYAN}]{Colors.BLUE} {icon}{Colors.CYAN}{name}")
     
     @staticmethod
     def render_menu_footer() -> None:
