@@ -5,13 +5,11 @@
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
 ```
 
-# xharvester v2.1 - Cross-Platform Edition with Auto-Update
+# xharvester v1.0 - Cross-Platform Edition with Auto-Update
 
-⚡ **xharvester v2.1** is a completely rewritten and cross-platform enhanced version of the specialized Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems. Now with **automatic GitHub updates** and **full Android/Termux support**!
+⚡ **xharvester v1.0** is a cross-platform enhanced Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems with **automatic GitHub updates** and **full Android/Termux & IOS/a-Shell support**!
 
-## 🚀 What's New in v2.1
-
-### 🆕 NEW Features
+### 🆕 Features
 - **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically
 - **📱 Android/Termux Support**: Full compatibility with Android devices using Termux
 - **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
@@ -20,18 +18,9 @@
 - **🛱️ Platform-Specific Security**: Adaptive security based on platform capabilities
 - **💾 Backup & Restore**: Automatic backup creation during updates with rollback support
 - **📋 Version Management**: Smart version comparison and update notifications
-- **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith
+- **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle
 - **🍎 App Bundle Integration**: Native macOS app bundles with Spotlight and Dock support
 - **📡 5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
-
-### Major Improvements (v2.0 Base)
-- **🔧 Modular Architecture**: Complete code restructuring with proper separation of concerns
-- **🛡️ Enhanced Security**: Improved input validation and security controls
-- **📝 Comprehensive Logging**: Structured logging system with file rotation
-- **⚙️ Configuration Management**: Centralized configuration system
-- **🔄 Better Error Handling**: Graceful error handling with proper cleanup
-- **🧵 Thread Safety**: Improved threading management for CAN bus operations
-- **📊 Input Validation**: Robust input validation to prevent security issues
 
 ## Overview
 Moving beyond traditional web OSINT, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automotive vehicles.
