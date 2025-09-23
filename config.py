@@ -72,12 +72,12 @@ class Config:
     
     # Application metadata
     APP_NAME = "xharvester"
-    VERSION = "1.0"
+    VERSION = "2.1"
     AUTHOR = f"N3twork({Colors.RED}G{Colors.YELLOW}H{Colors.GREEN}A{Colors.BLACK}N{Colors.RED}A{Colors.GREEN}) {Colors.YELLOW}- {Colors.RED}Computer Hacker {Colors.YELLOW}&{Colors.GREEN} Programmer"
-    GITHUB = "@n3tworkh4x"
-    GITHUB_REPO = "n3tworkh4x/xharvester"
-    GITHUB_API_URL = f"https://api.github.com/repos/n3tworkh4x/xharvester"
-    GITHUB_REPO_URL = f"https://github.com/n3tworkh4x/xharvester"
+    GITHUB = "@n3twork5"
+    GITHUB_REPO = "n3twork5/xharvester"
+    GITHUB_API_URL = f"https://api.github.com/repos/n3twork5/xharvester"
+    GITHUB_REPO_URL = f"https://github.com/n3twork5/xharvester"
     DONATION_URL = "https://ko-fi.com/n3twork"
     
     # Platform detection
@@ -163,7 +163,7 @@ class Config:
     
     # Update settings
     UPDATE_CHECK_INTERVAL = 86400  # 24 hours in seconds
-    AUTO_UPDATE = False  # User must confirm updates
+    AUTO_UPDATE = True  # Auto-update enabled for production
     BACKUP_COUNT = 3  # Number of backups to keep
     UPDATE_TIMEOUT = 300  # 5 minutes timeout for updates
     
