@@ -22,16 +22,23 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         INSTALLER="$SCRIPT_DIR/icons/linux/install_desktop_integration.sh"
     fi
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-    OS="macos"
-    OS_NAME="macOS"
-    INSTALLER="$SCRIPT_DIR/icons/macos/install_desktop_integration.sh"
+    # Check if running on iOS (a-Shell/iSH)
+    if [[ -d "/System/Library/PrivateFrameworks/MobileDevice.framework" ]] || [[ -n "$PREFIX" && "$PREFIX" == "/private/var/mobile"* ]] || [[ "$(uname -m)" == "iPhone"* ]] || [[ "$(uname -m)" == "iPad"* ]]; then
+        OS="ios"
+        OS_NAME="iOS/iPadOS"
+        INSTALLER="$SCRIPT_DIR/install_ios.sh"
+    else
+        OS="macos"
+        OS_NAME="macOS"
+        INSTALLER="$SCRIPT_DIR/icons/macos/install_desktop_integration.sh"
+    fi
 elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
     OS="windows"
     OS_NAME="Windows"
     INSTALLER="$SCRIPT_DIR/icons/windows/install_desktop_integration.bat"
 else
     echo "❌ Unsupported operating system: $OSTYPE"
-    echo "   Supported: Linux, macOS, Windows, Android/Termux"
+    echo "   Supported: Linux, macOS, iOS/iPadOS, Windows, Android/Termux"
     exit 1
 fi
 
@@ -52,7 +59,7 @@ echo ""
 
 # Run OS-specific installer
 case $OS in
-    "linux"|"macos"|"android")
+    "linux"|"macos"|"ios"|"android")
         exec bash "$INSTALLER"
         ;;
     "windows")

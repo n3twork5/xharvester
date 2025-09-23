@@ -14,11 +14,15 @@
 ### 🆕 NEW Features
 - **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically
 - **📱 Android/Termux Support**: Full compatibility with Android devices using Termux
-- **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/Android)
-- **🛡️ Platform-Specific Security**: Adaptive security based on platform capabilities
+- **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
+- **🖥️ Desktop Integration**: Click-to-launch desktop shortcuts for all platforms (Linux/macOS/Windows/iOS/Android)
+- **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/iOS/Android)
+- **🛱️ Platform-Specific Security**: Adaptive security based on platform capabilities
 - **💾 Backup & Restore**: Automatic backup creation during updates with rollback support
 - **📋 Version Management**: Smart version comparison and update notifications
 - **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith
+- **🍎 App Bundle Integration**: Native macOS app bundles with Spotlight and Dock support
+- **📡 5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
 
 ### Major Improvements (v2.0 Base)
 - **🔧 Modular Architecture**: Complete code restructuring with proper separation of concerns
@@ -41,10 +45,22 @@ xharvester/
 ├── update_manager.py             # GitHub auto-update system
 ├── xharvester                    # Main application (cross-platform)
 ├── install_android.sh            # Android/Termux installation script
+├── install_ios.sh                # iOS/a-Shell installation script
+├── install_desktop_integration   # Universal desktop integration installer
 ├── modules/
 │   ├── automobile_module.py       # Professional automotive security testing
-│   └── automobile_module_old.py   # Original version (backup)
+│   ├── bluetooth_module.py        # Bluetooth security testing
+│   ├── wifi_module.py             # WiFi security testing
+│   ├── rf_module.py               # Radio frequency security testing
+│   └── scada_module.py            # SCADA/ICS security testing
+├── icons/                        # Desktop integration icons and installers
+│   ├── linux/                    # Linux desktop integration
+│   ├── macos/                     # macOS app bundle integration
+│   ├── windows/                   # Windows shortcuts integration
+│   ├── android/                   # Android/Termux integration
+│   └── *.png, *.ico               # Platform-specific icons
 ├── logs/                         # Application logs directory
+├── reports/                      # Security assessment reports
 ├── backups/                      # Update backups directory
 ├── requirements.txt              # Python dependencies
 └── README.md                     # This file
@@ -88,10 +104,30 @@ python -m venv venv
 python -m venv venv
 .\venv\Scripts\activate.bat
 ```
-### **Installing Requirements**
+### Installing Requirements
 ```
 pip install -r requirements.txt
 ```
+
+### 🖥️ Desktop Integration (Optional)
+
+**Launch xharvester from your desktop environment with a single click!**
+
+```bash
+# Universal installer (auto-detects OS)
+./install_desktop_integration
+
+# Creates desktop shortcuts, application menu entries, and command-line integration
+# Supports: Linux, macOS, Windows, iOS, Android
+```
+
+**What gets installed:**
+- 🐧 **Linux**: Application launcher entry, desktop integration, "Run as Root" option
+- 🍎 **macOS**: Native app bundle, Spotlight search, Dock integration
+- 🦾 **Windows**: Start Menu shortcuts, desktop icon, "Run as Administrator" option
+- 🍏 **iOS**: a-Shell integration, Shortcuts app support, home screen widget
+- 🤖 **Android**: Termux widget, command-line integration, root mode support
+
 ***External Requirements***
 #### 🍎 macOS
 ``` 
@@ -143,6 +179,49 @@ python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 tsu ./xharvester
+```
+
+##### 🍎 iOS/iPadOS (a-Shell/iSH)
+###### Installation of a-Shell from App Store
+```
+Install a-Shell or a-Shell mini from App Store:
+
+    1. Open the App Store on your iOS/iPadOS device
+    
+    2. Search for "a-Shell" or "a-Shell mini"
+    
+    3. Install the app by Nicolas Holzschuch
+    
+    4. Alternative: Install iSH (Alpine Linux terminal)
+```
+
+###### Installation & Execution
+```
+# In a-Shell or iSH terminal:
+git clone https://github.com/n3tworkh4x/xharvester.git
+cd xharvester
+
+# Run iOS-specific installer
+./install_ios.sh
+
+# Launch xharvester
+xharvester
+
+# Or use iOS-optimized version
+xharvester-ios
+```
+
+###### iOS Shortcuts Integration
+```
+For home screen access:
+
+    1. Run the iOS installer: ./install_ios.sh
+    
+    2. Install "Shortcuts" app (if not already installed)
+    
+    3. Import the generated shortcut file
+    
+    4. Add xharvester widget to home screen
 ```
 
 ### 💝 Support Xharvester's Growth
