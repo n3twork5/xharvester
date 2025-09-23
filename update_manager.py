@@ -59,8 +59,13 @@ class GitHubAPI:
         try:
             url = f"{Config.GITHUB_API_URL}/releases/latest"
             response = self.session.get(url, timeout=30)
-            response.raise_for_status()
             
+            # Handle 404 specifically for no releases scenario
+            if response.status_code == 404:
+                self.logger.info("No releases found for this repository")
+                return None
+            
+            response.raise_for_status()
             return response.json()
             
         except requests.exceptions.RequestException as e:
@@ -229,7 +234,7 @@ class UpdateManager:
         
         release_info = self.github_api.get_latest_release()
         if not release_info:
-            print(f"{Colors.ERROR}  Failed to check for updates!")
+            print(f"{Colors.WARNING}  No releases available yet - you're using the development version!")
             return None
         
         latest_version = release_info.get('tag_name', '').lstrip('v')

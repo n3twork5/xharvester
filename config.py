@@ -163,7 +163,7 @@ class Config:
     
     # Update settings
     UPDATE_CHECK_INTERVAL = 86400  # 24 hours in seconds
-    AUTO_UPDATE = True  # Auto-update enabled for production
+    AUTO_UPDATE = False  # Disabled until first release is published
     BACKUP_COUNT = 3  # Number of backups to keep
     UPDATE_TIMEOUT = 300  # 5 minutes timeout for updates
     
