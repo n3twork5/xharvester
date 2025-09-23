@@ -216,9 +216,6 @@ For home screen access:
 ### 💝 Support Xharvester's Growth
 **🚀 If Xharvester helps you, consider [sponsoring](https://ko-fi.com/n3twork) -- 100% of support goes to keeping it free forever.**
 
-- **$5/month**: Coffie Tier ☕
-- **$25/month**: 
-
 Any Feedback and Suggestions? Consider Gmailing Me: [networkmandaean@gmail.com](mailto:networkmandaean@gmail.com)
 
 #### **📌 Disclaimer**
