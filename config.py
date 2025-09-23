@@ -72,12 +72,12 @@ class Config:
     
     # Application metadata
     APP_NAME = "xharvester"
-    VERSION = "2.1"
+    VERSION = "1.0"
     AUTHOR = f"N3twork({Colors.RED}G{Colors.YELLOW}H{Colors.GREEN}A{Colors.BLACK}N{Colors.RED}A{Colors.GREEN}) {Colors.YELLOW}- {Colors.RED}Computer Hacker {Colors.YELLOW}&{Colors.GREEN} Programmer"
     GITHUB = "@n3twork5"
     GITHUB_REPO = "n3twork5/xharvester"
     GITHUB_API_URL = f"https://api.github.com/repos/n3twork5/xharvester"
-    GITHUB_REPO_URL = f"https://github.com/n3twork5/xharvester"
+    GITHUB_REPO_URL = f"https://github.com/n3twork5/xharvester.git"
     DONATION_URL = "https://ko-fi.com/n3twork"
     
     # Platform detection
