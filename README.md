@@ -5,7 +5,7 @@
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
 ```
 
-# xharvester v1.0 - Cross-Platform Edition with Auto-Update
+# xharvester v1.0 - Cross-Platform Edition
 
 ⚡ **xharvester v1.0** is a cross-platform enhanced Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems with **automatic GitHub updates** and **full Android/Termux & IOS/a-Shell support**!
 
@@ -15,7 +15,7 @@
 - **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
 - **🖥️ Desktop Integration**: Click-to-launch desktop shortcuts for all platforms (Linux/macOS/Windows/iOS/Android)
 - **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/iOS/Android)
-- **🛱️ Platform-Specific Security**: Adaptive security based on platform capabilities
+- **Platform-Specific Security**: Adaptive security based on platform capabilities
 - **💾 Backup & Restore**: Automatic backup creation during updates with rollback support
 - **📋 Version Management**: Smart version comparison and update notifications
 - **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle
