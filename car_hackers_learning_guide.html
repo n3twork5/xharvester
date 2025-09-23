@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>The Car Hacker’s Handbook – Complete Learning Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, "Noto Sans", "Liberation Sans", sans-serif; line-height: 1.5; color: #111; margin: 2rem auto; max-width: 880px; padding: 0 1rem; }
+    h1, h2, h3 { color: #0b3d91; }
+    h1 { border-bottom: 2px solid #eee; padding-bottom: .3rem; }
+    code, pre { background: #f7f7f9; padding: .2rem .4rem; border-radius: 4px; }
+    pre { padding: 1rem; overflow: auto; }
+    .chapter { page-break-before: always; }
+    .toc li { margin: .25rem 0; }
+    .callout { background: #f0f7ff; border-left: 4px solid #0b3d91; padding: .75rem 1rem; margin: 1rem 0; }
+    .lab { background: #f9fff0; border-left: 4px solid #6aa84f; padding: .75rem 1rem; margin: 1rem 0; }
+    .warning { background: #fff7f7; border-left: 4px solid #d93025; padding: .75rem 1rem; margin: 1rem 0; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #f2f2f2; }
+    .small { color: #555; font-size: .95rem; }
+  </style>
+</head>
+<body>
+  <h1>The Car Hacker’s Handbook – Complete Learning Guide</h1>
+  <p class="small">Compiled for hands-on learning and research. Use only on vehicles and equipment you own or have explicit permission to test. Educational content adapted for practical study.</p>
+
+  <h2>Table of Contents</h2>
+  <ol class="toc">
+    <li><a href="#ch1">Chapter 1: Understanding Threat Models</a></li>
+    <li><a href="#ch2">Chapter 2: Bus Protocols</a></li>
+    <li><a href="#ch3">Chapter 3: Vehicle Communication with SocketCAN</a></li>
+    <li><a href="#ch4">Chapter 4: Diagnostics and Logging</a></li>
+    <li><a href="#ch5">Chapter 5: Reverse Engineering the CAN Bus</a></li>
+    <li><a href="#ch6">Chapter 6: ECU Hacking</a></li>
+    <li><a href="#ch7">Chapter 7: Building and Using ECU Test Benches</a></li>
+    <li><a href="#ch8">Chapter 8: Attacking ECUs and Other Embedded Systems</a></li>
+    <li><a href="#ch9">Chapter 9: In-Vehicle Infotainment Systems</a></li>
+    <li><a href="#ch10">Chapter 10: Vehicle-to-Vehicle Communication</a></li>
+    <li><a href="#ch11">Chapter 11: Weaponizing CAN Findings</a></li>
+    <li><a href="#ch12">Chapter 12: Attacking Wireless Systems with SDR</a></li>
+    <li><a href="#ch13">Chapter 13: Performance Tuning</a></li>
+    <li><a href="#appA">Appendix A: Tools of the Trade</a></li>
+    <li><a href="#appB">Appendix B: Diagnostic Modes and PIDs</a></li>
+    <li><a href="#appC">Appendix C: Create Your Own Open Garage</a></li>
+    <li><a href="#lab">Practical Lab Setup</a></li>
+  </ol>
+
+  <div id="ch1" class="chapter">
+    <h2>Chapter 1: Understanding Threat Models</h2>
+    <h3>Key Concepts</h3>
+    <ul>
+      <li>Attack surface: all ways data enters a vehicle (external and internal).</li>
+      <li>Threat modeling levels: Level 0 (bird’s-eye inputs), Level 1 (receivers), Level 2 (receiver internals).</li>
+      <li>Trust boundaries: more boundaries crossed → higher risk.</li>
+    </ul>
+    <h3>Process</h3>
+    <ol>
+      <li>List all inputs (cellular, Wi-Fi, Bluetooth, key fob, TPMS, USB, OBD-II, sensors).</li>
+      <li>Map receivers (IVI/infotainment, immobilizer, ECUs, gateways).</li>
+      <li>Break down complex receivers (kernel-space vs user-space paths).</li>
+    </ol>
+    <h3>Risk Rating</h3>
+    <ul>
+      <li>DREAD (Damage, Reproducibility, Exploitability, Affected users, Discoverability).</li>
+      <li>CVSS as an alternative framework for standardized scoring.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Draw Level 0/1/2 diagrams for a specific car. Brainstorm threats and score them with DREAD.
+    </div>
+  </div>
+
+  <div id="ch2" class="chapter">
+    <h2>Chapter 2: Bus Protocols</h2>
+    <h3>Core Protocols</h3>
+    <ul>
+      <li>CAN (11-bit/29-bit IDs, 2-wire differential, 120Ω termination).</li>
+      <li>ISO-TP for multi-frame messages (diagnostics, large transfers).</li>
+      <li>GMLAN (GM: low-speed single-wire + high-speed dual-wire).</li>
+      <li>J1850 (PWM/VPW), KWP2000/K-Line (ISO 14230/9141-2), LIN (master/slave), MOST (multimedia), FlexRay (time-critical), Automotive Ethernet.</li>
+    </ul>
+    <h3>Finding Buses</h3>
+    <ul>
+      <li>OBD-II pins: 6 (CANH), 14 (CANL), 2/10 (J1850), 7 (K-line), 15 (L-line), 16 (battery+).</li>
+      <li>Voltage heuristics: CAN ~2.5V rest ±1V; LIN ~12V; PWM 5V; VPW 7V.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Measure OBD-II voltages to identify active protocols. Map protocol-to-system usage from wiring diagrams.
+    </div>
+  </div>
+
+  <div id="ch3" class="chapter">
+    <h2>Chapter 3: Vehicle Communication with SocketCAN</h2>
+    <h3>Setup</h3>
+    <ul>
+      <li>Drivers: built-in CAN controllers, USB/serial CAN adapters.</li>
+      <li>Virtual interfaces: <code>vcan</code> for safe practice.</li>
+      <li>Utilities: <code>ip link</code>, <code>candump</code>, <code>cansend</code>, <code>cansniffer</code>, <code>canplayer</code>, <code>isotptun</code>.</li>
+    </ul>
+    <h3>Workflow</h3>
+    <ol>
+      <li>Bring up interface (real or vcan).</li>
+      <li>Sniff: record baseline traffic.</li>
+      <li>Replay: verify action reproducibility.</li>
+      <li>Filter: isolate IDs/bits for behaviors.</li>
+    </ol>
+    <div class="lab">
+      <strong>Exercise:</strong> Create <code>vcan0</code>, use <code>cansend</code> to transmit frames, capture with <code>candump</code>, and replay using <code>canplayer</code>.
+    </div>
+  </div>
+
+  <div id="ch4" class="chapter">
+    <h2>Chapter 4: Diagnostics and Logging</h2>
+    <h3>Diagnostics</h3>
+    <ul>
+      <li>DTCs (Diagnostic Trouble Codes): format and reading/erasing.</li>
+      <li>UDS over ISO-TP: modes, PIDs, security access.</li>
+      <li>Keeping diagnostic sessions alive; brute-forcing modes safely.</li>
+    </ul>
+    <h3>Event Data</h3>
+    <ul>
+      <li>Recorder logging: ethical, legal, and technical considerations.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Query PIDs on a test bench; practice UDS session control on a bench ECU (never on-road).
+    </div>
+  </div>
+
+  <div id="ch5" class="chapter">
+    <h2>Chapter 5: Reverse Engineering the CAN Bus</h2>
+    <h3>Methods</h3>
+    <ul>
+      <li>Record → Replay to confirm causality.</li>
+      <li>Binary search on logs to find minimal triggering frame(s).</li>
+      <li>Bit/byte diffing when physical actions occur.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Identify door lock/unlock frames on a bench network. Map arbitration IDs to functions and log them.
+    </div>
+  </div>
+
+  <div id="ch6" class="chapter">
+    <h2>Chapter 6: ECU Hacking</h2>
+    <h3>Targets & Techniques</h3>
+    <ul>
+      <li>Bootloaders, firmware extraction, flashing procedures.</li>
+      <li>Debug ports (UART, JTAG, SWD), tear-down and safe probing.</li>
+      <li>Security access levels, seed-key, signature checks.</li>
+    </ul>
+    <div class="warning">Only work on bench ECUs or authorized targets. Firmware tampering can brick devices or create unsafe conditions.</div>
+    <div class="lab">
+      <strong>Exercise:</strong> Read firmware via bench setup, identify update formats, and verify signatures where applicable.
+    </div>
+  </div>
+
+  <div id="ch7" class="chapter">
+    <h2>Chapter 7: Building and Using ECU Test Benches</h2>
+    <h3>Design</h3>
+    <ul>
+      <li>Harnesses, breakout boxes, fusing, power supplies with current limiting.</li>
+      <li>Network simulation: multiple ECUs, gateway behavior, termination.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Assemble a basic CAN bench with an ECU, proper termination, and a CAN interface. Validate with <code>candump</code>.</div>
+  </div>
+
+  <div id="ch8" class="chapter">
+    <h2>Chapter 8: Attacking ECUs and Other Embedded Systems</h2>
+    <h3>Approach</h3>
+    <ul>
+      <li>Static/dynamic analysis of firmware; common memory protections.</li>
+      <li>Input parsing issues (buffers, state machines, timing).</li>
+      <li>Persistence and rollback protections.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Fuzz a non-safety ECU service on a bench via ISO-TP; monitor for crashes or resets.</div>
+  </div>
+
+  <div id="ch9" class="chapter">
+    <h2>Chapter 9: In-Vehicle Infotainment (IVI) Systems</h2>
+    <h3>Surfaces</h3>
+    <ul>
+      <li>Media parsers, Bluetooth/Wi-Fi stacks, app platforms, update channels.</li>
+      <li>Bridges from IVI to vehicle networks; hardening gateways.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Analyze an IVI update package format and verify signature enforcement; test in a VM when possible.</div>
+  </div>
+
+  <div id="ch10" class="chapter">
+    <h2>Chapter 10: Vehicle-to-Vehicle (V2V) Communication</h2>
+    <h3>Concepts</h3>
+    <ul>
+      <li>V2V/V2X stacks (DSRC/C-V2X), timing, identity, and privacy.</li>
+      <li>Threats: spoofing, replay, jamming, and misbehavior detection.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Simulate message flows in a lab with SDR or software stacks; explore authentication models conceptually.</div>
+  </div>
+
+  <div id="ch11" class="chapter">
+    <h2>Chapter 11: Weaponizing CAN Findings</h2>
+    <h3>From Research to Proof-of-Concept</h3>
+    <ul>
+      <li>Design safe, minimal PoCs; avoid impacting safety systems.</li>
+      <li>Document IDs, data formats, preconditions, and fail-safes.</li>
+      <li>Coordinated disclosure and ethical considerations.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Create a benign PoC (e.g., toggle a non-critical indicator) on a bench with a clear safety checklist.</div>
+  </div>
+
+  <div id="ch12" class="chapter">
+    <h2>Chapter 12: Attacking Wireless Systems with SDR</h2>
+    <h3>Targets</h3>
+    <ul>
+      <li>Key fobs, TPMS, remote services, cellular modems.</li>
+      <li>Legal spectrum use and strict adherence to regulations.</li>
+    </ul>
+    <div class="lab">
+      <strong>Exercise:</strong> Passive capture of TPMS transmissions in a Faraday-safe setup to study protocol framing (receive-only).</div>
+  </div>
+
+  <div id="ch13" class="chapter">
+    <h2>Chapter 13: Performance Tuning</h2>
+    <h3>Principles</h3>
+    <ul>
+      <li>Calibration vs hacking; legality, emissions, and safety.</li>
+      <li>Reading maps, tables, and applying safe, reversible changes.</li>
+    </ul>
+    <div class="warning">Never apply performance changes to on-road vehicles without compliance and safety validation.</div>
+    <div class="lab">
+      <strong>Exercise:</strong> Analyze a sample calibration in a simulator tool; document any change impacts.</div>
+  </div>
+
+  <div id="appA" class="chapter">
+    <h2>Appendix A: Tools of the Trade</h2>
+    <ul>
+      <li>Hardware: CAN interfaces (USB adapters), power supplies, multimeter, oscilloscope/logic analyzer, soldering/probing tools.</li>
+      <li>Software: can-utils, SocketCAN, Wireshark (CAN dissectors), Kayak, firmware analysis suites, SDR stacks.</li>
+    </ul>
+  </div>
+
+  <div id="appB" class="chapter">
+    <h2>Appendix B: Diagnostic Modes and PIDs</h2>
+    <ul>
+      <li>Generic OBD-II modes/PIDs and manufacturer-specific extensions.</li>
+      <li>UDS services: session control, security access, read/write data by identifier.</li>
+    </ul>
+  </div>
+
+  <div id="appC" class="chapter">
+    <h2>Appendix C: Create Your Own Open Garage</h2>
+    <ul>
+      <li>Community lab guidelines, safety culture, documentation standards, and collaboration.</li>
+    </ul>
+  </div>
+
+  <div id="lab" class="chapter">
+    <h2>Practical Lab Setup</h2>
+    <h3>Minimum Bench</h3>
+    <ul>
+      <li>12V current-limited supply with fuses, ECU with harness, proper CAN termination.</li>
+      <li>Interface (USB-CAN), host laptop with SocketCAN, can-utils, and logging.</li>
+    </ul>
+    <h3>Safety Checklist</h3>
+    <ul>
+      <li>Never connect to on-road vehicles when testing unknown frames.</li>
+      <li>Use Faraday shielding for RF experiments; respect spectrum laws.</li>
+      <li>Log every action; design reversible changes; back up firmware/configs.</li>
+    </ul>
+  </div>
+
+  <p class="small">This guide is for educational purposes. Always get permission, follow the law, and prioritize safety.</p>
+</body>
+</html>
