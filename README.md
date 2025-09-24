@@ -214,7 +214,7 @@ For home screen access:
 ```
 
 ### 💝 Support Xharvester's Growth
-**🚀 If Xharvester helps you, consider [sponsoring](https://n3twork5.github.io/CodeSupport-Hub/) -- 100% of support goes to keeping it free forever.**
+**🚀 If Xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
 
 Any Feedback and Suggestions? Consider Gmailing Me: [networkmandaean@gmail.com](mailto:networkmandaean@gmail.com)
 
