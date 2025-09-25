@@ -4,9 +4,6 @@
  )  (  ) _ (  /(__)\  )   / \  /  )__) \__ \  )(   )__)  )   /
 (_/\_)(_) (_)(__)(__)(_)\_)  \/  (____)(___/ (__) (____)(_)\_)
 ```
-
-# xharvester v1.0 - Cross-Platform Edition
-
 ⚡ **xharvester v1.0** is a cross-platform enhanced Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems with **automatic GitHub updates** and **full Android/Termux & IOS/a-Shell support**!
 
 ### 🆕 Features
@@ -24,36 +21,6 @@
 
 ## Overview
 Moving beyond traditional web OSINT, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automotive vehicles.
-
-## 📁 Project Structure
-
-```
-xharvester/
-├── config.py                     # Centralized configuration management
-├── utils.py                      # Shared utilities and helper functions
-├── update_manager.py             # GitHub auto-update system
-├── xharvester                    # Main application (cross-platform)
-├── install_android.sh            # Android/Termux installation script
-├── install_ios.sh                # iOS/a-Shell installation script
-├── install_desktop_integration   # Universal desktop integration installer
-├── modules/
-│   ├── automobile_module.py       # Professional automotive security testing
-│   ├── bluetooth_module.py        # Bluetooth security testing
-│   ├── wifi_module.py             # WiFi security testing
-│   ├── rf_module.py               # Radio frequency security testing
-│   └── scada_module.py            # SCADA/ICS security testing
-├── icons/                        # Desktop integration icons and installers
-│   ├── linux/                    # Linux desktop integration
-│   ├── macos/                     # macOS app bundle integration
-│   ├── windows/                   # Windows shortcuts integration
-│   ├── android/                   # Android/Termux integration
-│   └── *.png, *.ico               # Platform-specific icons
-├── logs/                         # Application logs directory
-├── reports/                      # Security assessment reports
-├── backups/                      # Update backups directory
-├── requirements.txt              # Python dependencies
-└── README.md                     # This file
-```
 
 ## ✨ Core Framework Features
 Unified Command & Control: A single Python-based interface to orchestrate a wide array of specialized hardware and software tools.
@@ -216,7 +183,7 @@ For home screen access:
 ### 💝 Support Xharvester's Growth
 **🚀 If Xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
 
-Any Feedback and Suggestions? Consider Gmailing Me: [networkmandaean@gmail.com](mailto:networkmandaean@gmail.com)
+Any Feedback and Suggestions? Consider Gmailing Me: [gmail](mailto:networkmandaean@gmail.com)
 
 #### **📌 Disclaimer**
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, and severe legal consequences. Always operate within a controlled and legal environment.
