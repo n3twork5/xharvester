@@ -419,7 +419,7 @@ class AutomobileModule:
             "4": "Real-time Traffic Monitor", 
             "5": "Security Fuzzing (DANGEROUS)",
             "6": "ICSim Integration Test",
-            "7": "Interface Status & Info",
+            "7": " Interface Status & Info",
             "0": "Back to Main Menu"
         }
         
@@ -433,7 +433,7 @@ class AutomobileModule:
     def show_menu(self):
         """Display automobile module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"AUTOMOBILE SECURITY TESTING {Colors.YELLOW}-{Colors.CYAN} PROFESSIONAL")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} AUTOMOBILE MODULE")
         
         # Show interface status
         status_color = Colors.SUCCESS if self.can_interface.is_connected else Colors.WARNING
@@ -621,7 +621,7 @@ class AutomobileModule:
                     choice = MenuRenderer.get_user_input(self.hostname)
                     
                     if choice == "0":
-                        print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                        print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                         break
                     elif choice == "1":
                         self.can_network_discovery()
@@ -644,7 +644,7 @@ class AutomobileModule:
                         input(f"\n  {Colors.GREEN}Press Enter to continue...")
                         
                 except (KeyboardInterrupt, EOFError):
-                    print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                    print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                     break
                     
         except Exception as e:

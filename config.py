@@ -199,7 +199,7 @@ class Config:
         return (
             f"{Colors.GREEN}| GitHub:{Colors.RESET}{Colors.YELLOW} {cls.GITHUB} |{Colors.RESET}"
             f"{Colors.MAGENTA} Ko-fi{Colors.YELLOW}(Donation):{Colors.RESET}{Colors.GREEN} {cls.DONATION_URL} |\n"
-            f"\t\t{Colors.WHITE}Created by{Colors.GREEN} {cls.AUTHOR}\t\t\t\n"
+            f"{Colors.WHITE}  Created by{Colors.GREEN} {cls.AUTHOR}\t\t\t\n"
             f"{Colors.RED} Use only for authorized security testing!{Colors.RESET}"
         )
 

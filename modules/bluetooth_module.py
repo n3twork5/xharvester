@@ -368,7 +368,7 @@ class BluetoothModule:
     def show_menu(self):
         """Display the Bluetooth module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"BLUETOOTH {Colors.YELLOW}-{Colors.CYAN} SECURITY MODULE")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} BLUETOOTH MODULE")
         
         icons = {
             "1": "🔍",
@@ -390,7 +390,7 @@ class BluetoothModule:
             "5": "Bluejacking Attack",
             "6": "Bluetooth Tools & Utilities",
             "7": "Generate Security Report",
-            "8": "Module Information",
+            "8": " Module Information",
             "0": "Return to Main Menu"
         }
         
@@ -709,7 +709,7 @@ class BluetoothModule:
                     choice = MenuRenderer.get_user_input(self.hostname)
                     
                     if choice == "0":
-                        print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                        print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                         break
                     elif choice == "1":
                         self.device_discovery()
@@ -734,7 +734,7 @@ class BluetoothModule:
                         input(f"\n  {Colors.GREEN}Press Enter to continue...")
                         
                 except (KeyboardInterrupt, EOFError):
-                    print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                    print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                     break
                     
         except Exception as e:

@@ -614,7 +614,7 @@ class WifiModule:
     def show_menu(self):
         """Display the WiFi module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"XHARVERSER {Colors.YELLOW}-{Colors.CYAN} WiFi Hacking Module")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} WIFI MODULE")
         
         icons = {
             "1": "📡",
@@ -1181,7 +1181,7 @@ class WifiModule:
                     choice = MenuRenderer.get_user_input(self.hostname)
                     
                     if choice == "0":
-                        print(f"\n{Colors.MAGENTA}\t🚪{Colors.YELLOW} Returning to main menu...")
+                        print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                         break
                     elif choice == "1":
                         self.network_discovery()
@@ -1210,7 +1210,7 @@ class WifiModule:
                         input(f"\n  {Colors.GREEN}Press Enter to continue...")
                         
                 except (KeyboardInterrupt, EOFError):
-                    print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                    print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                     break
                     
         except Exception as e:

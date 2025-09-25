@@ -1126,7 +1126,7 @@ class RFModule:
                     choice = MenuRenderer.get_user_input(self.hostname)
                     
                     if choice == "0":
-                        print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                        print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                         break
                     elif choice == "1":
                         self.frequency_scan()
@@ -1153,7 +1153,7 @@ class RFModule:
                         input(f"\n  {Colors.GREEN}Press Enter to continue...")
                         
                 except (KeyboardInterrupt, EOFError):
-                    print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                    print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                     break
                     
         except Exception as e:

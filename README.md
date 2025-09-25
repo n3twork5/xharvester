@@ -1,3 +1,177 @@
+# Elena Rodriguez - Artisan Website
+
+A beautiful, modern website showcasing the artistic work of Elena Rodriguez, a passionate artisan specializing in handmade ceramics, paintings, and custom art pieces.
+
+## Features
+
+### 🏠 Homepage
+- Hero section with compelling introduction
+- About section highlighting expertise
+- Featured artwork showcase
+- Services overview with pricing
+- Contact banner with phone number and booking CTA
+
+### 🖼️ Gallery
+- Interactive filtering by category (Paintings, Ceramics, Mixed Media, Commissions)
+- Modal image viewer with artwork details and pricing
+- Responsive grid layout
+- Categories include:
+  - **Paintings**: Oil, acrylic, and watercolor artwork
+  - **Ceramics**: Handthrown pottery, vases, and decorative pieces
+  - **Mixed Media**: Experimental contemporary art
+  - **Commissions**: Custom work for clients
+
+### 📅 Booking Service
+- Detailed service information with pricing
+- Comprehensive booking form with validation
+- Services offered:
+  - **Custom Commissions** (Starting at $200)
+  - **Art Classes** ($75/hour)
+  - **Art Restoration** (Quote on request)
+- FAQ section addressing common questions
+- Features like quick response guarantee and free consultation
+
+### 📞 Contact
+- Multiple contact methods
+- Contact form with real-time validation
+- Studio information and visit scheduling
+- Social media links
+- Creative process explanation
+- Studio features and equipment details
+
+## Technical Features
+
+### 🎨 Design
+- Modern, artistic design with elegant typography
+- Responsive layout that works on all devices
+- Beautiful gradient backgrounds
+- Professional color scheme (purple/blue gradient theme)
+- Font Awesome icons
+- Google Fonts (Playfair Display + Open Sans)
+
+### 📱 Responsive Design
+- Mobile-first approach
+- Hamburger menu for mobile navigation
+- Flexible grid layouts
+- Touch-friendly buttons and interactions
+- Optimized images and content for all screen sizes
+
+### ⚡ Interactive Features
+- Mobile navigation toggle
+- Gallery filtering system
+- Modal image viewer
+- Form validation with real-time feedback
+- Smooth scrolling
+- Scroll animations
+- Back-to-top button
+- Loading states for forms
+
+### 🔧 JavaScript Functionality
+- Form validation and submission handling
+- Gallery modal with keyboard navigation (ESC to close)
+- Mobile menu interactions
+- Image lazy loading
+- Intersection Observer for scroll animations
+- Date input validation (prevents past dates)
+- Error handling for missing images
+
+## Contact Information
+
+- **Phone**: (555) 123-4567
+- **Email**: elena@artisancreations.com
+- **Availability**: Monday-Friday, 9AM-6PM PST
+- **Studio**: San Francisco Bay Area (by appointment)
+
+## Services & Pricing
+
+### Custom Commissions
+- Starting at $200
+- Timeline: 2-6 weeks
+- Includes consultation, sketches, revisions
+
+### Art Classes
+- $75/hour
+- 1-3 hours per session
+- Materials and tools included
+
+### Art Restoration
+- Free evaluation
+- Quote based on project scope
+- Specializes in oil paintings, ceramics, mixed media
+
+## File Structure
+
+```
+├── index.html          # Homepage
+├── gallery.html        # Art gallery with filtering
+├── booking.html        # Service booking page
+├── contact.html        # Contact and studio information
+├── styles.css          # Main stylesheet
+├── script.js           # JavaScript functionality
+├── images/             # Image directory
+│   ├── gallery/        # Gallery artwork images
+│   ├── hero-artwork.jpg
+│   ├── artist-portrait.jpg
+│   ├── featured-1.jpg
+│   ├── featured-2.jpg
+│   ├── featured-3.jpg
+│   └── studio-interior.jpg
+└── README.md          # This file
+```
+
+## Setup Instructions
+
+1. Ensure all files are in the same directory
+2. Add actual artwork images to the `images/` and `images/gallery/` directories
+3. Replace placeholder contact information with real details
+4. Update social media links in the footer
+5. Add Google Analytics tracking code if needed
+6. Test all forms and functionality before going live
+
+## Image Requirements
+
+To complete the website, add the following images:
+
+### Main Images
+- `hero-artwork.jpg` (1200x800px) - Featured artwork for homepage hero
+- `artist-portrait.jpg` (600x600px) - Photo of Elena working
+- `studio-interior.jpg` (1000x600px) - Interior studio shot
+
+### Featured Work (Homepage)
+- `featured-1.jpg` (400x300px) - Ocean Dreams Vase
+- `featured-2.jpg` (400x300px) - Abstract Emotions painting
+- `featured-3.jpg` (400x300px) - Family Portrait
+
+### Gallery Images (400x400px each)
+- `painting-1.jpg` through `painting-4.jpg` - Various paintings
+- `ceramic-1.jpg` through `ceramic-4.jpg` - Ceramic pieces
+- `mixed-1.jpg` and `mixed-2.jpg` - Mixed media art
+- `commission-1.jpg` and `commission-2.jpg` - Commission examples
+
+## Browser Compatibility
+
+- Chrome 60+
+- Firefox 55+
+- Safari 12+
+- Edge 79+
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Technologies Used
+
+- HTML5 semantic markup
+- CSS3 with Flexbox and Grid
+- Vanilla JavaScript (ES6+)
+- Font Awesome 6.0
+- Google Fonts
+- Intersection Observer API
+- CSS Animations and Transitions
+
+---
+
+**Built with ❤️ for artisan creations**
+
+*This website represents Elena Rodriguez's artistic journey and provides clients with an easy way to explore her work and book services.*
+
 ```
  _  _  _   _    __    ____  _  _  ____  ___  ____  ____  ____ 
 ( \/ )( )_( )  /__\  (  _ \( \/ )( ___)/ __)(_  _)( ___)(  _ \

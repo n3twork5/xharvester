@@ -7,3 +7,99 @@
 2025-09-23 17:55:35,856 - xharvester - INFO - Starting xharvester v1.0 on linux
 2025-09-23 18:59:28,352 - xharvester - INFO - Starting xharvester v1.0 on linux
 2025-09-23 20:09:38,905 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-23 22:34:36,151 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-24 00:37:27,179 - xharvester - ERROR - Error in 'launching RF module': Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/xharvester/utils.py", line 424, in error_handler
+    yield
+  File "/home/unknown/Desktop/xharvester/./xharvester", line 141, in _handle_rf_module
+    rf_module = RFModule()
+  File "/home/unknown/Desktop/xharvester/modules/rf_module.py", line 655, in __init__
+    self.sdr = SDRController()
+               ~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/xharvester/modules/rf_module.py", line 58, in __init__
+    self._detect_sdr_devices()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/xharvester/modules/rf_module.py", line 88, in _detect_sdr_devices
+    result = subprocess.run(['bladeRF-cli', '-i'], capture_output=True, text=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+2025-09-24 14:12:12,752 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:03:34,362 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:05:01,145 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:05:25,468 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:05:52,843 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:09:51,201 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:11:58,800 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:15:19,321 - xharvester - ERROR - Error in 'launching RF module': Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/Projects/xharvester/utils.py", line 424, in error_handler
+    yield
+  File "/home/unknown/Desktop/Projects/xharvester/./xharvester", line 141, in _handle_rf_module
+    rf_module = RFModule()
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 655, in __init__
+    self.sdr = SDRController()
+               ~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 58, in __init__
+    self._detect_sdr_devices()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 88, in _detect_sdr_devices
+    result = subprocess.run(['bladeRF-cli', '-i'], capture_output=True, text=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+2025-09-25 23:16:16,826 - xharvester - ERROR - Error in 'launching RF module': Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+Traceback (most recent call last):
+  File "/home/unknown/Desktop/Projects/xharvester/utils.py", line 424, in error_handler
+    yield
+  File "/home/unknown/Desktop/Projects/xharvester/./xharvester", line 141, in _handle_rf_module
+    rf_module = RFModule()
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 655, in __init__
+    self.sdr = SDRController()
+               ~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 58, in __init__
+    self._detect_sdr_devices()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/unknown/Desktop/Projects/xharvester/modules/rf_module.py", line 88, in _detect_sdr_devices
+    result = subprocess.run(['bladeRF-cli', '-i'], capture_output=True, text=True, timeout=5)
+  File "/usr/lib/python3.13/subprocess.py", line 556, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1222, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 2129, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.13/subprocess.py", line 1269, in _check_timeout
+    raise TimeoutExpired(
+    ...<2 lines>...
+            stderr=b''.join(stderr_seq) if stderr_seq else None)
+subprocess.TimeoutExpired: Command '['bladeRF-cli', '-i']' timed out after 5 seconds
+2025-09-25 23:16:23,591 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:18:47,745 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:23:51,426 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-09-25 23:26:24,187 - xharvester - INFO - Starting xharvester v1.0 on linux

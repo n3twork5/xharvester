@@ -618,7 +618,7 @@ class SCADAModule:
     def show_menu(self):
         """Display the SCADA module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"SCADA/ICS {Colors.YELLOW}-{Colors.CYAN} SECURITY MODULE")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} SCADA/ICS MODULE")
         
         icons = {
             "1": "🏗",
@@ -635,10 +635,10 @@ class SCADAModule:
         }
         
         menu_options = {
-            "1": "Industrial Device Discovery",
+            "1": " Industrial Device Discovery",
             "2": "Modbus Device Enumeration",
             "3": "Register/Coil Reading",
-            "4": "Coil Manipulation Attack",
+            "4": " Coil Manipulation Attack",
             "5": "Register Write Attack",
             "6": "Industrial DoS Attack",
             "7": "Protocol Fuzzing",
@@ -1150,7 +1150,7 @@ class SCADAModule:
                     choice = MenuRenderer.get_user_input(self.hostname)
                     
                     if choice == "0":
-                        print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                        print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                         break
                     elif choice == "1":
                         self.device_discovery()
@@ -1179,7 +1179,7 @@ class SCADAModule:
                         input(f"\n  {Colors.GREEN}Press Enter to continue...")
                         
                 except (KeyboardInterrupt, EOFError):
-                    print(f"\n{Colors.MAGENTA}🚪🔙{Colors.YELLOW} Returning to main menu...")
+                    print(f"\n{Colors.MAGENTA} 🚪{Colors.YELLOW}Returning to main menu...")
                     break
                     
         except Exception as e:
