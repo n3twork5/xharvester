@@ -61,26 +61,6 @@ python -m venv venv
 ```
 pip install -r requirements.txt
 ```
-
-### 🖥️ Desktop Integration (Optional)
-
-**Launch xharvester from your desktop environment with a single click!**
-
-```bash
-# Universal installer (auto-detects OS)
-./install_desktop_integration
-
-# Creates desktop shortcuts, application menu entries, and command-line integration
-# Supports: Linux, macOS, Windows, iOS, Android
-```
-
-**What gets installed:**
-- 🐧 **Linux**: Application launcher entry, desktop integration, "Run as Root" option
-- 🍎 **macOS**: Native app bundle, Spotlight search, Dock integration
-- 🦾 **Windows**: Start Menu shortcuts, desktop icon, "Run as Administrator" option
-- 🍏 **iOS**: a-Shell integration, Shortcuts app support, home screen widget
-- 🤖 **Android**: Termux widget, command-line integration, root mode support
-
 ***External Requirements***
 #### 🍎 macOS
 ``` 
@@ -126,7 +106,7 @@ Install from Google Play Store (Recommended)
 ```
 pkg update && pkg upgrade -y
 pkg install git python tsu -y 
-git clone https://github.com/n3tworkh4x/xharvester.git
+git clone https://github.com/n3twork5/xharvester.git
 cd xharvester
 python -m venv venv
 source venv/bin/activate
@@ -151,7 +131,7 @@ Install a-Shell or a-Shell mini from App Store:
 ###### Installation & Execution
 ```
 # In a-Shell or iSH terminal:
-git clone https://github.com/n3tworkh4x/xharvester.git
+git clone https://github.com/n3twork5/xharvester.git
 cd xharvester
 
 # Run iOS-specific installer
@@ -180,7 +160,7 @@ For home screen access:
 ### 💝 Support Xharvester's Growth
 **🚀 If Xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
 
-Any Feedback and Suggestions? Consider Gmailing Me: [gmail](mailto:networkmandaean@gmail.com)
+Any Feedback and Suggestions? Consider Gmailing Me: [GMAIL](mailto:networkmandaean@gmail.com)
 
 #### **📌 Disclaimer**
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, and severe legal consequences. Always operate within a controlled and legal environment.
