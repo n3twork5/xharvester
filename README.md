@@ -10,13 +10,10 @@
 - **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically
 - **📱 Android/Termux Support**: Full compatibility with Android devices using Termux
 - **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
-- **🖥️ Desktop Integration**: Click-to-launch desktop shortcuts for all platforms (Linux/macOS/Windows/iOS/Android)
 - **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/iOS/Android)
 - **Platform-Specific Security**: Adaptive security based on platform capabilities
 - **💾 Backup & Restore**: Automatic backup creation during updates with rollback support
-- **📋 Version Management**: Smart version comparison and update notifications
 - **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle
-- **🍎 App Bundle Integration**: Native macOS app bundles with Spotlight and Dock support
 - **5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
 
 ## Overview
