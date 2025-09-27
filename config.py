@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-Configuration management for xharvester
-Centralizes all settings, colors, and constants
-"""
 
 import os
 import sys
@@ -209,7 +205,7 @@ class MenuConfig:
     
     MAIN_MENU_OPTIONS = {
         "1": "BlueTooth",
-        "2": "WiFi",
+        "2": "Wi-Fi",
         "3": "Automobile",
         "4": "Radio Frequency",
         "5": "Industrial Control System - SCADA",

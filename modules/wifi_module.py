@@ -614,7 +614,7 @@ class WifiModule:
     def show_menu(self):
         """Display the WiFi module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} WIFI MODULE")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} Wi-Fi MODULE")
         
         icons = {
             "1": "📡",

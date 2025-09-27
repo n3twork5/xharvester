@@ -368,7 +368,7 @@ class BluetoothModule:
     def show_menu(self):
         """Display the Bluetooth module menu"""
         Animation.display_banner()
-        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} BLUETOOTH MODULE")
+        MenuRenderer.render_menu_header(f"XHARVESTER {Colors.YELLOW}-{Colors.CYAN} BlueTooth MODULE")
         
         icons = {
             "1": "🔍",

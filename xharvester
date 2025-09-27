@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""
-xharvester - Extended Reconnaissance & Exploitation Toolkit
-Main application entry point with improved error handling and structure
-
-Author: N3twork(GHANA) - Computer Programmer & Hacker
-Version: 1.0
-"""
 
 import sys
 import time
