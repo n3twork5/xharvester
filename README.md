@@ -6,7 +6,7 @@
 ```
 ⚡ **xharvester v1.0** is a cross-platform enhanced Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems with **automatic GitHub updates** and **full Android/Termux & IOS/a-Shell support**!
 
-### 🆕 Features
+### Features
 - **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically
 - **📱 Android/Termux Support**: Full compatibility with Android devices using Termux
 - **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
@@ -17,7 +17,7 @@
 - **📋 Version Management**: Smart version comparison and update notifications
 - **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle
 - **🍎 App Bundle Integration**: Native macOS app bundles with Spotlight and Dock support
-- **📡 5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
+- **5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
 
 ## Overview
 Moving beyond traditional web OSINT, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automotive vehicles.
