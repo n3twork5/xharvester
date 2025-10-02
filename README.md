@@ -7,22 +7,23 @@
 ⚡ **xharvester v1.0** is a cross-platform enhanced Python-based reconnaissance and exploitation suite designed for security assessments of radio frequency (RF), wireless (Bluetooth & WiFi), industrial control systems (SCADA), and automotive systems with **automatic GitHub updates** and **full Android/Termux & IOS/a-Shell support**!
 
 ### Features
-- **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically
-- **📱 Android/Termux Support**: Full compatibility with Android devices using Termux
-- **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration
-- **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/iOS/Android)
-- **Platform-Specific Security**: Adaptive security based on platform capabilities
-- **💾 Backup & Restore**: Automatic backup creation during updates with rollback support
-- **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle
-- **5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing
+- **🔄 Auto-Update System**: Option 99 now downloads latest version from GitHub automatically.
+- **Preventing Attacks**: **Generate Security Report** option gives a brief knowledage of **rules to protect individuals against the threat module(Wi-Fi MODULE)**.
+- **🤖 Android/Termux Support**: Full compatibility with Android devices using Termux.
+- **🍏 iOS/iPadOS Support**: Native support for a-Shell and iSH apps with Shortcuts integration.
+- **🌍 Cross-Platform Detection**: Automatic platform detection (Linux/Windows/macOS/iOS/Android).
+- **Platform-Specific Security**: Adaptive security based on platform capabilities.
+- **💾 Backup & Restore**: Automatic backup creation during updates with rollback support.
+- **🚗 Professional Automotive Module**: Based on "The Car Hacker's Handbook" by Craig Smith, Go search and learn more and unlock the hidden feautures of your vehicle.
+- **5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing.
 
 ## Overview
-Moving beyond traditional web OSINT, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS) and modern automotive vehicles.
+Moving beyond traditional web OSINT & exploitations, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS),modern automotive vehicles and radio frequency(RF).
 
 ## ✨ Core Framework Features
 Unified Command & Control: A single Python-based interface to orchestrate a wide array of specialized hardware and software tools.
 
-Modular Architecture: Enables users to run xharvestor in full-spectrum.
+Modular Architecture: Enables users to run xharvestor in full-spectrum with a key.
 
 Automated Evidence Collection: Automatically saves all findings in structured, standardized formats:
 
@@ -104,8 +105,10 @@ Install from Google Play Store (Recommended)
 
 ###### Upgrade, Installation & Execution
 ```
+#In termux terminal:
+
 pkg update && pkg upgrade -y
-pkg install git python tsu -y 
+pkg install git python tsu aircrack-ng iptables hostapd dnsmasq -y 
 git clone https://github.com/n3twork5/xharvester.git
 cd xharvester
 python -m venv venv
@@ -128,9 +131,12 @@ Install a-Shell or a-Shell mini from App Store:
     4. Alternative: Install iSH (Alpine Linux terminal)
 ```
 
-###### Installation & Execution
+###### Upgrade, Installation & Execution
 ```
 # In a-Shell or iSH terminal:
+
+pkg update && pkg upgrade -y
+pkg install git python tsu aircrack-ng iptables hostapd dnsmasq -y
 git clone https://github.com/n3twork5/xharvester.git
 cd xharvester
 
@@ -158,9 +164,10 @@ For home screen access:
 ```
 
 ### 💝 Support Xharvester's Growth
-**🚀 If Xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
+**🚀 If xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
 
-Any Feedback and Suggestions? Consider Gmailing Me: [GMAIL](mailto:networkmandaean@gmail.com)
+### Feedback & Suggestions
+**Any Feedback and Suggestions? Consider contacting: [me...](mailto:networkmandaean@gmail.com)  --  Make sure you get the tools in need for yourself as well, because most complex attacks will require specific hardware tool to support it functionalities.**
 
 #### **📌 Disclaimer**
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, and severe legal consequences. Always operate within a controlled and legal environment.

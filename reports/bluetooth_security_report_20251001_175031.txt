@@ -1,0 +1,14 @@
+===============================================
+  BLUETOOTH SECURITY ASSESSMENT REPORT
+===============================================
+
+Date: 2025-10-01 17:50:31
+Assessor: xharvester v1.0
+Environment: linux
+
+DISCOVERED DEVICES
+==================
+
+[1] Device: 41:42:6B:73:E7:08
+    Name: TWS V5.3
+    Services: 6

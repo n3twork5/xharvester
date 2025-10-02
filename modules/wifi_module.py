@@ -772,7 +772,7 @@ class WifiModule:
             if client_mac and not InputValidator.validate_mac_address(client_mac):
                 raise ValueError("Invalid MAC address format")
             
-            count_input = input(f"{Colors.GREEN}  Number of deauth packets [0]: {Colors.YELLOW}") or "0"
+            count_input = input(f"{Colors.GREEN}  Number of deauth packets [default = 0, to deauth all client]: {Colors.YELLOW}" or "0")
             count = InputValidator.validate_integer(count_input, 1, 1000)
             
             # Perform deauth attack
