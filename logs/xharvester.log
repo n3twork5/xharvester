@@ -36,3 +36,4 @@ Traceback (most recent call last):
             stderr=b''.join(stderr_seq) if stderr_seq else None)
 subprocess.TimeoutExpired: Command '['bladeRF-cli', '-i']' timed out after 5 seconds
 2025-10-01 18:08:53,162 - xharvester - INFO - Starting xharvester v1.0 on linux
+2025-10-02 10:53:29,356 - xharvester - INFO - Starting xharvester v1.0 on linux
