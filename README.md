@@ -18,7 +18,7 @@
 - **5 Complete Security Modules**: Bluetooth, WiFi, Automotive, RF, and SCADA/ICS testing.
 
 ## Overview
-Moving beyond traditional web OSINT & exploitations, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS),modern automotive vehicles and radio frequency(RF).
+Moving beyond traditional web OSINT & exploitations, xharvester allows security researchers, red teams, and penetration testers to interact with the electromagnetic spectrum. It provides a structured approach to discovering, fingerprinting, exploiting and assessing the security posture of devices ranging from WiFi routers and Bluetooth peripherals to critical Industrial Control Systems (ICS), modern automotive vehicles and radio frequency(RF).
 
 ## ✨ Core Framework Features
 Unified Command & Control: A single Python-based interface to orchestrate a wide array of specialized hardware and software tools.
@@ -167,7 +167,7 @@ For home screen access:
 **🚀 If xharvester helps you, consider [sponsoring](https://n3twork5.github.io/BoostBond/) -- 100% of support goes to keeping it free forever.**
 
 ### Feedback & Suggestions
-**Any Feedback and Suggestions? Consider contacting: [me...](mailto:networkmandaean@gmail.com)  --  Make sure you get the tools in need for yourself as well, because most complex attacks will require specific hardware tool to support it functionalities.**
+**Any Feedback and Suggestions? Consider contacting: [Me](mailto:networkmandaean@gmail.com)  --  Make sure you get the tools in need for yourself as well, because most complex attacks will require specific hardware tool to support it functionalities.**
 
 #### **📌 Disclaimer**
 This tool is intended for authorized security testing and educational purposes only. Interfering with wireless signals, industrial processes, or vehicle systems without explicit permission is illegal, extremely dangerous, and can lead to physical harm, and severe legal consequences. Always operate within a controlled and legal environment.
