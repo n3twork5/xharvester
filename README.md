@@ -163,11 +163,16 @@ For home screen access:
     4. Add xharvester widget to home screen
 ```
 
-### Simulation for Automobile Network
-Instrument Cluster Simulator for SocketCAN
+### Simulation for Automobile Network testing 
+#### Instrument Cluster Simulator for SocketCAN
 ------------------------------------------
 
 By: OpenGarages <agent.craig@gmail.com>
+
+```
+git clone https://github.com/n3twork5/ICSim.git
+cd ICSim
+```
 
 Compiling
 ---------
